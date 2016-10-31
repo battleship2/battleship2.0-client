@@ -1,0 +1,10 @@
+.idea
+bower_components
+node_modules
+www/css/
+www/dist/
+www/fonts/
+www/js/
+.bowerrc
+*.swp
+*.iml

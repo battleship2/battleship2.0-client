@@ -1,0 +1,63 @@
+$material-font-path: "../fonts/Material/";
+
+@font-face {
+
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url($material-font-path + "material_icons.eot"); /* For IE6-8. */
+    src: local("Material Icons"),
+    local("MaterialIcons-Regular"),
+    url($material-font-path + "material_icons.eot") format("embedded-opentype"),
+    url($material-font-path + "material_icons.ttf") format("truetype"),
+    url($material-font-path + "material_icons.woff") format("woff"),
+    url($material-font-path + "material_icons.woff2") format("woff2");
+
+}
+
+.material-icons {
+
+    font-family: "Material Icons", serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: "liga";
+
+    /* Rules for sizing the icon. */
+    &.md-12 { font-size: 12px; }
+    &.md-24 { font-size: 24px; }
+    &.md-36 { font-size: 36px; }
+    &.md-48 { font-size: 48px; }
+    &.md-60 { font-size: 60px; }
+    &.md-72 { font-size: 72px; }
+    &.md-84 { font-size: 84px; }
+    &.md-96 { font-size: 96px; }
+
+    /* Rules for using icons as black on a light background. */
+    &.md-dark { color: rgba(0, 0, 0, 0.54); }
+    &.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+    /* Rules for using icons as white on a dark background. */
+    &.md-light { color: rgba(255, 255, 255, 1); }
+    &.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+}

@@ -1,0 +1,27 @@
+/// <reference path="../node_modules/@types/jquery/index.d.ts" />
+/// <reference path="../node_modules/@types/createjs/index.d.ts" />
+/// <reference path="../node_modules/@types/socket.io-client/index.d.ts" />
+
+$(document).ready(() => {
+
+    let loader = new bs.core.Loader();
+
+    loader.setManifest([
+        { id: 'MAP',        src: 'map.png' },
+        { id: 'LOGO',       src: 'logo.png' },
+        { id: 'MARK',       src: 'mark.png' },
+        { id: 'TARGET',     src: 'target.png' },
+        { id: 'PLAYER',     src: 'player.png' },
+        { id: 'CRUISER',    src: 'ships/cruiser.png' },
+        { id: 'CARRIER',    src: 'ships/carrier.png' },
+        { id: 'SUBMARINE',  src: 'ships/submarine.png' },
+        { id: 'DESTROYER',  src: 'ships/destroyer.png' },
+        { id: 'BATTLESHIP', src: 'ships/battleship.png' }
+    ]);
+
+    loader.loadAssets(
+        new bs.core.Game().setup,
+        () => { console.error('Error while loading assets...'); }
+    );
+
+});

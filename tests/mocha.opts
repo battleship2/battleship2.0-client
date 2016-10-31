@@ -1,0 +1,4 @@
+  tests/server
+  --recursive
+  --require chai
+  --ui bdd

@@ -1,0 +1,66 @@
+* {
+    color: $bs-black;
+    margin: 0;
+    padding: 0;
+    font-size: $bs-font-size-base;
+    font-weight: $bs-font-weight-medium;
+    line-height: 1.42857143;
+    font-family: $bs-font-family-roboto;
+
+    @include vendor-prefix(box-sizing, border-box);
+    @include vendor-prefix(font-smoothing, antialiased);
+
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+
+    background: $bs-light-blue; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  $bs-light-blue 0%, $bs-blue 70%, $bs-blue 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg,  $bs-light-blue 0%,$bs-blue 70%,$bs-blue 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  $bs-light-blue 0%,$bs-blue 70%,$bs-blue 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.header-title {
+    font-size: 3rem;
+    text-align: center;
+    font-family: $bs-font-family-bebas-neue, $bs-font-family-roboto;
+
+    @media (min-width: 768px) {
+        font-size: 4rem;
+    }
+}
+
+.hidden {
+    opacity: 0 !important;
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.container {
+    width: 100%;
+}
+.desktop-full-height {
+    @media (min-width: 992px) {
+        height: 100%;
+    }
+}
+
+.overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba($bs-black, .3);
+}
+
+.md-mb-1 {
+    margin-bottom: 1rem;
+    @media (min-width: 992px) {
+        margin-bottom: 0;
+    }
+}
