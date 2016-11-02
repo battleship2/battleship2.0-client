@@ -69,13 +69,7 @@ gulp.task('default',     gulp.series('scratch', 'browser', 'watch'));
 /*                                                                                */
 /**********************************************************************************/
 
-/**
- * _ts
- * @name _ts
- * @function
- */
 function _ts() {
-
     var tsResult = gulp.src(paths.ts)
         .pipe(ts({
             declaration: true,
@@ -86,16 +80,9 @@ function _ts() {
         tsResult.dts.pipe(gulp.dest('./www/js/definitions')),
         tsResult.js.pipe(gulp.dest('./www/js/release'))
     );
-
 }
 
-/**
- * _minify
- * @name _minify
- * @function
- */
 function _minify() {
-
     var jsMinified =
         gulp.src('./www/dist/js/*.js')
             .pipe(minify({
@@ -110,16 +97,9 @@ function _minify() {
             .pipe(gulp.dest('./www/dist/styles'));
 
     return merge(jsMinified, cssMinified);
-
 }
 
-/**
- * _hook
- * @name _hook
- * @function
- */
 function _hook(done) {
-
     function endsWith(string, value) {
         return string.substring(string.length - value.length, string.length) === value;
     }
@@ -181,58 +161,30 @@ function _hook(done) {
     );
 
     done();
-
 }
 
-/**
- * _replaceStringInFile
- * @name _replaceStringInFile
- * @function
- */
 function _replaceStringInFile(filename, toReplace, replaceWith) {
-
     var data = fs.readFileSync(filename, 'utf8'),
         result = _replace(data, toReplace, replaceWith);
 
     fs.writeFileSync(filename, result, 'utf8');
-
 }
 
-/**
- * _replace
- * @name _replace
- * @function
- */
 function _replace(data, from, to) {
-
     return data.replace(new RegExp(from, 'g'), to);
-
 }
 
-/**
- * _sass
- * @name _sass
- * @function
- */
 function _sass() {
-
     return gulp.src(paths.sass)
         .pipe(sass({ errLogToConsole: true }))
         .pipe(gulp.dest('./www/css/'))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest('./www/css/'))
         .pipe(livereload());
-
 }
 
-/**
- * _copyfonts
- * @name _copyfonts
- * @function
- */
 function _copyfonts() {
-
     var fontsMaterial =
         gulp.src(['./www/lib/material/*.{ttf,woff,woff2,eot}'])
             .pipe(gulp.dest('./www/fonts/Material'))
@@ -252,30 +204,16 @@ function _copyfonts() {
             .pipe(gulp.dest('./www/dist/fonts/Bebas-Neue'));
 
     return merge(fontsMaterial, fontsRoboto, fontsBebasNeue);
-
 }
 
-/**
- * _copyimgs
- * @name _copyimgs
- * @function
- */
 function _copyimgs() {
-
     return gulp.src(paths.images)
         .pipe(gulp.dest('./www/css/img'))
         .pipe(gulp.dest('./www/dist/img'))
         .pipe(livereload());
-
 }
 
-/**
- * _useref
- * @name _useref
- * @function
- */
 function _useref() {
-
     var jsFilter = filter('./www/dist/tmp/**/*.js', { restore: true }),
         cssFilter = filter('./www/css/*.min.css', { restore: true }),
         indexHtmlFilter = filter(['**/*', '!**/*.html'], { restore: true });
@@ -293,55 +231,25 @@ function _useref() {
         .pipe(indexHtmlFilter.restore)
         .pipe(revReplace())         // Substitute in new filenames
         .pipe(gulp.dest('./www/dist'));
-    // .pipe(livereload());
-
 }
 
-/**
- * _scratch
- * @name _scratch
- * @function
- */
 function _scratch(error, toDelete) {
-
     toDelete = toDelete || ['www/css', 'www/dist', 'www/fonts', 'www/js'];
-
     return del(toDelete);
-
 }
 
-/**
- * _build
- * @name _build
- * @function
- */
 function _build() {
-
     return _scratch(null, './www/dist/tmp/**')
         .then(_zip);
-
 }
 
-/**
- * _zip
- * @name _zip
- * @function
- */
 function _zip() {
-
     var timestamp = new Date().toJSON().substring(0, 20).replace(/-|:/g, '').replace('T', '_');
-
     return gulp.src('./www/dist/**')
         .pipe(zip('battleship_client_' + timestamp + 'zip'))
         .pipe(gulp.dest('./www/dist'));
-
 }
 
-/**
- * _watch
- * @name _watch
- * @function
- */
 function _watch(done) {
     livereload.listen({
         port: 35730
@@ -355,39 +263,18 @@ function _watch(done) {
     done();
 }
 
-/**
- * _bower
- * @name _bower
- * @function
- */
 function _bower() {
-
     return gulp.src('./www/index.html')
         .pipe(wiredep())
         .pipe(gulp.dest('./www'));
-
 }
 
-/**
- * _serve
- * @name _serve
- * @function
- */
 function _serve(done) {
-
     connect.server({ livereload: true });
     done();
-
 }
 
-/**
- * _browser
- * @name _browser
- * @function
- */
 function _browser(done) {
-
     opn('http://localhost:8080/www');
     done();
-
 }
