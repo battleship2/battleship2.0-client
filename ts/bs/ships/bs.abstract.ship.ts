@@ -66,7 +66,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public setTemplate = (template: createjs.Bitmap = null) : this => {
+            public setTemplate = (template: createjs.Bitmap = null) : bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -76,13 +76,12 @@ namespace bs {
                 this.template.cursor = 'pointer';
                 _board.applyFilterOn('black', this.template, false);
 
-                let self = this;
-                this.template.on('click',     function (event) { _shipClicked.call(this, event, self); });
-                this.template.on('pressup',   function (event) { _shipUnselected.call(this, event, self); });
-                this.template.on('rollout',   function (event) { _shipUnhovered.call(this, event, self); });
-                this.template.on('rollover',  function (event) { _shipHovered.call(this, event, self); });
-                this.template.on('pressmove', function (event) { _shipMoved.call(this, event, self); });
-                this.template.on('mousedown', function (event) { _shipSelected.call(this, event, self); });
+                this.template.on('click',     _shipClicked.bind(this));
+                this.template.on('pressup',   _shipUnselected.bind(this));
+                this.template.on('rollout',   _shipUnhovered.bind(this));
+                this.template.on('rollover',  _shipHovered.bind(this));
+                this.template.on('pressmove', _shipMoved.bind(this));
+                this.template.on('mousedown', _shipSelected.bind(this));
                 _board.templateCache(this.template);
 
                 return this;
@@ -113,7 +112,7 @@ namespace bs {
                 return !this._invalidLocation;
             };
 
-            public doLocationCheck = () : this => {
+            public doLocationCheck = () : bs.ships.AbstractShip => {
                 this.clearLocationCheck();
 
                 if (!_map.isShipLocationValid(this)) {
@@ -142,7 +141,7 @@ namespace bs {
                 return this;
             };
 
-            public clearLocationCheck = () : this => {
+            public clearLocationCheck = () : bs.ships.AbstractShip => {
                 if (this._invalidLocation) {
                     this.black();
                     this._invalidLocation = false;
@@ -152,7 +151,7 @@ namespace bs {
                 return this;
             };
 
-            public clear = () : this => {
+            public clear = () : bs.ships.AbstractShip => {
                 this._debugArea.graphics.clear();
                 this._invalidLocationIndicator.graphics.clear();
                 _board.stage.removeChild(this.template);
@@ -160,7 +159,7 @@ namespace bs {
                 return this;
             };
 
-            public moveTo = (x: number, y: number) : this => {
+            public moveTo = (x: number, y: number) : bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -170,7 +169,7 @@ namespace bs {
                 return this;
             };
 
-            public setLocation = (x: number, y: number) : this => {
+            public setLocation = (x: number, y: number) : bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -180,7 +179,7 @@ namespace bs {
                 return this;
             };
 
-            public debug = () : this => {
+            public debug = () : bs.ships.AbstractShip => {
                 let shipPosition = this.getPosition();
 
                 this._debugArea.graphics.clear();
@@ -198,7 +197,7 @@ namespace bs {
                 return this;
             };
 
-            public rotate = (angle: number = 0, center?: number) : this => {
+            public rotate = (angle: number = 0, center?: number) : bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -209,7 +208,7 @@ namespace bs {
                 return this;
             };
 
-            public init = () : this => {
+            public init = () : bs.ships.AbstractShip => {
                 if (bs.utils.isFunction(this._updateListener)) {
                     this._updateListener();
                 }
@@ -233,22 +232,22 @@ namespace bs {
                 };
             };
 
-            public red = () : this => {
+            public red = () : bs.ships.AbstractShip => {
                 _board.applyFilterOn('red', this.template);
                 return this;
             };
 
-            public green = () : this => {
+            public green = () : bs.ships.AbstractShip => {
                 _board.applyFilterOn('green', this.template);
                 return this;
             };
 
-            public black = () : this => {
+            public black = () : bs.ships.AbstractShip => {
                 _board.applyFilterOn('black', this.template);
                 return this;
             };
 
-            public draw = (event?: Event) : this => {
+            public draw = (event?: Event) : bs.ships.AbstractShip => {
                 let shipPosition = this.getPosition(),
                     aspectRatio = null;
 
@@ -288,15 +287,15 @@ namespace bs {
                 return this;
             };
 
-            public setScale = (scale: number) : this => {
+            public setScale = (scale: number) : bs.ships.AbstractShip => {
                 this.scale = this.template.scaleX = this.template.scaleY = scale;
                 return this;
             };
 
-            public freeze = () : this => {
+            public freeze = () : bs.ships.AbstractShip => {
                 _frozen = true;
                 return this;
-            }
+            };
 
         }
 
@@ -306,95 +305,85 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _shipSelected(event: any, ship?: bs.ships.AbstractShip) {
-            // IMPORTANT NOTE: The this instance refers to this.template
-            if (_frozen) {
-                return;
+        function _shipSelected(event: any) : bs.ships.AbstractShip {
+            if (!_frozen) {
+                this.template.offset = {
+                    x: this.template.x - event.stageX,
+                    y: this.template.y - event.stageY
+                };
             }
-
-            this.offset = {
-                x: this.x - event.stageX,
-                y: this.y - event.stageY
-            };
+            return this;
         }
 
-        function _shipClicked(event: any, ship?: bs.ships.AbstractShip) {
-            // IMPORTANT NOTE: The this instance refers to this.template
-            if (_frozen || ship.isBeingDragged()) {
-                return;
+        function _shipClicked(event?: any) : bs.ships.AbstractShip {
+            if (_frozen || this.isBeingDragged()) {
+                return this;
             }
 
             let orientation = _constants.get('orientation');
 
-            if (ship.orientation === orientation.vertical) {
-                ship.orientation = orientation.horizontal;
+            if (this.orientation === orientation.vertical) {
+                this.orientation = orientation.horizontal;
             }
-            else { ship.orientation = orientation.vertical; }
+            else { this.orientation = orientation.vertical; }
 
-            _board.shipMoved(ship);
+            _board.shipMoved(this);
+
+            return this;
         }
 
-        function _shipMoved(event: any, ship?: bs.ships.AbstractShip) {
-            // IMPORTANT NOTE: The this instance refers to this.template
+        function _shipMoved(event?: any) : bs.ships.AbstractShip {
             if (_frozen) {
-                return;
+                return this;
             }
 
-            ship.isBeingDragged(true);
+            this.isBeingDragged(true);
 
-            let x = event.stageX + this.offset.x,
-                y = event.stageY + this.offset.y,
+            let x = event.stageX + this.template.offset.x,
+                y = event.stageY + this.template.offset.y,
                 abs = _map.relativeToAbsoluteCoordinates(x, y);
 
-            if (ship.location.x !== abs.x || ship.location.y !== abs.y) {
+            if (this.location.x !== abs.x || this.location.y !== abs.y) {
 
                 let _ship = {
-                    length: ship.length,
+                    length: this.length,
                     location: {
                         x: abs.x,
                         y: abs.y
                     },
-                    orientation: ship.orientation
+                    orientation: this.orientation
                 };
 
                 if (_map.locationIsWithinMap(<bs.ships.AbstractShip>_ship)) {
-                    ship.moveTo(x, y);
-                    ship.setLocation(abs.x, abs.y);
-                    _board.shipMoved(ship);
+                    this.moveTo(x, y);
+                    this.setLocation(abs.x, abs.y);
+                    _board.shipMoved(this);
                 }
             }
+
+            return this;
         }
 
-        function _shipUnselected(event: any, ship?: bs.ships.AbstractShip) {
-            // IMPORTANT NOTE: The this instance refers to this.template
-            if (_frozen) {
-                return;
+        function _shipUnselected(event?: any) : bs.ships.AbstractShip {
+            if (!_frozen) {
+                this.isBeingDragged(false);
+                _board.shipMoved(this);
             }
-
-            ship.isBeingDragged(false);
-            _board.shipMoved(ship);
+            return this;
         }
 
-        function _shipHovered(event: any, ship?: bs.ships.AbstractShip) {
-            // IMPORTANT NOTE: The this instance refers to this.template
-            if (_frozen) {
-                return;
+        function _shipHovered(event?: any) : bs.ships.AbstractShip {
+            if (!_frozen && this.hasValidLocation()) {
+                this.green();
             }
-
-            if (ship.hasValidLocation()) {
-                ship.green();
-            }
+            return this;
         }
 
-        function _shipUnhovered(event: any, ship?: bs.ships.AbstractShip) {
-            // IMPORTANT NOTE: The this instance refers to this.template
-            if (_frozen) {
-                return;
+        function _shipUnhovered(event?: any) : bs.ships.AbstractShip {
+            if (!_frozen && this.hasValidLocation()) {
+                this.black();
             }
-
-            if (ship.hasValidLocation()) {
-                ship.black();
-            }
+            return this;
         }
 
     }
