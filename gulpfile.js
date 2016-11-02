@@ -4,44 +4,39 @@
 /*                                                                                */
 /**********************************************************************************/
 
-var fs              = require('fs'),
-    ts              = require('gulp-typescript'),
-    del             = require('del'),
-    opn             = require('opn'),
-    rev             = require('gulp-rev'),
-    zip             = require('gulp-zip'),
-    gulp            = require('gulp'),
-    path            = require('path'),
-    csso            = require('gulp-csso'),
-    sass            = require('gulp-sass'),
-    merge           = require('merge2'),
-    mocha           = require('gulp-mocha'),
-    watch           = require('gulp-watch'),
-    rename          = require('gulp-rename'),
-    useref          = require('gulp-useref'),
-    filter          = require('gulp-filter'),
-    uglify          = require('gulp-uglify'),
-    minify          = require('gulp-minify'),
-    connect         = require('gulp-connect'),
-    wiredep         = require('wiredep').stream,
-    cleanCss        = require('gulp-clean-css'),
-    minifyCss       = require('gulp-minify-css'),
-    livereload      = require('gulp-livereload'),
-    revReplace      = require('gulp-rev-replace'),
+var fs         = require('fs');
+var ts         = require('gulp-typescript');
+var del        = require('del');
+var opn        = require('opn');
+var rev        = require('gulp-rev');
+var zip        = require('gulp-zip');
+var gulp       = require('gulp');
+var path       = require('path');
+var csso       = require('gulp-csso');
+var sass       = require('gulp-sass');
+var merge      = require('merge2');
+var watch      = require('gulp-watch');
+var rename     = require('gulp-rename');
+var useref     = require('gulp-useref');
+var filter     = require('gulp-filter');
+var uglify     = require('gulp-uglify');
+var minify     = require('gulp-minify');
+var connect    = require('gulp-connect');
+var wiredep    = require('wiredep').stream;
+var cleanCss   = require('gulp-clean-css');
+var minifyCss  = require('gulp-minify-css');
+var livereload = require('gulp-livereload');
+var revReplace = require('gulp-rev-replace');
 
-    paths = {
+var paths = {
 
-        ts: ['./ts/**/*.ts'],
-        js: ['./www/**/*.js'],
-        sass: ['./scss/**/*.scss'],
-        images: ['./www/img/**/*'],
-        tests: {
-            server: ['./tests/server/**/*.js'],
-            client: ['./tests/bs/**/*.js']
-        },
-        useref: ['./www/*.html', '!./www/index.html']
+    ts: ['./ts/**/*.ts'],
+    js: ['./www/**/*.js'],
+    sass: ['./scss/**/*.scss'],
+    images: ['./www/img/**/*'],
+    useref: ['./www/*.html', '!./www/index.html']
 
-    };
+};
 
 /**********************************************************************************/
 /*                                                                                */
@@ -66,12 +61,7 @@ gulp.task('minify',      gulp.series('hook', _minify));
 gulp.task('build',       gulp.series('minify', _build));
 gulp.task('browser',     gulp.series('serve', _browser));
 
-gulp.task('watch-test',  gulp.series(_watchTest));
-gulp.task('test-client', gulp.series('watch-test', _testClient));
-gulp.task('test-server', gulp.series('watch-test', _testServer));
-gulp.task('test',        gulp.series('test-client', 'test-server', 'watch-test'));
-
-gulp.task('default',     gulp.series('browser', 'watch'));
+gulp.task('default',     gulp.series('scratch', 'browser', 'watch'));
 
 /**********************************************************************************/
 /*                                                                                */
@@ -303,7 +293,7 @@ function _useref() {
         .pipe(indexHtmlFilter.restore)
         .pipe(revReplace())         // Substitute in new filenames
         .pipe(gulp.dest('./www/dist'));
-        // .pipe(livereload());
+    // .pipe(livereload());
 
 }
 
@@ -342,7 +332,7 @@ function _zip() {
     var timestamp = new Date().toJSON().substring(0, 20).replace(/-|:/g, '').replace('T', '_');
 
     return gulp.src('./www/dist/**')
-        .pipe(zip('battleship_' + timestamp + 'zip'))
+        .pipe(zip('battleship_client_' + timestamp + 'zip'))
         .pipe(gulp.dest('./www/dist'));
 
 }
@@ -362,12 +352,6 @@ function _watch(done) {
     gulp.watch(paths.sass, gulp.series(_sass));
     gulp.watch(paths.images, gulp.series(_copyimgs));
     // gulp.watch(paths.useref, gulp.series(_useref));
-    done();
-}
-
-function _watchTest(done) {
-    gulp.watch(paths.tests.server, gulp.series(_testServer));
-    gulp.watch(paths.tests.client, gulp.series(_testClient));
     done();
 }
 
@@ -406,33 +390,4 @@ function _browser(done) {
     opn('http://localhost:8080/www');
     done();
 
-}
-
-/**
- * _testServer
- * @name _testServer
- * @function
- */
-function _testServer() {
-
-    var config = {
-        reporter: 'dot'
-    };
-
-    return gulp.src(paths.tests.server)
-        .pipe(mocha(config));
-}
-
-/**
- * _testClient
- * @name _testClient
- * @function
- */
-function _testClient() {
-
-    Server = require('karma').Server;
-    new Server({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    });
 }

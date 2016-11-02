@@ -77,12 +77,12 @@ namespace bs {
                 _board.applyFilterOn('black', this.template, false);
 
                 let self = this;
-                this.template.on('click',     function (event) { _shipClicked.call(this, event, self); });
-                this.template.on('pressup',   function (event) { _shipUnselected.call(this, event, self); });
-                this.template.on('rollout',   function (event) { _shipUnhovered.call(this, event, self); });
-                this.template.on('rollover',  function (event) { _shipHovered.call(this, event, self); });
-                this.template.on('pressmove', function (event) { _shipMoved.call(this, event, self); });
-                this.template.on('mousedown', function (event) { _shipSelected.call(this, event, self); });
+                this.template.on('click',     event => { _shipClicked.call(this, event, self); });
+                this.template.on('pressup',   event => { _shipUnselected.call(this, event, self); });
+                this.template.on('rollout',   event => { _shipUnhovered.call(this, event, self); });
+                this.template.on('rollover',  event => { _shipHovered.call(this, event, self); });
+                this.template.on('pressmove', event => { _shipMoved.call(this, event, self); });
+                this.template.on('mousedown', event => { _shipSelected.call(this, event, self); });
                 _board.templateCache(this.template);
 
                 return this;
