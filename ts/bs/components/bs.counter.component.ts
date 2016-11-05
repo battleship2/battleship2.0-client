@@ -15,10 +15,10 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public count: number = 0;
-            public nextSize: string = "";
-            public $element: JQuery = null;
-            public currentSize: string = "";
+            private _count: number = 0;
+            private _nextSize: string = "";
+            private _$element: JQuery = null;
+            private _currentSize: string = "";
 
             /**********************************************************************************/
             /*                                                                                */
@@ -29,8 +29,8 @@ namespace bs {
             constructor(count: number = 0, element: string = "") {
                 super();
 
-                this.count = count;
-                this.$element = $(element);
+                this._count = count;
+                this._$element = $(element);
                 this.setTemplate();
             }
 
@@ -47,10 +47,10 @@ namespace bs {
 
             public animate = () : this => {
                 setTimeout(() => {
-                    this.$element.addClass("changing")
+                    this._$element.addClass("changing")
                         .one(_animationEnd, () => {
                             setTimeout(() => {
-                                this.$element.addClass("changed").removeClass("changing");
+                                this._$element.addClass("changed").removeClass("changing");
                             }, 500);
                         });
                 }, 200);
@@ -60,15 +60,15 @@ namespace bs {
 
             public increment = () : this => {
                 this.update();
-                this.count += 1;
+                this._count += 1;
                 return this;
             };
 
             public setTemplate = () : this => {
-                this.nextSize = this.getSize(this.count + 1);
-                this.currentSize = this.getSize(this.count);
+                this._nextSize = this.getSize(this._count + 1);
+                this._currentSize = this.getSize(this._count);
 
-                this.$element
+                this._$element
                     .html(this._getTemplate())
                     .addClass("up")
                     .removeClass("changed");
@@ -80,10 +80,10 @@ namespace bs {
             };
 
             private _getTemplate = (): string => {
-                return _template.replace(/<%= count %>/g, String(this.count))
-                    .replace(/<%= nextSize %>/g, this.nextSize)
-                    .replace(/<%= nextCount %>/g, String(this.count + 1))
-                    .replace(/<%= currentSize %>/g, this.currentSize);
+                return _template.replace(/<%= count %>/g, String(this._count))
+                    .replace(/<%= nextSize %>/g, this._nextSize)
+                    .replace(/<%= nextCount %>/g, String(this._count + 1))
+                    .replace(/<%= currentSize %>/g, this._currentSize);
             }
 
         }
