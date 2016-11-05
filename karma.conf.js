@@ -15,9 +15,7 @@ module.exports = function(config) {
             'node_modules/socket.io-client/socket.io.js',
             'bower_components/jquery/dist/jquery.min.js',
 
-            // 'www/js/release/**/*.js',
-            // 'www/js/release/bs.js',
-
+            'www/js/release/bs/definitions/bsdata.js',
             'www/js/release/bs/exceptions/bs.factory.exception.js',
             'www/js/release/bs/exceptions/bs.invalid-value.exception.js',
             'www/js/release/bs/exceptions/bs.missing-property.exception.js',
@@ -58,14 +56,14 @@ module.exports = function(config) {
         },
 
         client: {
-            //captureConsole: false
+            captureConsole: false
         },
 
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['dots'],
 
 
         // web server port
@@ -82,7 +80,7 @@ module.exports = function(config) {
 
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+        autoWatch: false,
 
 
         // setup these browsers

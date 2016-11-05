@@ -38,7 +38,7 @@ namespace bs {
                 if (bs.utils.isNull(_instance)) {
                     _instance = this;
 
-                    console.info("TODO: Check for warning when leaving or refreshing page if a game is playing");
+                    console.debug("(bs.gui.core) TODO: Check for warning when leaving or refreshing page if a game is playing");
 
                     _overlay = $(".overlay");
 
@@ -54,8 +54,8 @@ namespace bs {
                     _bombCounter = new bs.components.Counter(0, "#bombs-counter");
                     _shipDestroyedCounter = new bs.components.Counter(0, "#ship-destroyed-counter");
 
-                    console.info("TODO: Plug hits counter to server response here");
-                    console.info("TODO: Plug ships destroyed counter to server response here");
+                    console.debug("(bs.gui.core) TODO: Plug hits counter to server response here");
+                    console.debug("(bs.gui.core) TODO: Plug ships destroyed counter to server response here");
                     // bs.events.on(_enum.events.bomb.hit, _hitCounter.increment);
                     // bs.events.on(_enum.events.ship.destroyed, _shipDestroyedCounter.increment);
                 }

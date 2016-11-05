@@ -42,6 +42,12 @@ namespace bs {
                     _socket = new bs.core.Socket();
                     _constants = new bs.core.Constants();
                     _debugEnabled = true /*__debugEnabled__*/;
+
+                    _socket
+                        .connect("http://localhost:9001")
+                        .then(() => {
+                            _socket.emit(BSData.getEvents().emit.READY);
+                        });
                 }
 
                 return _instance;
@@ -61,7 +67,7 @@ namespace bs {
 
                 _gameStarted = true;
 
-                console.info("TODO: Set state according to who starts first (from server)");
+                console.debug("(bs.game.core) TODO: Set state according to who starts first (from server)");
                 _instance.state(_constants.get("enum").names.player);
 
                 return _instance;
@@ -79,7 +85,7 @@ namespace bs {
 
                 _board.setup();
 
-                console.info("TODO: Create ships depending on server game configuration");
+                console.debug("(bs.game.core) TODO: Create ships depending on server game configuration");
                 _board.addShip(new bs.ships.Destroyer());
                 _board.addShip(new bs.ships.Submarine());
                 _board.addShip(new bs.ships.Cruiser());

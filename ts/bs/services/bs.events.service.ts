@@ -53,7 +53,13 @@ namespace bs {
             if (!namedListeners) return;
 
             bs.utils.forEach(namedListeners, function (listener) {
-                try { listener.apply(null, [args]); }
+                try {
+                    if (bs.utils.isUndefined(args)) {
+                        listener.apply(null);
+                    } else {
+                        listener.apply(null, [args]);
+                    }
+                }
                 catch (exception) { bs.utils.handleException(exception); }
             });
 

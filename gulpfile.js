@@ -30,13 +30,11 @@ var livereload = require('gulp-livereload');
 var revReplace = require('gulp-rev-replace');
 
 var paths = {
-
     ts: ['./ts/**/*.ts'],
     js: ['./www/**/*.js'],
     sass: ['./scss/**/*.scss'],
     images: ['./www/img/**/*'],
     useref: ['./www/*.html', '!./www/index.html']
-
 };
 
 /**********************************************************************************/
@@ -73,9 +71,8 @@ gulp.task('default', gulp.series('scratch', 'browser', 'watch'));
 /**********************************************************************************/
 
 function _test(done) {
-    new karma({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
+    return new karma({
+        configFile: __dirname + '/karma.conf.js'
     }, done).start();
 }
 
@@ -85,7 +82,9 @@ function _tslint() {
             formatter: 'verbose',
             configuration: 'tslint.json'
         }))
-        .pipe(tslint.report())
+        .pipe(tslint.report({
+            emitError: false
+        }));
 }
 
 function _ts() {
@@ -274,7 +273,7 @@ function _watch(done) {
         port: 35730
     });
 
-    gulp.watch(paths.ts, gulp.series(_ts));
+    gulp.watch(paths.ts, gulp.series(_tslint, _ts));
     // gulp.watch(paths.js, gulp.series(_useref));
     gulp.watch(paths.sass, gulp.series(_sass));
     gulp.watch(paths.images, gulp.series(_copyimgs));
