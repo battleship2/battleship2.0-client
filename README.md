@@ -17,7 +17,8 @@ Please refer to this [link](https://demisx.github.io/gulp4/2015/01/15/install-gu
 ## Launch
 From the project's root directory, type the following commands:
 
-1. `npm install` -> Install the required dependencies
+1. `npm install` -> Install the required NPM dependencies
+1. `bower install` -> Install the required Bower dependencies
 2. `gulp` or `npm start` -> Start the project
 
 ## Tests, Bugs & Contributions
