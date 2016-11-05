@@ -27,18 +27,18 @@ namespace bs {
              * @description
              * Use this exception when the value of a property is not matching required specifications.
              *
-             * @param {*} value The invalid property's value.
-             * @param {String} property The invalid property's name.
+             * @param {*} value The invalid property"s value.
+             * @param {String} property The invalid property"s name.
              */
             constructor(value: any, property: string) {
                 super();
-                this.name = 'BSInvalidValueException';
+                this.name = "BSInvalidValueException";
                 this.stack = (new Error()).stack;
-                this.toString = function () { return this.name + ': ' + this.message; };
-                this.message = 'Encountered invalid value: ' + value;
+                this.toString = function () { return this.name + ": " + this.message; };
+                this.message = "Encountered invalid value: " + value;
 
                 if (bs.utils.isString(property) && property.trim().length) {
-                    this.message = 'Property `' + property + '` has an invalid value: `' + value + '`';
+                    this.message = "Property `" + property + "` has an invalid value: `" + value + "`";
                 }
             }
 

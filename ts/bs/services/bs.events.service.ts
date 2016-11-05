@@ -24,14 +24,14 @@ namespace bs {
                 return;
             }
 
-            var namedListeners = _listeners[name];
+            let namedListeners = _listeners[name];
             if (!namedListeners) {
                 _listeners[name] = namedListeners = [];
             }
             namedListeners.push(listener);
 
             return function _off() {
-                var indexOfListener = namedListeners.indexOf(listener);
+                let indexOfListener = namedListeners.indexOf(listener);
                 if (indexOfListener !== -1) {
                     namedListeners.splice(indexOfListener, 1);
                 }
@@ -49,7 +49,7 @@ namespace bs {
 
         export function broadcast(name: string, args?: any) {
 
-            var namedListeners = _listeners[name];
+            let namedListeners = _listeners[name];
             if (!namedListeners) return;
 
             bs.utils.forEach(namedListeners, function (listener) {

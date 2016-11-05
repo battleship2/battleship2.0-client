@@ -24,10 +24,10 @@ namespace bs {
 
             constructor() {
                 super();
-                this.name = 'BSFactoryException';
+                this.name = "BSFactoryException";
                 this.stack = (new Error()).stack;
-                this.toString = function () { return this.name + ': ' + this.message; };
-                this.message = 'An error occurred.';
+                this.toString = function () { return this.name + ": " + this.message; };
+                this.message = "An error occurred.";
             }
 
             /**********************************************************************************/

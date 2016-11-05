@@ -12,6 +12,7 @@ module.exports = function(config) {
 
         files: [
             'https://code.createjs.com/createjs-2015.11.26.min.js',
+            'node_modules/socket.io-client/socket.io.js',
             'bower_components/jquery/dist/jquery.min.js',
 
             // 'www/js/release/**/*.js',
@@ -24,12 +25,13 @@ module.exports = function(config) {
             'www/js/release/bs/services/bs.utils.service.js',
             'www/js/release/bs/services/bs.events.service.js',
             'www/js/release/bs/core/bs.core.js',
-            'www/js/release/bs/core/bs.loader.core.js',
-            'www/js/release/bs/core/bs.board.core.js',
-            'www/js/release/bs/core/bs.game.core.js',
-            'www/js/release/bs/core/bs.constants.core.js',
-            'www/js/release/bs/core/bs.gui.core.js',
             'www/js/release/bs/core/bs.map.core.js',
+            'www/js/release/bs/core/bs.gui.core.js',
+            'www/js/release/bs/core/bs.game.core.js',
+            'www/js/release/bs/core/bs.board.core.js',
+            'www/js/release/bs/core/bs.loader.core.js',
+            'www/js/release/bs/core/bs.socket.core.js',
+            'www/js/release/bs/core/bs.constants.core.js',
             'www/js/release/bs/components/bs.hints.component.js',
             'www/js/release/bs/components/bs.counter.component.js',
             'www/js/release/bs/ships/bs.abstract.ship.js',

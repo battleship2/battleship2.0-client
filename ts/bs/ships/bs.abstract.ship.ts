@@ -25,11 +25,11 @@ namespace bs {
             private _invalidLocation: boolean = false;
             private _invalidLocationIndicator: createjs.Shape = new createjs.Shape();
 
-            public name: string = 'ABSTRACT_SHIP';
+            public name: string = "ABSTRACT_SHIP";
             public scale: number = 0;
             public length: number = 0;
             public template: createjs.Bitmap = null;
-            public location: {x: number, y: number} = { x: 1, y: 1 };
+            public location: {x: number, y: number} = {x: 1, y: 1};
             public orientation: string = null;
 
             /**********************************************************************************/
@@ -38,7 +38,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            constructor(name: string = 'ABSTRACT_SHIP', length: number = 0) {
+            constructor(name: string = "ABSTRACT_SHIP", length: number = 0) {
                 super();
 
                 _map = new bs.core.Map();
@@ -50,9 +50,9 @@ namespace bs {
                 this.length = length;
 
                 if ((Math.random() * 100) > 50) {
-                    this.orientation = _constants.get('orientation').vertical;
+                    this.orientation = _constants.get("orientation").vertical;
                 } else {
-                    this.orientation = _constants.get('orientation').horizontal
+                    this.orientation = _constants.get("orientation").horizontal;
                 }
 
                 this.setName(name);
@@ -66,28 +66,28 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public setTemplate = (template: createjs.Bitmap = null) : bs.ships.AbstractShip => {
+            public setTemplate = (template: createjs.Bitmap = null): bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
 
                 this.template = template;
                 this.template.name = this.name;
-                this.template.cursor = 'pointer';
-                _board.applyFilterOn('black', this.template, false);
+                this.template.cursor = "pointer";
+                _board.applyFilterOn("black", this.template, false);
 
-                this.template.on('click',     _shipClicked.bind(this));
-                this.template.on('pressup',   _shipUnselected.bind(this));
-                this.template.on('rollout',   _shipUnhovered.bind(this));
-                this.template.on('rollover',  _shipHovered.bind(this));
-                this.template.on('pressmove', _shipMoved.bind(this));
-                this.template.on('mousedown', _shipSelected.bind(this));
+                this.template.on("click", _shipClicked.bind(this));
+                this.template.on("pressup", _shipUnselected.bind(this));
+                this.template.on("rollout", _shipUnhovered.bind(this));
+                this.template.on("rollover", _shipHovered.bind(this));
+                this.template.on("pressmove", _shipMoved.bind(this));
+                this.template.on("mousedown", _shipSelected.bind(this));
                 _board.templateCache(this.template);
 
                 return this;
             };
 
-            public setName = (name: string) : this => {
+            public setName = (name: string): this => {
                 if (_frozen) {
                     return this;
                 }
@@ -101,18 +101,18 @@ namespace bs {
                 return this;
             };
 
-            public isBeingDragged = (beingDragged?: boolean) : boolean => {
+            public isBeingDragged = (beingDragged?: boolean): boolean => {
                 if (bs.utils.isUndefined(beingDragged)) {
                     return this._beingDragged;
                 }
                 return this._beingDragged = beingDragged;
             };
 
-            public hasValidLocation = () : boolean => {
+            public hasValidLocation = (): boolean => {
                 return !this._invalidLocation;
             };
 
-            public doLocationCheck = () : bs.ships.AbstractShip => {
+            public doLocationCheck = (): bs.ships.AbstractShip => {
                 this.clearLocationCheck();
 
                 if (!_map.isShipLocationValid(this)) {
@@ -122,7 +122,7 @@ namespace bs {
                     this._invalidLocationIndicator
                         .graphics
                         .setStrokeStyle(1)
-                        .beginFill(_constants.get('colors').red)
+                        .beginFill(_constants.get("colors").red)
                         .drawRect(shipPosition.x, shipPosition.y, shipPosition.w, shipPosition.h)
                         .endFill();
 
@@ -141,7 +141,7 @@ namespace bs {
                 return this;
             };
 
-            public clearLocationCheck = () : bs.ships.AbstractShip => {
+            public clearLocationCheck = (): bs.ships.AbstractShip => {
                 if (this._invalidLocation) {
                     this.black();
                     this._invalidLocation = false;
@@ -151,7 +151,7 @@ namespace bs {
                 return this;
             };
 
-            public clear = () : bs.ships.AbstractShip => {
+            public clear = (): bs.ships.AbstractShip => {
                 this._debugArea.graphics.clear();
                 this._invalidLocationIndicator.graphics.clear();
                 _board.stage.removeChild(this.template);
@@ -159,7 +159,7 @@ namespace bs {
                 return this;
             };
 
-            public moveTo = (x: number, y: number) : bs.ships.AbstractShip => {
+            public moveTo = (x: number, y: number): bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -169,7 +169,7 @@ namespace bs {
                 return this;
             };
 
-            public setLocation = (x: number, y: number) : bs.ships.AbstractShip => {
+            public setLocation = (x: number, y: number): bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -179,7 +179,7 @@ namespace bs {
                 return this;
             };
 
-            public debug = () : bs.ships.AbstractShip => {
+            public debug = (): bs.ships.AbstractShip => {
                 let shipPosition = this.getPosition();
 
                 this._debugArea.graphics.clear();
@@ -187,7 +187,7 @@ namespace bs {
                 this._debugArea
                     .graphics
                     .setStrokeStyle(1)
-                    .beginStroke(_constants.get('colors').black)
+                    .beginStroke(_constants.get("colors").black)
                     .drawRect(shipPosition.x, shipPosition.y, shipPosition.w, shipPosition.h)
                     .endStroke();
 
@@ -197,7 +197,7 @@ namespace bs {
                 return this;
             };
 
-            public rotate = (angle: number = 0, center?: number) : bs.ships.AbstractShip => {
+            public rotate = (angle: number = 0, center?: number): bs.ships.AbstractShip => {
                 if (_frozen) {
                     return this;
                 }
@@ -208,7 +208,7 @@ namespace bs {
                 return this;
             };
 
-            public init = () : bs.ships.AbstractShip => {
+            public init = (): bs.ships.AbstractShip => {
                 if (bs.utils.isFunction(this._updateListener)) {
                     this._updateListener();
                 }
@@ -221,41 +221,41 @@ namespace bs {
                 return this;
             };
 
-            public getPosition = () : {x: number, y: number, w: number, h: number} => {
-                let _line = _constants.get('line');
-                let _orientation = _constants.get('orientation');
+            public getPosition = (): {x: number, y: number, w: number, h: number} => {
+                let _line = _constants.get("line");
+                let _orientation = _constants.get("orientation");
                 return {
                     x: this.location.x * _line.size.width,
                     y: this.location.y * _line.size.height,
                     w: (this.orientation === _orientation.horizontal ? this.length : 1) * _line.size.width,
-                    h: (this.orientation === _orientation.vertical   ? this.length : 1) * _line.size.height
+                    h: (this.orientation === _orientation.vertical ? this.length : 1) * _line.size.height
                 };
             };
 
-            public red = () : bs.ships.AbstractShip => {
-                _board.applyFilterOn('red', this.template);
+            public red = (): bs.ships.AbstractShip => {
+                _board.applyFilterOn("red", this.template);
                 return this;
             };
 
-            public green = () : bs.ships.AbstractShip => {
-                _board.applyFilterOn('green', this.template);
+            public green = (): bs.ships.AbstractShip => {
+                _board.applyFilterOn("green", this.template);
                 return this;
             };
 
-            public black = () : bs.ships.AbstractShip => {
-                _board.applyFilterOn('black', this.template);
+            public black = (): bs.ships.AbstractShip => {
+                _board.applyFilterOn("black", this.template);
                 return this;
             };
 
-            public draw = (event?: Event) : bs.ships.AbstractShip => {
+            public draw = (event?: Event): bs.ships.AbstractShip => {
                 let shipPosition = this.getPosition(),
                     aspectRatio = null;
 
-                if(_game.hasDebugEnabled()) {
+                if (_game.hasDebugEnabled()) {
                     this.debug();
                 }
 
-                if (this.orientation === _constants.get('orientation').vertical) {
+                if (this.orientation === _constants.get("orientation").vertical) {
 
                     aspectRatio = bs.utils.getAspectRatioFit(this.template.image.height, this.template.image.width, shipPosition.w, shipPosition.h);
 
@@ -287,12 +287,12 @@ namespace bs {
                 return this;
             };
 
-            public setScale = (scale: number) : bs.ships.AbstractShip => {
+            public setScale = (scale: number): bs.ships.AbstractShip => {
                 this.scale = this.template.scaleX = this.template.scaleY = scale;
                 return this;
             };
 
-            public freeze = () : bs.ships.AbstractShip => {
+            public freeze = (): bs.ships.AbstractShip => {
                 _frozen = true;
                 return this;
             };
@@ -305,7 +305,7 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _shipSelected(event: any) : bs.ships.AbstractShip {
+        function _shipSelected(event: any): bs.ships.AbstractShip {
             if (!_frozen) {
                 this.template.offset = {
                     x: this.template.x - event.stageX,
@@ -315,24 +315,26 @@ namespace bs {
             return this;
         }
 
-        function _shipClicked(event?: any) : bs.ships.AbstractShip {
+        function _shipClicked(event?: any): bs.ships.AbstractShip {
             if (_frozen || this.isBeingDragged()) {
                 return this;
             }
 
-            let orientation = _constants.get('orientation');
+            let orientation = _constants.get("orientation");
 
             if (this.orientation === orientation.vertical) {
                 this.orientation = orientation.horizontal;
             }
-            else { this.orientation = orientation.vertical; }
+            else {
+                this.orientation = orientation.vertical;
+            }
 
             _board.shipMoved(this);
 
             return this;
         }
 
-        function _shipMoved(event?: any) : bs.ships.AbstractShip {
+        function _shipMoved(event?: any): bs.ships.AbstractShip {
             if (_frozen) {
                 return this;
             }
@@ -364,7 +366,7 @@ namespace bs {
             return this;
         }
 
-        function _shipUnselected(event?: any) : bs.ships.AbstractShip {
+        function _shipUnselected(event?: any): bs.ships.AbstractShip {
             if (!_frozen) {
                 this.isBeingDragged(false);
                 _board.shipMoved(this);
@@ -372,14 +374,14 @@ namespace bs {
             return this;
         }
 
-        function _shipHovered(event?: any) : bs.ships.AbstractShip {
+        function _shipHovered(event?: any): bs.ships.AbstractShip {
             if (!_frozen && this.hasValidLocation()) {
                 this.green();
             }
             return this;
         }
 
-        function _shipUnhovered(event?: any) : bs.ships.AbstractShip {
+        function _shipUnhovered(event?: any): bs.ships.AbstractShip {
             if (!_frozen && this.hasValidLocation()) {
                 this.black();
             }

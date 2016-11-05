@@ -1,25 +1,32 @@
-# How to use this project?
+# Battleship2.0 | Client repository
+This is the client-side repository of the `Battleship2.0` game.
+The server (NodeJS) repository is hosted at [https://github.com/battleship2/battleship2.0-server](https://github.com/battleship2/battleship2.0-server).
 
-A few steps are in order to get **BattleShip 2.0** up and running in your environment.
+## Dependencies
+The client relies on several well-known libraries such as:
+- [Socket.IO](http://socket.io/)
+- [Karma](https://karma-runner.github.io)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Gulp](http://gulpjs.com/)
+- ...
 
-## Setup
+**Important note about Gulp:**
+_The project is configured to use Gulp v4 and above.
+Please refer to this [link](https://demisx.github.io/gulp4/2015/01/15/install-gulp4.html) to check how to configure it in your environment._
 
-To get the project started, fetch the sources form this repository:
+## Launch
+From the project's root directory, type the following commands:
 
-* `cd path/to/save/the/repository/locally`
-* `git clone https://github.com/Adrael/battleship2.0.git`
+1. `npm install` -> Install the required dependencies
+2. `gulp` or `npm start` -> Start the project
 
-Then, install the required dependencies:
+## Tests, Bugs & Contributions
+While we do our best to get the whole project tested, do not hesitate to PR us if you ever find a bug. 
+To launch all the tests, type the following command:
 
-* `npm install`
-* `bower install`
+`gulp test` or `npm test`
 
-## Getting started
-
-To launch the game in your browser, simply use `gulp` at the root of the project.
-The browser will **refresh automatically** upon changes in the code as watchers will be set up.
-
-### Working with the sources
+## Working with the sources
 
 The project offers a few helpers to make the running up faster.
 Refer to this guide to know how and when to use them.
@@ -57,20 +64,6 @@ Builds the project for the selected environment. See the `./config/environments.
 
 * `gulp zip`:
 Creates a zip archive of the `dist` directory for easy deployment purposes.
-
-## Tests
-
-### client
-To run the tests, use the `npm test` command. It will use Karma, Jasmine and PhantomJS to automatically run the tests described in `./tests/bs`.
-
-### server
-To run the server-side tests, use the `gulp test-server` command. These tests are run Mocha and Chai.
-
-## References
-
-* https://fr.wikipedia.org/wiki/Bataille_navale_(jeu)
-* https://en.wikipedia.org/wiki/Battleship_(game)
-* https://coolors.co/ff5e5b-acede7-a3d8ec-f8f8ff-36393b
 
 # What's next?
 

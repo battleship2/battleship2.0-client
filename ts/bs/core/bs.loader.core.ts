@@ -54,21 +54,21 @@ namespace bs {
                 let itemsLoaded = 0;
 
                 // http://www.createjs.com/demos/preloadjs/mediagrid
-                // bs.data.preload.on('error', handleError);
+                // bs.data.preload.on("error", handleError);
 
-                _loader.on('complete', () => {
+                _loader.on("complete", () => {
                     if (bs.utils.isFunction(successHandler)) {
                         successHandler();
                     }
                 });
 
-                // _loader.on('fileload', (event: any) => {
-                //     window.console.log('LOADED ASSET:', event.item.id);
-                //     window.console.log('PROGRESSION:', Math.floor((++itemsLoaded * 100) / _manifest.length) + '%');
+                // _loader.on("fileload", (event: any) => {
+                //     window.console.log("LOADED ASSET:", event.item.id);
+                //     window.console.log("PROGRESSION:", Math.floor((++itemsLoaded * 100) / _manifest.length) + "%");
                 // });
 
                 _loader.loadManifest({
-                    path: 'img/',
+                    path: "img/",
                     manifest: _manifest
                 });
 

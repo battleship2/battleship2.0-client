@@ -32,13 +32,13 @@ namespace bs {
              */
             constructor(x: number, y: number) {
                 super();
-                this.name = 'BSInvalidCoordinatesException';
+                this.name = "BSInvalidCoordinatesException";
                 this.stack = (new Error()).stack;
-                this.toString = function () { return this.name + ': ' + this.message; };
-                this.message = 'Encountered invalid coordinates';
+                this.toString = function () { return this.name + ": " + this.message; };
+                this.message = "Encountered invalid coordinates";
 
                 if (bs.utils.isNumber(x) && bs.utils.isNumber(y)) {
-                    this.message = 'Encountered invalid coordinates: (' + x + ', ' + y + ')';
+                    this.message = "Encountered invalid coordinates: (" + x + ", " + y + ")";
                 }
             }
 

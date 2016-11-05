@@ -21,9 +21,9 @@ namespace bs {
         let _stageChildren: Array<createjs.DisplayObject> = [];
         let _mouseOverArea: createjs.Shape = new createjs.Shape();
 
-        let _redFilter:   createjs.ColorFilter = new createjs.ColorFilter(0,0,0,1, 238,64,0,0);
-        let _greenFilter: createjs.ColorFilter = new createjs.ColorFilter(0,0,0,1, 0,139,69,0);
-        let _blackFilter: createjs.ColorFilter = new createjs.ColorFilter(0,0,0,1, 54,57,59,0);
+        let _redFilter: createjs.ColorFilter = new createjs.ColorFilter(0, 0, 0, 1, 238, 64, 0, 0);
+        let _greenFilter: createjs.ColorFilter = new createjs.ColorFilter(0, 0, 0, 1, 0, 139, 69, 0);
+        let _blackFilter: createjs.ColorFilter = new createjs.ColorFilter(0, 0, 0, 1, 54, 57, 59, 0);
 
         export class Board extends bs.core.Core {
 
@@ -53,7 +53,7 @@ namespace bs {
                     _loader = new bs.core.Loader();
                     _constants = new bs.core.Constants();
 
-                    let canvasNode = _constants.get('canvas').node;
+                    let canvasNode = _constants.get("canvas").node;
                     _canvas = $(canvasNode);
                     _canvasParent = _canvas.parent();
                     _instance.stage = new createjs.Stage(canvasNode);
@@ -61,11 +61,11 @@ namespace bs {
                     createjs.Touch.enable(_instance.stage);
                     _instance.stage.enableMouseOver(10);
                     // _instance.stage.mouseMoveOutside = true;
-                    _instance.stage.addEventListener('mouseleave', _mouseLeave);
-                    _instance.stage.addEventListener('stagemousedown', _mouseDown);
-                    _instance.stage.addEventListener('stagemousemove', _mouseMove);
+                    _instance.stage.addEventListener("mouseleave", _mouseLeave);
+                    _instance.stage.addEventListener("stagemousedown", _mouseDown);
+                    _instance.stage.addEventListener("stagemousemove", _mouseMove);
 
-                    createjs.Ticker.addEventListener('tick', _notifyClients);
+                    createjs.Ticker.addEventListener("tick", _notifyClients);
                 }
 
                 return _instance;
@@ -77,7 +77,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public addShip = (ship: bs.ships.AbstractShip) : bs.core.Board => {
+            public addShip = (ship: bs.ships.AbstractShip): bs.core.Board => {
                 try {
                     let freeCoordinates = _map.getFreeCoordinates(ship.orientation, ship.length);
                     ship.setLocation(freeCoordinates.x, freeCoordinates.y);
@@ -85,47 +85,46 @@ namespace bs {
                 }
                 catch (exception) {
                     console.error(exception);
-                    //console.error('Cannot place ship:', ship);
                 }
                 return _instance;
             };
 
-            public getShips = () : Array<bs.ships.AbstractShip> => {
+            public getShips = (): Array<bs.ships.AbstractShip> => {
                 return _ships;
             };
 
-            public clearShips = () : bs.core.Board => {
+            public clearShips = (): bs.core.Board => {
                 bs.utils.forEach(_ships, ship => ship.clear());
                 return _instance;
             };
 
-            public drawShips = () : bs.core.Board => {
+            public drawShips = (): bs.core.Board => {
                 bs.utils.forEach(_ships, ship => ship.draw());
                 return _instance;
             };
 
-            public freezeShips = () : bs.core.Board => {
+            public freezeShips = (): bs.core.Board => {
                 bs.utils.forEach(_ships, ship => ship.freeze());
                 return _instance;
             };
 
-            public shipMoved = (ship?: bs.ships.AbstractShip) : bs.core.Board => {
+            public shipMoved = (ship?: bs.ships.AbstractShip): bs.core.Board => {
                 bs.utils.forEach(_ships, _ship => _ship.doLocationCheck());
                 _instance.requestUpdate();
                 return _instance;
             };
 
-            public applyFilterOn = (name: string, template: createjs.Bitmap, update: boolean = true) : bs.core.Board => {
+            public applyFilterOn = (name: string, template: createjs.Bitmap, update: boolean = true): bs.core.Board => {
 
                 switch (name.toLowerCase()) {
-                    case 'red':
-                        template.filters = [ _redFilter ];
+                    case "red":
+                        template.filters = [_redFilter];
                         break;
-                    case 'green':
-                        template.filters = [ _greenFilter ];
+                    case "green":
+                        template.filters = [_greenFilter];
                         break;
-                    case 'black':
-                        template.filters = [ _blackFilter ];
+                    case "black":
+                        template.filters = [_blackFilter];
                         break;
                 }
 
@@ -138,16 +137,16 @@ namespace bs {
                 return _instance;
             };
 
-            public requestUpdate = () : bs.core.Board => {
+            public requestUpdate = (): bs.core.Board => {
                 _updateStage = true;
                 return _instance;
             };
 
-            public notifyOnUpdate = (callback?: Function) : Function => {
-                return bs.events.on(_constants.get('enum').events.graphic.update, callback);
+            public notifyOnUpdate = (callback?: Function): Function => {
+                return bs.events.on(_constants.get("enum").events.graphic.update, callback);
             };
 
-            public templateCache = (template: createjs.Bitmap) : bs.core.Board => {
+            public templateCache = (template: createjs.Bitmap): bs.core.Board => {
                 if (!bs.utils.isElement(template.image)) {
                     return _instance;
                 }
@@ -161,47 +160,47 @@ namespace bs {
                 return _instance;
             };
 
-            public setup = () : bs.core.Board => {
+            public setup = (): bs.core.Board => {
                 if (_setup) {
-                    console.error('The board has already been setup!');
+                    console.error("The board has already been setup!");
                     return _instance;
                 }
 
                 _setup = true;
 
-                $(window).on('resize', _resize);
+                $(window).on("resize", _resize);
                 _instance.show();
                 _resize();
 
-                _mark = new createjs.Bitmap(_loader.get('MARK'));
+                _mark = new createjs.Bitmap(_loader.get("MARK"));
                 _instance.templateCache(_mark);
 
-                _target = new createjs.Bitmap(_loader.get('TARGET'));
+                _target = new createjs.Bitmap(_loader.get("TARGET"));
                 _instance.templateCache(_target);
 
                 return _instance;
             };
 
-            public show = () : bs.core.Board => {
+            public show = (): bs.core.Board => {
                 if (bs.utils.isElement(_canvas)) {
-                    _canvas.removeClass('hidden');
+                    _canvas.removeClass("hidden");
                 }
                 return _instance;
             };
 
-            public hide = () : bs.core.Board => {
+            public hide = (): bs.core.Board => {
                 if (bs.utils.isElement(_canvas)) {
-                    _canvas.addClass('hidden');
+                    _canvas.addClass("hidden");
                 }
                 return _instance;
             };
 
-            public draw = () : bs.core.Board => {
+            public draw = (): bs.core.Board => {
                 if (!_setup) {
                     return _instance;
                 }
 
-                let _enum = _constants.get('enum');
+                let _enum = _constants.get("enum");
 
                 _draw();
 
@@ -215,13 +214,13 @@ namespace bs {
                 return _instance;
             };
 
-            public clear = () : bs.core.Board => {
+            public clear = (): bs.core.Board => {
                 _clear();
                 _clearBombSelection();
                 return _instance;
             };
 
-            public reset = () : bs.core.Board => {
+            public reset = (): bs.core.Board => {
                 _instance.clear();
                 _instance.clearShips();
                 _ships = [];
@@ -236,7 +235,7 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _clearBombSelection() : bs.core.Board {
+        function _clearBombSelection(): bs.core.Board {
             _instance.stage.removeChild(_mark);
             _instance.stage.removeChild(_target);
             _instance.stage.removeChild(_mouseOverArea);
@@ -244,7 +243,7 @@ namespace bs {
             return _instance;
         }
 
-        function _drawTargetTemplate(name: string, bitmap: createjs.Bitmap) : boolean {
+        function _drawTargetTemplate(name: string, bitmap: createjs.Bitmap): boolean {
             let rel = _map.relativeToAbsoluteCoordinates(_instance.stage.mouseX, _instance.stage.mouseY);
 
             if (rel.x <= 0 || rel.y <= 0) {
@@ -252,7 +251,7 @@ namespace bs {
             }
 
             let abs = _map.absoluteToRelativeCoordinates(rel.x, rel.y),
-                _line = _constants.get('line'),
+                _line = _constants.get("line"),
                 aspectRatio = bs.utils.getAspectRatioFit(bitmap.image.width, bitmap.image.height, _line.size.width, _line.size.height);
 
             bitmap.scaleX = bitmap.scaleY = aspectRatio.ratio;
@@ -267,7 +266,7 @@ namespace bs {
             return true;
         }
 
-        function _mouseLeave() : bs.core.Board {
+        function _mouseLeave(): bs.core.Board {
             if (!_mouseOverArea.parent && !_target.parent) {
                 return _instance;
             }
@@ -277,30 +276,30 @@ namespace bs {
             return _instance;
         }
 
-        function _mouseMove(event) : bs.core.Board {
-            if (!_game.hasStarted() || _game.state() !== _constants.get('enum').names.player) {
+        function _mouseMove(event): bs.core.Board {
+            if (!_game.hasStarted() || _game.state() !== _constants.get("enum").names.player) {
                 return _instance;
             }
 
-            if (!_drawTargetTemplate('TARGET', _target)) {
+            if (!_drawTargetTemplate("TARGET", _target)) {
                 return _instance;
             }
 
             let rel = _map.relativeToAbsoluteCoordinates(_instance.stage.mouseX, _instance.stage.mouseY),
                 abs = _map.absoluteToRelativeCoordinates(rel.x, rel.y),
-                _line = _constants.get('line');
+                _line = _constants.get("line");
 
             _mouseOverArea.graphics.clear();
 
             _mouseOverArea
                 .graphics
                 .setStrokeStyle(1)
-                .beginFill(_constants.get('colors').white)
+                .beginFill(_constants.get("colors").white)
                 .drawRect(abs.x, abs.y, _line.size.width, _line.size.height)
                 .endFill();
 
             _mouseOverArea.alpha = .5;
-            _mouseOverArea.cursor = 'pointer';
+            _mouseOverArea.cursor = "pointer";
 
             if (!_mouseOverArea.parent) {
                 _instance.stage.addChild(_mouseOverArea);
@@ -311,14 +310,14 @@ namespace bs {
             return _instance;
         }
 
-        function _mouseDown(event) : bs.core.Board {
-            if (!_game.hasStarted() || _game.state() !== _constants.get('enum').names.player) {
+        function _mouseDown(event): bs.core.Board {
+            if (!_game.hasStarted() || _game.state() !== _constants.get("enum").names.player) {
                 return _instance;
             }
 
-            console.info('TODO: Check here that the coords have not already been hit (from map?)');
+            console.info("TODO: Check here that the coords have not already been hit (from map?)");
 
-            _drawTargetTemplate('MARK', _mark);
+            _drawTargetTemplate("MARK", _mark);
 
             _instance.stage.update(event);
 
@@ -332,16 +331,16 @@ namespace bs {
             return _instance;
         }
 
-        function _notifyClients(event: Event) : bs.core.Board {
+        function _notifyClients(event: Event): bs.core.Board {
             // This set makes it so the stage only re-renders when an event handler indicates a change has happened.
             if (_updateStage) {
                 _updateStage = false;
-                bs.events.broadcast(_constants.get('enum').events.graphic.update, event)
+                bs.events.broadcast(_constants.get("enum").events.graphic.update, event);
             }
             return _instance;
         }
 
-        function _draw() : bs.core.Board {
+        function _draw(): bs.core.Board {
             _constants.update();
 
             if (_stageChildren.length > 0) {
@@ -349,10 +348,10 @@ namespace bs {
             }
 
             // Drawing board
-            let _line = _constants.get('line'),
-                _map = _constants.get('map'),
-                _canvas = _constants.get('canvas'),
-                _colors = _constants.get('colors'),
+            let _line = _constants.get("line"),
+                _map = _constants.get("map"),
+                _canvas = _constants.get("canvas"),
+                _colors = _constants.get("colors"),
                 lineWidth = _line.size.width,
                 lineHeight = _line.size.height;
 
@@ -405,16 +404,16 @@ namespace bs {
                     let textScale = (lineWidth / 2),
                         verticalText = _map.indexes.vertical[index - 1],
                         horizontalText = _map.indexes.horizontal[index - 1],
-                        verticalIndexText = new createjs.Text(verticalText, textScale + 'px Arial', _colors.white),
-                        horizontalIndexText = new createjs.Text(horizontalText, textScale + 'px Arial', _colors.white);
+                        verticalIndexText = new createjs.Text(verticalText, textScale + "px Arial", _colors.white),
+                        horizontalIndexText = new createjs.Text(horizontalText, textScale + "px Arial", _colors.white);
 
                     verticalIndexText.x = (currentVerticalPosition + lineWidth / 2 - verticalIndexText.getBounds().width / 2);
                     verticalIndexText.y = (lineHeight / 2);
-                    verticalIndexText.textBaseline = 'middle';
+                    verticalIndexText.textBaseline = "middle";
 
                     horizontalIndexText.x = (lineWidth / 2 - horizontalIndexText.getBounds().width / 2);
                     horizontalIndexText.y = (currentHorizontalPosition + lineHeight / 2);
-                    horizontalIndexText.textBaseline = 'middle';
+                    horizontalIndexText.textBaseline = "middle";
 
                     _stageChildren.push(verticalIndexText);
                     _stageChildren.push(horizontalIndexText);
@@ -437,7 +436,7 @@ namespace bs {
             return _instance;
         }
 
-        function _drawPicture(name: string, scale: number = 1) : bs.core.Board {
+        function _drawPicture(name: string, scale: number = 1): bs.core.Board {
             if (!bs.utils.isNull(_picture) && bs.utils.isDefined(_picture.parent)) {
                 _instance.stage.removeChild(_picture);
                 _stageChildren.splice(_stageChildren.indexOf(_picture));
@@ -451,9 +450,9 @@ namespace bs {
             return _instance;
         }
 
-        function _getBitmapPictureOf(name: string, scale: number = 1) : createjs.Bitmap {
+        function _getBitmapPictureOf(name: string, scale: number = 1): createjs.Bitmap {
             let bitmap = new createjs.Bitmap(_loader.get(name)),
-                _line = _constants.get('line'),
+                _line = _constants.get("line"),
                 lineWidth = _line.size.width,
                 lineHeight = _line.size.height,
                 logoScale = (lineWidth / bitmap.image.width) / scale;
@@ -464,18 +463,18 @@ namespace bs {
             return bitmap;
         }
 
-        function _resize() : bs.core.Board {
+        function _resize(): bs.core.Board {
 
-            var __width = _canvasParent.width(),
-                __height = _canvasParent.height(),
-                _width = __width * .9,
-                _height = __height * .9,
-                size = Math.min(_width, _height),
-                marginTop = (__height - size) / 2,
-                marginLeft = (__width - size) / 2;
+            let __width = _canvasParent.width();
+            let __height = _canvasParent.height();
+            let _width = __width * .9;
+            let _height = __height * .9;
+            let size = Math.min(_width, _height);
+            let marginTop = (__height - size) / 2;
+            let marginLeft = (__width - size) / 2;
 
-            _canvas.css('margin-top', (_width > 384) ? marginTop : 0);
-            _canvas.css('margin-left', marginLeft);
+            _canvas.css("margin-top", (_width > 384) ? marginTop : 0);
+            _canvas.css("margin-left", marginLeft);
 
             (<HTMLCanvasElement>_instance.stage.canvas).width = size;
             (<HTMLCanvasElement>_instance.stage.canvas).height = size;

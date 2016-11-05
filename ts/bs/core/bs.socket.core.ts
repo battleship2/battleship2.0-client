@@ -4,19 +4,19 @@ namespace bs {
 
     export namespace core {
 
-        let _socket: SocketIOClient.Socket = io('http://localhost:9001');
+        let _socket: SocketIOClient.Socket = io("http://localhost:9001");
         let _instance: bs.core.Socket = null;
-        let _eventPrefix: string = 'BS::SOCKET::';
+        let _eventPrefix: string = "BS::SOCKET::";
         let _messages: Array<string> = [
-            'nickname',
-            'play turn',
-            'list games',
-            'new player',
-            'game state',
-            'turn result',
-            'game created',
-            'player ready',
-            'ship placement'
+            "nickname",
+            "play turn",
+            "list games",
+            "new player",
+            "game state",
+            "turn result",
+            "game created",
+            "player ready",
+            "ship placement"
         ];
 
         export class Socket extends bs.core.Core {
@@ -26,7 +26,6 @@ namespace bs {
             /*                                  PROPERTIES                                    */
             /*                                                                                */
             /**********************************************************************************/
-
 
 
             /**********************************************************************************/
@@ -41,7 +40,7 @@ namespace bs {
                 if (bs.utils.isNull(_instance)) {
                     _instance = this;
 
-                    bs.utils.forEach(_messages, _bindMessageToEvent)
+                    bs.utils.forEach(_messages, _bindMessageToEvent);
                 }
 
                 return _instance;
@@ -53,7 +52,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public emit = (message: string, value?: any) : bs.core.Socket => {
+            public emit = (message: string, value?: any): bs.core.Socket => {
                 _socket.emit(message, value);
                 return _instance;
             };
@@ -66,7 +65,7 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _bindMessageToEvent(message: string) : bs.core.Socket {
+        function _bindMessageToEvent(message: string): bs.core.Socket {
             let event = _castMessageToEvent(message);
             _socket.on(message, data => {
                 bs.events.broadcast(event, data);
@@ -74,8 +73,8 @@ namespace bs {
             return _instance;
         }
 
-        function _castMessageToEvent(message: string) : string {
-            return _eventPrefix + message.toUpperCase().replace(/ /g, '_');
+        function _castMessageToEvent(message: string): string {
+            return _eventPrefix + message.toUpperCase().replace(/ /g, "_");
         }
 
     }

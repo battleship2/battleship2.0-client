@@ -4,7 +4,7 @@ namespace bs {
 
     export namespace components {
 
-        let _hint: {title: string, body: string} = {title: '', body: ''};
+        let _hint: {title: string, body: string} = {title: "", body: ""};
         let _$hints: JQuery = null;
         let _$hintsBody: JQuery = null;
         let _$hintsTitle: JQuery = null;
@@ -29,8 +29,8 @@ namespace bs {
                 super();
 
                 _$hints = $(element);
-                _$hintsBody = _$hints.find('.hints-body');
-                _$hintsTitle = _$hints.find('.hints-title');
+                _$hintsBody = _$hints.find(".hints-body");
+                _$hintsTitle = _$hints.find(".hints-title");
             }
 
             /**********************************************************************************/
@@ -44,21 +44,21 @@ namespace bs {
                 _hint.title = title;
 
                 _update();
-                _$hints.removeClass('hidden');
+                _$hints.removeClass("hidden");
 
                 return this;
             };
 
             public clear = () : this => {
-                _hint.body = '';
-                _hint.title = '';
+                _hint.body = "";
+                _hint.title = "";
                 _update();
-                _$hints.addClass('hidden');
+                _$hints.addClass("hidden");
                 return this;
             };
 
             public isVisible = () : boolean => {
-                return !_$hints.hasClass('hidden');
+                return !_$hints.hasClass("hidden");
             };
 
         }

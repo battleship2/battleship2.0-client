@@ -17,7 +17,6 @@ namespace bs {
             /**********************************************************************************/
 
 
-
             /**********************************************************************************/
             /*                                                                                */
             /*                                  CONSTRUCTOR                                   */
@@ -43,9 +42,9 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public getShipsAt = (x: number, y: number) : Array<bs.ships.AbstractShip> => {
+            public getShipsAt = (x: number, y: number): Array<bs.ships.AbstractShip> => {
                 let _result = [];
-                let _orientation = _constants.get('orientation');
+                let _orientation = _constants.get("orientation");
 
                 bs.utils.forEach(_board.getShips(), (_ship: bs.ships.AbstractShip) => {
 
@@ -63,17 +62,17 @@ namespace bs {
                 return _result;
             };
 
-            public savePlayerBombLocation = (x: number, y: number) : bs.core.Map => {
-                console.info('TODO: Save player bomb here');
+            public savePlayerBombLocation = (x: number, y: number): bs.core.Map => {
+                console.info("TODO: Save player bomb here");
                 return _instance;
             };
 
-            public isShipLocationValid = (ship: bs.ships.AbstractShip) : boolean => {
+            public isShipLocationValid = (ship: bs.ships.AbstractShip): boolean => {
                 return this.locationIsWithinMap(ship) && !this.overlappingOtherShips(ship);
             };
 
-            public getFreeCoordinates = (orientation: string, length: number) : {x: number, y: number} => {
-                let _line = _constants.get('line'),
+            public getFreeCoordinates = (orientation: string, length: number): {x: number, y: number} => {
+                let _line = _constants.get("line"),
                     _ship = {
                         length: length,
                         orientation: orientation,
@@ -83,14 +82,14 @@ namespace bs {
                 do {
                     _ship.location.x = 1 + Math.abs(Math.floor(Math.random() * (_line.count)) - length);
                     _ship.location.y = 1 + Math.abs(Math.floor(Math.random() * (_line.count)) - length);
-                } while(!this.isShipLocationValid(<bs.ships.AbstractShip>_ship));
+                } while (!this.isShipLocationValid(<bs.ships.AbstractShip>_ship));
 
-                return { x: _ship.location.x, y: _ship.location.y };
+                return {x: _ship.location.x, y: _ship.location.y};
             };
 
-            public locationIsWithinMap = (ship: bs.ships.AbstractShip) : boolean => {
-                let _orientation = _constants.get('orientation'),
-                    max = _constants.get('line').count,
+            public locationIsWithinMap = (ship: bs.ships.AbstractShip): boolean => {
+                let _orientation = _constants.get("orientation"),
+                    max = _constants.get("line").count,
                     vLength = (ship.orientation === _orientation.vertical) ? ship.length : 1,
                     hLength = (ship.orientation === _orientation.horizontal) ? ship.length : 1;
 
@@ -98,9 +97,9 @@ namespace bs {
                     ship.location.y >= 1 && ship.location.y + vLength - 1 < max;
             };
 
-            public overlappingOtherShips = (ship: bs.ships.AbstractShip) : boolean => {
+            public overlappingOtherShips = (ship: bs.ships.AbstractShip): boolean => {
                 let cursor = <any>{},
-                    isHorizontal = (ship.orientation === _constants.get('orientation').horizontal);
+                    isHorizontal = (ship.orientation === _constants.get("orientation").horizontal);
 
                 try {
 
@@ -117,8 +116,8 @@ namespace bs {
                 return false;
             };
 
-            public relativeToAbsoluteCoordinates = (relX: number, relY: number) : {x: number, y: number} => {
-                let _line = _constants.get('line');
+            public relativeToAbsoluteCoordinates = (relX: number, relY: number): {x: number, y: number} => {
+                let _line = _constants.get("line");
 
                 return {
                     x: Math.floor(relX / _line.size.width),
@@ -126,8 +125,8 @@ namespace bs {
                 };
             };
 
-            public absoluteToRelativeCoordinates = (absX: number, absY: number) : {x: number, y: number} => {
-                let _line = _constants.get('line');
+            public absoluteToRelativeCoordinates = (absX: number, absY: number): {x: number, y: number} => {
+                let _line = _constants.get("line");
 
                 return {
                     x: Math.floor(absX * _line.size.width),
@@ -143,11 +142,11 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _validFreeCoordinates(x: number, y: number, ship: bs.ships.AbstractShip) : boolean {
+        function _validFreeCoordinates(x: number, y: number, ship: bs.ships.AbstractShip): boolean {
 
-            let _line = _constants.get('line');
+            let _line = _constants.get("line");
             if (x < 1 || x > _line.count || y < 1 || y > _line.count) {
-                throw new bs.exceptions.BSInvalidCoordinatesException(x, y)
+                throw new bs.exceptions.BSInvalidCoordinatesException(x, y);
             }
 
             let _ships = _instance.getShipsAt(x, y);

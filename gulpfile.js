@@ -4,27 +4,28 @@
 /*                                                                                */
 /**********************************************************************************/
 
-var fs         = require('fs');
-var ts         = require('gulp-typescript');
-var del        = require('del');
-var opn        = require('opn');
-var rev        = require('gulp-rev');
-var zip        = require('gulp-zip');
-var gulp       = require('gulp');
-var path       = require('path');
-var csso       = require('gulp-csso');
-var sass       = require('gulp-sass');
-var merge      = require('merge2');
-var watch      = require('gulp-watch');
-var rename     = require('gulp-rename');
-var useref     = require('gulp-useref');
-var filter     = require('gulp-filter');
-var uglify     = require('gulp-uglify');
-var minify     = require('gulp-minify');
-var connect    = require('gulp-connect');
-var wiredep    = require('wiredep').stream;
-var cleanCss   = require('gulp-clean-css');
-var minifyCss  = require('gulp-minify-css');
+var fs = require('fs');
+var ts = require('gulp-typescript');
+var del = require('del');
+var opn = require('opn');
+var rev = require('gulp-rev');
+var zip = require('gulp-zip');
+var gulp = require('gulp');
+var path = require('path');
+var csso = require('gulp-csso');
+var sass = require('gulp-sass');
+var merge = require('merge2');
+var watch = require('gulp-watch');
+var karma = require('karma').Server;
+var rename = require('gulp-rename');
+var useref = require('gulp-useref');
+var filter = require('gulp-filter');
+var uglify = require('gulp-uglify');
+var tslint = require('gulp-tslint');
+var minify = require('gulp-minify');
+var connect = require('gulp-connect');
+var wiredep = require('wiredep').stream;
+var minifyCss = require('gulp-minify-css');
 var livereload = require('gulp-livereload');
 var revReplace = require('gulp-rev-replace');
 
@@ -44,30 +45,48 @@ var paths = {
 /*                                                                                */
 /**********************************************************************************/
 
-gulp.task('ts',          gulp.series(_ts));
-gulp.task('zip',         gulp.series(_zip));
-gulp.task('sass',        gulp.series(_sass));
-gulp.task('bower',       gulp.series(_bower));
-gulp.task('watch',       gulp.series(_watch));
-gulp.task('useref',      gulp.series(_useref));
-gulp.task('scratch',     gulp.series(_scratch));
-gulp.task('copyimgs',    gulp.series(_copyimgs));
-gulp.task('copyfonts',   gulp.series(_copyfonts));
+gulp.task('zip', gulp.series(_zip));
+gulp.task('sass', gulp.series(_sass));
+gulp.task('bower', gulp.series(_bower));
+gulp.task('watch', gulp.series(_watch));
+gulp.task('tslint', gulp.series(_tslint));
+gulp.task('useref', gulp.series(_useref));
+gulp.task('scratch', gulp.series(_scratch));
+gulp.task('copyimgs', gulp.series(_copyimgs));
+gulp.task('copyfonts', gulp.series(_copyfonts));
 
-gulp.task('deploy',      gulp.series('ts', 'sass', 'copyimgs', 'copyfonts', _useref));
-gulp.task('hook',        gulp.series('deploy', _hook));
-gulp.task('serve',       gulp.series('deploy', _serve));
-gulp.task('minify',      gulp.series('hook', _minify));
-gulp.task('build',       gulp.series('minify', _build));
-gulp.task('browser',     gulp.series('serve', _browser));
+gulp.task('ts', gulp.series('tslint', _ts));
+gulp.task('deploy', gulp.series('ts', 'sass', 'copyimgs', 'copyfonts', _useref));
+gulp.task('hook', gulp.series('deploy', _hook));
+gulp.task('serve', gulp.series('deploy', _serve));
+gulp.task('minify', gulp.series('hook', _minify));
+gulp.task('build', gulp.series('minify', _build));
+gulp.task('browser', gulp.series('serve', _browser));
 
-gulp.task('default',     gulp.series('scratch', 'browser', 'watch'));
+gulp.task('test', gulp.series('scratch', 'ts', _test));
+gulp.task('default', gulp.series('scratch', 'browser', 'watch'));
 
 /**********************************************************************************/
 /*                                                                                */
 /*                                     HOOKS                                      */
 /*                                                                                */
 /**********************************************************************************/
+
+function _test(done) {
+    new karma({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done).start();
+}
+
+function _tslint() {
+    return gulp.src(paths.ts)
+        .pipe(tslint({
+            formatter: 'verbose',
+            configuration: 'tslint.json'
+        }))
+        .pipe(tslint.report())
+}
 
 function _ts() {
     var tsResult = gulp.src(paths.ts)
@@ -86,14 +105,14 @@ function _minify() {
     var jsMinified =
         gulp.src('./www/dist/js/*.js')
             .pipe(minify({
-                ext: { min:'.js' },
+                ext: {min: '.js'},
                 noSource: true
             }))
             .pipe(gulp.dest('./www/dist/js'));
 
     var cssMinified =
         gulp.src('./www/dist/styles/*.css')
-            .pipe(cleanCss({ keepSpecialComments: 0 }))
+            .pipe(minifyCss({keepSpecialComments: 0}))
             .pipe(gulp.dest('./www/dist/styles'));
 
     return merge(jsMinified, cssMinified);
@@ -118,12 +137,12 @@ function _hook(done) {
 
             var realFile = filePatternToReplace;
 
-            for(var i = 0; i < distFilenames.length; ++i) {
+            for (var i = 0; i < distFilenames.length; ++i) {
 
                 var pattern = new RegExp(filePatternToReplace),
                     filename = distFilenames[i];
 
-                if(endsWith(filename, '.js') &&  pattern.test(filename)) {
+                if (endsWith(filename, '.js') && pattern.test(filename)) {
                     realFile = filename;
                     break;
                 }
@@ -176,9 +195,9 @@ function _replace(data, from, to) {
 
 function _sass() {
     return gulp.src(paths.sass)
-        .pipe(sass({ errLogToConsole: true }))
+        .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest('./www/css/'))
-        .pipe(cleanCss())
+        .pipe(minifyCss())
         .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest('./www/css/'))
         .pipe(livereload());
@@ -214,9 +233,9 @@ function _copyimgs() {
 }
 
 function _useref() {
-    var jsFilter = filter('./www/dist/tmp/**/*.js', { restore: true }),
-        cssFilter = filter('./www/css/*.min.css', { restore: true }),
-        indexHtmlFilter = filter(['**/*', '!**/*.html'], { restore: true });
+    var jsFilter = filter('./www/dist/tmp/**/*.js', {restore: true}),
+        cssFilter = filter('./www/css/*.min.css', {restore: true}),
+        indexHtmlFilter = filter(['**/*', '!**/*.html'], {restore: true});
 
     return gulp.src('www/*.html')
         .pipe(useref())             // Concatenate with gulp-useref
@@ -270,7 +289,7 @@ function _bower() {
 }
 
 function _serve(done) {
-    connect.server({ livereload: true });
+    connect.server({livereload: true});
     done();
 }
 

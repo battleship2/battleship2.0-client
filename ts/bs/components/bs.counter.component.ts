@@ -4,8 +4,8 @@ namespace bs {
 
     export namespace components {
 
-        let _template: string = '<span class="current top <%= currentSize %>"><%= count %></span><span class="next top <%= nextSize %>"><%= nextCount %></span><span class="current bottom <%= currentSize %>"><%= count %></span><span class="next bottom <%= nextSize %>"><%= nextCount %></span>';
-        let _animationEnd: string = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
+        let _template: string = "<span class=\"current top <%= currentSize %>\"><%= count %></span><span class=\"next top <%= nextSize %>\"><%= nextCount %></span><span class=\"current bottom <%= currentSize %>\"><%= count %></span><span class=\"next bottom <%= nextSize %>\"><%= nextCount %></span>";
+        let _animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend";
 
         export class Counter extends bs.core.Core {
 
@@ -16,9 +16,9 @@ namespace bs {
             /**********************************************************************************/
 
             public count: number = 0;
-            public nextSize: string = '';
+            public nextSize: string = "";
             public $element: JQuery = null;
-            public currentSize: string = '';
+            public currentSize: string = "";
 
             /**********************************************************************************/
             /*                                                                                */
@@ -26,7 +26,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            constructor(count: number = 0, element: string = '') {
+            constructor(count: number = 0, element: string = "") {
                 super();
 
                 this.count = count;
@@ -47,10 +47,10 @@ namespace bs {
 
             public animate = () : this => {
                 setTimeout(() => {
-                    this.$element.addClass('changing')
+                    this.$element.addClass("changing")
                         .one(_animationEnd, () => {
                             setTimeout(() => {
-                                this.$element.addClass('changed').removeClass('changing');
+                                this.$element.addClass("changed").removeClass("changing");
                             }, 500);
                         });
                 }, 200);
@@ -70,13 +70,13 @@ namespace bs {
 
                 this.$element
                     .html(this._getTemplate())
-                    .addClass('up')
-                    .removeClass('changed');
+                    .addClass("up")
+                    .removeClass("changed");
                 return this;
             };
 
             public getSize = (count: number) : string => {
-                return count > 9 ? 'small' : '';
+                return count > 9 ? "small" : "";
             };
 
             private _getTemplate = (): string => {

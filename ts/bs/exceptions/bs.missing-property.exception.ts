@@ -32,17 +32,17 @@ namespace bs {
              */
             constructor(property: string, requiredProperties?: Array<any>) {
                 super();
-                this.name = 'BSMissingPropertyException';
+                this.name = "BSMissingPropertyException";
                 this.stack = (new Error()).stack;
-                this.toString = function () { return this.name + ': ' + this.message; };
-                this.message = 'A property is missing.';
+                this.toString = function () { return this.name + ": " + this.message; };
+                this.message = "A property is missing.";
 
                 if (bs.utils.isString(property) && property.trim().length) {
-                    this.message = 'Missing `' + property + '` property.';
+                    this.message = "Missing `" + property + "` property.";
                 }
 
                 if (bs.utils.isArray(requiredProperties) && requiredProperties.length) {
-                    this.message += ' Required properties are: [' + requiredProperties.join(', ') + ']';
+                    this.message += " Required properties are: [" + requiredProperties.join(", ") + "]";
                 }
             }
 

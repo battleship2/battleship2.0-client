@@ -24,7 +24,6 @@ namespace bs {
             /**********************************************************************************/
 
 
-
             /**********************************************************************************/
             /*                                                                                */
             /*                                  CONSTRUCTOR                                   */
@@ -54,33 +53,33 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public start = () : bs.core.Game => {
+            public start = (): bs.core.Game => {
                 if (_gameStarted) {
-                    console.error('The game has already started!');
+                    console.error("The game has already started!");
                     return _instance;
                 }
 
                 _gameStarted = true;
 
-                console.info('TODO: Set state according to who starts first (from server)');
-                _instance.state(_constants.get('enum').names.player);
+                console.info("TODO: Set state according to who starts first (from server)");
+                _instance.state(_constants.get("enum").names.player);
 
                 return _instance;
             };
 
-            public setup = () : bs.core.Game => {
+            public setup = (): bs.core.Game => {
                 if (_gameSetup) {
-                    console.error('The game has already been set up!');
+                    console.error("The game has already been set up!");
                     return _instance;
                 }
 
                 _gameSetup = true;
 
-                _gameState =  _constants.get('enum').names.player;
+                _gameState = _constants.get("enum").names.player;
 
                 _board.setup();
 
-                console.info('TODO: Create ships depending on server game configuration');
+                console.info("TODO: Create ships depending on server game configuration");
                 _board.addShip(new bs.ships.Destroyer());
                 _board.addShip(new bs.ships.Submarine());
                 _board.addShip(new bs.ships.Cruiser());
@@ -93,7 +92,7 @@ namespace bs {
                 return _instance;
             };
 
-            public state = (gameState?: string) : bs.core.Game | string => {
+            public state = (gameState?: string): bs.core.Game | string => {
                 if (bs.utils.isUndefined(gameState)) {
                     return _gameState;
                 }
@@ -105,20 +104,20 @@ namespace bs {
                 return _instance;
             };
 
-            public hasStarted = () : boolean => {
+            public hasStarted = (): boolean => {
                 return _gameStarted;
             };
 
-            public hasDebugEnabled = () : boolean => {
+            public hasDebugEnabled = (): boolean => {
                 return _debugEnabled;
             };
 
-            public sendBombCoordinates = (x: number, y: number) : bs.core.Game => {
-                let _enum = _constants.get('enum');
+            public sendBombCoordinates = (x: number, y: number): bs.core.Game => {
+                let _enum = _constants.get("enum");
                 if (this.state() !== _enum.names.player) {
                     return _instance;
                 }
-                console.info('TODO: Send bomb coordinates to server here');
+                console.info("TODO: Send bomb coordinates to server here");
                 _map.savePlayerBombLocation(x, y);
                 this.state(_enum.names.opponent);
                 return _instance;
@@ -132,12 +131,12 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _stateChanged() : bs.core.Game {
-            let _enum = _constants.get('enum');
+        function _stateChanged(): bs.core.Game {
+            let _enum = _constants.get("enum");
             switch (_gameState) {
                 case _enum.names.player:
                     _board.clearShips();
-                    console.info('TODO: Draw player bombs here');
+                    console.info("TODO: Draw player bombs here");
                     _gui.hideOverlay();
                     _gui.showDropBombHint();
                     _gui.showCommand();
@@ -145,7 +144,7 @@ namespace bs {
                 case _enum.names.opponent:
                     _board.freezeShips();
                     _board.drawShips();
-                    console.info('TODO: Draw opponent bombs here');
+                    console.info("TODO: Draw opponent bombs here");
                     _gui.showOverlay();
                     _gui.showWaitingForOpponentHint();
                     break;
