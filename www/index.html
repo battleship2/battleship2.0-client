@@ -56,8 +56,12 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-10 offset-xs-1 messages hidden" id="messages">
-
+                <div class="col-xs-10 offset-xs-1 messages" id="messages">
+                    <div class="messages-container"></div>
+                    <div class="input-container">
+                        <i class="material-icons pull-xs-0 message-input-icon">keyboard_arrow_right</i>
+                        <input type="text" class="message-input" placeholder="Type here to talk to the other players in the room">
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,7 +79,9 @@
 <script src="../node_modules/socket.io-client/socket.io.js"></script>
 
 <!-- bower:js -->
+<script src="../bower_components/moment/moment.js"></script>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/randomcolor/randomColor.js"></script>
 <!-- endbower -->
 
 <script src="js/release/bs.js"></script>
@@ -101,6 +107,7 @@
 
 <script src="js/release/bs/components/bs.hints.component.js"></script>
 <script src="js/release/bs/components/bs.counter.component.js"></script>
+<script src="js/release/bs/components/bs.messages.component.js"></script>
 
 <script src="js/release/bs/ships/bs.abstract.ship.js"></script>
 <script src="js/release/bs/ships/bs.cruiser.ship.js"></script>

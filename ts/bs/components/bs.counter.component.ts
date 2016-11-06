@@ -4,8 +4,12 @@ namespace bs {
 
     export namespace components {
 
-        let _template: string = "<span class=\"current top <%= currentSize %>\"><%= count %></span><span class=\"next top <%= nextSize %>\"><%= nextCount %></span><span class=\"current bottom <%= currentSize %>\"><%= count %></span><span class=\"next bottom <%= nextSize %>\"><%= nextCount %></span>";
-        let _animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend";
+        const _animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend";
+
+        const _template: string = "<span class=\"current top <%= currentSize %>\"><%= count %></span>" +
+            "<span class=\"next top <%= nextSize %>\"><%= nextCount %></span>" +
+            "<span class=\"current bottom <%= currentSize %>\"><%= count %></span>" +
+            "<span class=\"next bottom <%= nextSize %>\"><%= nextCount %></span>";
 
         export class Counter extends bs.core.Core {
 
@@ -40,12 +44,12 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public update = () : this => {
+            public update = (): bs.components.Counter => {
                 this.setTemplate();
                 return this.animate();
             };
 
-            public animate = () : this => {
+            public animate = (): bs.components.Counter => {
                 setTimeout(() => {
                     this._$element.addClass("changing")
                         .one(_animationEnd, () => {
@@ -58,33 +62,26 @@ namespace bs {
                 return this;
             };
 
-            public increment = () : this => {
+            public increment = (): bs.components.Counter => {
                 this.update();
                 this._count += 1;
                 return this;
             };
 
-            public setTemplate = () : this => {
+            public setTemplate = (): bs.components.Counter => {
                 this._nextSize = this.getSize(this._count + 1);
                 this._currentSize = this.getSize(this._count);
 
                 this._$element
-                    .html(this._getTemplate())
+                    .html(_getTemplate.call(this))
                     .addClass("up")
                     .removeClass("changed");
                 return this;
             };
 
-            public getSize = (count: number) : string => {
+            public getSize = (count: number): string => {
                 return count > 9 ? "small" : "";
             };
-
-            private _getTemplate = (): string => {
-                return _template.replace(/<%= count %>/g, String(this._count))
-                    .replace(/<%= nextSize %>/g, this._nextSize)
-                    .replace(/<%= nextCount %>/g, String(this._count + 1))
-                    .replace(/<%= currentSize %>/g, this._currentSize);
-            }
 
         }
 
@@ -94,7 +91,13 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-
+        function _getTemplate(): string {
+            return _template
+                .replace(/<%= count %>/g, String(this._count))
+                .replace(/<%= nextSize %>/g, this._nextSize)
+                .replace(/<%= nextCount %>/g, String(this._count + 1))
+                .replace(/<%= currentSize %>/g, this._currentSize);
+        }
 
     }
 

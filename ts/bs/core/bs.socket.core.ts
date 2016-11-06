@@ -6,7 +6,6 @@ namespace bs {
 
         let _socket: SocketIOClient.Socket = null;
         let _instance: bs.core.Socket = null;
-        let _messages: { [message: string]: string } = BSData.getEvents().on;
         let _connected: boolean = false;
         let _eventPrefix: string = "BS::SOCKET::";
 
@@ -107,7 +106,7 @@ namespace bs {
         /**********************************************************************************/
 
         function _bindSocket(): bs.core.Socket {
-            bs.utils.forEach(_messages, (event: string, message: string) => {
+            bs.utils.forEach(BSData.Events.on, (event: string, message: string) => {
                 _socket.on(message, (data?: any) => {
                     if (bs.utils.isUndefined(data)) {
                         console.log("(bs.socket.core) Received message: [%s]", message);
@@ -122,7 +121,7 @@ namespace bs {
         }
 
         function _unbindSocket(): bs.core.Socket {
-            bs.utils.forEach(_messages, _socket.off);
+            bs.utils.forEach(BSData.Events.on, _socket.off);
             return _instance;
         }
 

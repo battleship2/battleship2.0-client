@@ -13,7 +13,10 @@ module.exports = function(config) {
         files: [
             'https://code.createjs.com/createjs-2015.11.26.min.js',
             'node_modules/socket.io-client/socket.io.js',
+
+            'bower_components/moment/moment.js',
             'bower_components/jquery/dist/jquery.min.js',
+            'bower_components/randomcolor/randomColor.js',
 
             'www/js/release/bs/definitions/bsdata.js',
             'www/js/release/bs/exceptions/bs.factory.exception.js',
@@ -32,6 +35,7 @@ module.exports = function(config) {
             'www/js/release/bs/core/bs.constants.core.js',
             'www/js/release/bs/components/bs.hints.component.js',
             'www/js/release/bs/components/bs.counter.component.js',
+            'www/js/release/bs/components/bs.messages.component.js',
             'www/js/release/bs/ships/bs.abstract.ship.js',
             'www/js/release/bs/ships/bs.cruiser.ship.js',
             'www/js/release/bs/ships/bs.carrier.ship.js',

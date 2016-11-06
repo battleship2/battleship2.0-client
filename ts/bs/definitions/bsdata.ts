@@ -1,9 +1,23 @@
 namespace BSData {
-    export enum GameState { READY, PLAYING, SETTING, WAITING_PLAYERS }
-    export enum ActionType { BOMB }
+    export namespace States {
+        export const READY: number = 0;
+        export const PLAYING: number = 1;
+        export const SETTING: number = 2;
+        export const WAITING_PLAYERS: number = 3;
+    }
 
-    let _events = {
-        on: {
+    export namespace Actions {
+        export const BOMB: number = 0;
+    }
+
+    export namespace Names {
+        export const MAP: string = "MAP";
+        export const PLAYER: string = "PLAYER";
+        export const OPPONENT: string = "OPPONENT";
+    }
+
+    export namespace Events {
+        export const on = {
             "message": "MESSAGE",
             "refused": "REFUSED",
             "nickname": "NICKNAME",
@@ -19,22 +33,18 @@ namespace BSData {
             "game created": "GAME_CREATED",
             "player ready": "PLAYER_READY",
             "ship placement": "SHIP_PLACEMENT"
-        },
+        };
 
-        emit: {
+        export const emit = {
             READY: "ready",
             MESSAGE: "message",
             JOIN_GAME: "join game",
-            LIST_GAME: "list games",
             PLAY_TURN: "play turn",
+            LIST_GAMES: "list games",
             DISCONNECT: "disconnect",
             LEAVE_GAME: "leave game",
             CREATE_GAME: "create game",
             PLACE_SHIPS: "place ships"
-        }
-    };
-
-    export function getEvents() {
-        return _events;
+        };
     }
 }

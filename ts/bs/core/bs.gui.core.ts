@@ -9,6 +9,7 @@ namespace bs {
         let _hints: bs.components.Hints = null;
         let _overlay: JQuery = null;
         let _instance: bs.core.GUI = null;
+        let _messages: bs.components.Messages = null;
         let _constants: bs.core.Constants = null;
         let _hitCounter: bs.components.Counter = null;
         let _bombCounter: bs.components.Counter = null;
@@ -50,6 +51,7 @@ namespace bs {
                     _sendCommandButton.click(_sendCommand);
 
                     _hints = new bs.components.Hints("#hints");
+                    _messages = new bs.components.Messages("#messages");
                     _hitCounter = new bs.components.Counter(0, "#hits-counter");
                     _bombCounter = new bs.components.Counter(0, "#bombs-counter");
                     _shipDestroyedCounter = new bs.components.Counter(0, "#ship-destroyed-counter");
@@ -149,7 +151,7 @@ namespace bs {
             _startGameButton.parent().addClass("hidden");
             _instance.showCommand();
             _game.start();
-            _game.state(_constants.get("enum").names.player);
+            _game.state(BSData.Names.PLAYER);
             _board.draw();
             return _instance;
         }

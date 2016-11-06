@@ -1,0 +1,59 @@
+.messages {
+    height: 244px;
+    border: 1px solid rgba($bs-black, .2);
+    padding: 0;
+    margin-bottom: 1rem;
+
+    .input-container {
+        height: 44px;
+        border-top: 1px solid rgba($bs-black, .2);
+        background-color: rgba($bs-white, 1);
+
+        .message-input-icon {
+            left: 0;
+            width: 44px;
+            height: 44px;
+            z-index: 1000;
+            padding: 8px 8px 8px 0;
+            position: absolute;
+            font-size: 30px;
+        }
+
+        .message-input {
+            width: 100%;
+            height: 44px;
+            border: 0;
+            outline: 0;
+            padding-left: 25px;
+            padding-right: 10px;
+
+            @include placeholder-color($bs-black);
+        }
+    }
+
+    .messages-container {
+        height: 200px;
+        padding: 5px 15px;
+        overflow-y: auto;
+        background-color: rgba($bs-white, .9);
+
+        .message {
+            padding: 5px 0;
+
+            &:nth-child(even) {
+                background-color: rgba($bs-black, .05);
+            }
+
+            .message-author {
+                .author {
+                    font-weight: 500;
+                }
+                .date {
+                    font-size: 10px;
+                }
+            }
+
+            .message-body {}
+        }
+    }
+}

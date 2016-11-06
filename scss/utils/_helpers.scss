@@ -4,9 +4,22 @@
     text-overflow: ellipsis;
 }
 
-.lowercase { text-transform: lowercase; }
-.uppercase { text-transform: uppercase; }
+.lowercase {
+    text-transform: lowercase;
+}
 
-.text-left   { text-align: left; }
-.text-right  { text-align: right; }
-.text-center { text-align: center; }
+.uppercase {
+    text-transform: uppercase;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}

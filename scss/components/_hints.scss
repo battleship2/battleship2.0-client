@@ -1,7 +1,7 @@
 .hints {
-
-    padding: 20px;
     border: 1px solid rgba($bs-black, .2);
+    padding: 20px;
+    margin-bottom: 1rem;
     background-color: rgba($bs-white, .2);
 
     .hints-title {
@@ -13,5 +13,4 @@
         padding-left: 30px;
         margin-bottom: 1rem;
     }
-
 }

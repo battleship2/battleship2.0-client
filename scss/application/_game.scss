@@ -1,4 +1,6 @@
-.battlefield { border: 1px solid $bs-black; }
+.battlefield {
+    border: 1px solid $bs-black;
+}
 
 .battlefield::after {
     clear: both;

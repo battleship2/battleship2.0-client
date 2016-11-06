@@ -48,47 +48,6 @@ namespace bs {
             };
 
             public update = (): bs.core.Constants => {
-
-                console.debug("(bs.constants.core) TODO: Check if Constants.enum.events is still useful");
-                _constants.enum = {
-
-                    names: {
-                        map: "MAP",
-                        player: "PLAYER",
-                        opponent: "OPPONENT"
-                    },
-
-                    events: {
-                        game: {
-                            started: "BS::GAME::STARTED",
-                            sendCoords: "BS::GAME::SEND_COORDS",
-                            playerTurn: "BS::GAME::PLAYER_TURN",
-                            opponentTurn: "BS::GAME::OPPONENT_TURN"
-                        },
-
-                        graphic: {
-                            update: "BS::GRAPHIC::UPDATE"
-                        },
-
-                        ship: {
-                            moved: "BS::SHIP::MOVED",
-                            freeze: "BS::SHIP::FREEZE",
-                            destroyed: "BS::SHIP::DESTROYED"
-                        },
-
-                        bomb: {
-                            hit: "BS::BOMB::HIT",
-                            dropped: "BS::BOMB::DROPPED",
-                            selected: "BS::BOMB::SELECTED"
-                        },
-
-                        window: {
-                            resized: "BS::WINDOW::RESIZED"
-                        }
-                    }
-
-                };
-
                 _constants.canvas = {};
                 _constants.canvas.node = document.getElementById("battlefield");
                 _constants.canvas.size = {};

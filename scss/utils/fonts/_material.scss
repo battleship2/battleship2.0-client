@@ -1,7 +1,6 @@
 $material-font-path: "../fonts/Material/";
 
 @font-face {
-
     font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
@@ -12,11 +11,9 @@ $material-font-path: "../fonts/Material/";
     url($material-font-path + "material_icons.ttf") format("truetype"),
     url($material-font-path + "material_icons.woff") format("woff"),
     url($material-font-path + "material_icons.woff2") format("woff2");
-
 }
 
 .material-icons {
-
     font-family: "Material Icons", serif;
     font-weight: normal;
     font-style: normal;
@@ -59,5 +56,4 @@ $material-font-path: "../fonts/Material/";
     /* Rules for using icons as white on a dark background. */
     &.md-light { color: rgba(255, 255, 255, 1); }
     &.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
 }

@@ -143,7 +143,7 @@ namespace bs {
             };
 
             public notifyOnUpdate = (callback?: Function): Function => {
-                return bs.events.on(_constants.get("enum").events.graphic.update, callback);
+                return bs.events.on("BS::GRAPHIC::UPDATE", callback);
             };
 
             public templateCache = (template: createjs.Bitmap): bs.core.Board => {
@@ -200,15 +200,13 @@ namespace bs {
                     return _instance;
                 }
 
-                let _enum = _constants.get("enum");
-
                 _draw();
 
-                if (_game.state() === _enum.names.player) {
-                    _drawPicture(_enum.names.player, 1.4);
+                if (_game.state() === BSData.Names.PLAYER) {
+                    _drawPicture(BSData.Names.PLAYER, 1.4);
                 } else {
                     _clearBombSelection();
-                    _drawPicture(_enum.names.map, 1.4);
+                    _drawPicture(BSData.Names.MAP, 1.4);
                 }
 
                 return _instance;
@@ -277,7 +275,7 @@ namespace bs {
         }
 
         function _mouseMove(event): bs.core.Board {
-            if (!_game.hasStarted() || _game.state() !== _constants.get("enum").names.player) {
+            if (!_game.hasStarted() || _game.state() !== BSData.Names.PLAYER) {
                 return _instance;
             }
 
@@ -311,7 +309,7 @@ namespace bs {
         }
 
         function _mouseDown(event): bs.core.Board {
-            if (!_game.hasStarted() || _game.state() !== _constants.get("enum").names.player) {
+            if (!_game.hasStarted() || _game.state() !== BSData.Names.PLAYER) {
                 return _instance;
             }
 
@@ -335,7 +333,7 @@ namespace bs {
             // This set makes it so the stage only re-renders when an event handler indicates a change has happened.
             if (_updateStage) {
                 _updateStage = false;
-                bs.events.broadcast(_constants.get("enum").events.graphic.update, event);
+                bs.events.broadcast("BS::GRAPHIC::UPDATE", event);
             }
             return _instance;
         }

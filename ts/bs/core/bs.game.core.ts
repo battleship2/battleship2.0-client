@@ -46,7 +46,8 @@ namespace bs {
                     _socket
                         .connect("http://localhost:9001")
                         .then(() => {
-                            _socket.emit(BSData.getEvents().emit.READY);
+                            // this.setup();
+                            _socket.emit(BSData.Events.emit.READY);
                         });
                 }
 
@@ -68,7 +69,7 @@ namespace bs {
                 _gameStarted = true;
 
                 console.debug("(bs.game.core) TODO: Set state according to who starts first (from server)");
-                _instance.state(_constants.get("enum").names.player);
+                _instance.state(BSData.Names.PLAYER);
 
                 return _instance;
             };
@@ -81,7 +82,7 @@ namespace bs {
 
                 _gameSetup = true;
 
-                _gameState = _constants.get("enum").names.player;
+                _gameState = BSData.Names.PLAYER;
 
                 _board.setup();
 
@@ -119,13 +120,12 @@ namespace bs {
             };
 
             public sendBombCoordinates = (x: number, y: number): bs.core.Game => {
-                let _enum = _constants.get("enum");
-                if (this.state() !== _enum.names.player) {
+                if (this.state() !== BSData.Names.PLAYER) {
                     return _instance;
                 }
                 console.info("TODO: Send bomb coordinates to server here");
                 _map.savePlayerBombLocation(x, y);
-                this.state(_enum.names.opponent);
+                this.state(BSData.Names.OPPONENT);
                 return _instance;
             };
 
@@ -138,16 +138,15 @@ namespace bs {
         /**********************************************************************************/
 
         function _stateChanged(): bs.core.Game {
-            let _enum = _constants.get("enum");
             switch (_gameState) {
-                case _enum.names.player:
+                case BSData.Names.PLAYER:
                     _board.clearShips();
                     console.info("TODO: Draw player bombs here");
                     _gui.hideOverlay();
                     _gui.showDropBombHint();
                     _gui.showCommand();
                     break;
-                case _enum.names.opponent:
+                case BSData.Names.OPPONENT:
                     _board.freezeShips();
                     _board.drawShips();
                     console.info("TODO: Draw opponent bombs here");

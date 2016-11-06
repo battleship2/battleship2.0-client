@@ -4,11 +4,6 @@ namespace bs {
 
     export namespace components {
 
-        interface Hint {
-            body: string;
-            title: string;
-        }
-
         export class Hints extends bs.core.Core {
 
             /**********************************************************************************/
@@ -42,7 +37,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public show = (title: string, body: string) : this => {
+            public show = (title: string, body: string) : bs.components.Hints => {
                 this._hint.body = body;
                 this._hint.title = title;
                 _update.call(this);
@@ -50,7 +45,7 @@ namespace bs {
                 return this;
             };
 
-            public clear = () : this => {
+            public clear = () : bs.components.Hints => {
                 this._hint.body = "";
                 this._hint.title = "";
                 _update.call(this);
@@ -70,9 +65,10 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        function _update() {
+        function _update(): bs.components.Hints {
             this._$hintsBody.html(this._hint.body);
             this._$hintsTitle.html(this._hint.title);
+            return this;
         }
 
     }
