@@ -25,7 +25,7 @@ var tslint = require('gulp-tslint');
 var minify = require('gulp-minify');
 var connect = require('gulp-connect');
 var wiredep = require('wiredep').stream;
-var minifyCss = require('gulp-minify-css');
+var cleanCss = require('gulp-clean-css');
 var livereload = require('gulp-livereload');
 var revReplace = require('gulp-rev-replace');
 
@@ -111,7 +111,7 @@ function _minify() {
 
     var cssMinified =
         gulp.src('./www/dist/styles/*.css')
-            .pipe(minifyCss({keepSpecialComments: 0}))
+            .pipe(cleanCss({keepSpecialComments: 0}))
             .pipe(gulp.dest('./www/dist/styles'));
 
     return merge(jsMinified, cssMinified);
