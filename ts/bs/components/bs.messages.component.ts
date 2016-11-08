@@ -60,8 +60,8 @@ namespace bs {
                 this._$messageWritingIndicator = this._$element.find(".message-writing-indicator");
 
                 this._$input.keyup(_keyup.bind(this));
-                this._$container.mouseenter(this._$messageWritingIndicator.hide.bind(this));
-                this._$container.mouseleave(this._$messageWritingIndicator.show.bind(this));
+                this._$container.mouseenter(_hideMessageWritingIndicator.bind(this));
+                this._$container.mouseleave(_showMessageWritingIndicator.bind(this));
                 this._unbindNickname = bs.events.on("BS::SOCKET::NICKNAME", _nickname.bind(this));
                 this._debounceMessageCheck = $.throttle(500, _checkForMessageBeingWritten.bind(this));
 
@@ -85,6 +85,16 @@ namespace bs {
         /*                               PRIVATE MEMBERS                                  */
         /*                                                                                */
         /**********************************************************************************/
+
+        function _showMessageWritingIndicator(): bs.components.Messages {
+            this._$messageWritingIndicator.show();
+            return this;
+        }
+
+        function _hideMessageWritingIndicator(): bs.components.Messages {
+            this._$messageWritingIndicator.hide();
+            return this;
+        }
 
         function _keyup(event?: any): bs.components.Messages {
             let keycode = event.keyCode || event.which;
