@@ -4,6 +4,20 @@
     padding: 0;
     margin-bottom: 1rem;
 
+    .message-writing-indicator {
+        right: 18px;
+        color: $bs-white;
+        bottom: 47px;
+        z-index: 1000;
+        padding: 2px 5px;
+        position: absolute;
+        font-size: 12px;
+        font-style: italic;
+        font-weight: 500;
+        border-radius: 3px;
+        background-color: rgba($bs-black, .9);
+    }
+
     .input-container {
         height: 44px;
         border-top: 1px solid rgba($bs-black, .2);
@@ -39,6 +53,7 @@
 
         .message {
             padding: 5px 0;
+            word-wrap: break-word;
 
             &:nth-child(even) {
                 background-color: rgba($bs-black, .05);

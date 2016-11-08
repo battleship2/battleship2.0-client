@@ -85,10 +85,10 @@ namespace bs {
             public emit = (message: string, data?: any): bs.core.Socket => {
                 if (_connected) {
                     if (bs.utils.isUndefined(data)) {
-                        console.log("(bs.socket.core) Emitting message: [%s]", message);
+                        // console.log("(bs.socket.core) Emitting message: [%s]", message);
                         _socket.emit(message);
                     } else {
-                        console.log("(bs.socket.core) Emitting message: [%s] =", message, data);
+                        // console.log("(bs.socket.core) Emitting message: [%s] =", message, data);
                         _socket.emit(message, data);
                     }
                 } else {
@@ -109,10 +109,10 @@ namespace bs {
             bs.utils.forEach(BSData.Events.on, (event: string, message: string) => {
                 _socket.on(message, (data?: any) => {
                     if (bs.utils.isUndefined(data)) {
-                        console.log("(bs.socket.core) Received message: [%s]", message);
+                        // console.log("(bs.socket.core) Received message: [%s]", message);
                         bs.events.broadcast(_eventPrefix + event);
                     } else {
-                        console.log("(bs.socket.core) Received message: [%s] =", message, data);
+                        // console.log("(bs.socket.core) Received message: [%s] =", message, data);
                         bs.events.broadcast(_eventPrefix + event, data);
                     }
                 });

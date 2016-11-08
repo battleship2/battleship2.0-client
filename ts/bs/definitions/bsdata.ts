@@ -32,7 +32,9 @@ namespace BSData {
             "turn results": "TURN_RESULTS",
             "game created": "GAME_CREATED",
             "player ready": "PLAYER_READY",
-            "ship placement": "SHIP_PLACEMENT"
+            "ship placement": "SHIP_PLACEMENT",
+            "someone is writing": "SOMEONE_IS_WRITING",
+            "someone stopped writing": "SOMEONE_STOPPED_WRITING",
         };
 
         export const emit = {
@@ -44,7 +46,9 @@ namespace BSData {
             DISCONNECT: "disconnect",
             LEAVE_GAME: "leave game",
             CREATE_GAME: "create game",
-            PLACE_SHIPS: "place ships"
+            PLACE_SHIPS: "place ships",
+            SOMEONE_IS_WRITING: "someone is writing",
+            SOMEONE_STOPPED_WRITING: "someone stopped writing"
         };
     }
 }

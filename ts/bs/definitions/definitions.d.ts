@@ -15,8 +15,13 @@
 /*                                                                                */
 /**********************************************************************************/
 
-declare function randomColor(options: any): string;
+declare interface JQueryStatic {
+    throttle(delay: number, callback: Function): Function;
+    debounce(delay: number, callback: Function): Function;
+}
+
 declare function moment(date: any);
+declare function randomColor(options: any): string;
 
 /**********************************************************************************/
 /*                                                                                */
@@ -29,11 +34,14 @@ interface Hint {
     title: string;
 }
 
-interface Message {
+interface People {
     id: string;
+    nickname: string;
+}
+
+interface Message extends People {
     date: string;
     message: string;
-    nickname: string;
 }
 
 /**********************************************************************************/

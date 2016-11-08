@@ -196,7 +196,7 @@ function _sass() {
     return gulp.src(paths.sass)
         .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest('./www/css/'))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest('./www/css/'))
         .pipe(livereload());
@@ -210,7 +210,7 @@ function _copyfonts() {
             .pipe(gulp.dest('./www/dist/fonts/Material'));
 
     var fontsRoboto =
-        gulp.src(['./bower_components/roboto-fontface/fonts/roboto/*+(Regular|Medium).{ttf,woff,woff2,eot,svg}'])
+        gulp.src(['./bower_components/roboto-fontface/fonts/roboto/*+(Regular*|Medium*).{ttf,woff,woff2,eot,svg}'])
             .pipe(gulp.dest('./www/fonts/Roboto'))
             .pipe(gulp.dest('./www/css/fonts/Roboto'))
             .pipe(gulp.dest('./www/dist/fonts/Roboto'));
