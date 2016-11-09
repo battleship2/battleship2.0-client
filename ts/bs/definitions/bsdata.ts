@@ -24,6 +24,8 @@ namespace BSData {
             "game left": "GAME_LEFT",
             "play turn": "PLAY_TURN",
             "new round": "NEW_ROUND",
+            "left room": "LEFT_ROOM",
+            "join room": "JOIN_ROOM",
             "game state": "GAME_STATE",
             "list games": "LIST_GAMES",
             "new player": "NEW_PLAYER",
@@ -32,9 +34,9 @@ namespace BSData {
             "turn results": "TURN_RESULTS",
             "game created": "GAME_CREATED",
             "player ready": "PLAYER_READY",
+            "people writing": "PEOPLE_WRITING",
             "ship placement": "SHIP_PLACEMENT",
-            "someone is writing": "SOMEONE_IS_WRITING",
-            "someone stopped writing": "SOMEONE_STOPPED_WRITING",
+            "people in room": "PEOPLE_IN_ROOM"
         };
 
         export const emit = {

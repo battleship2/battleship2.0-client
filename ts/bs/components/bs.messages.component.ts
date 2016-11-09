@@ -4,22 +4,50 @@ namespace bs {
 
     export namespace components {
 
-        const _entityMap: { [symbol: string]: string } = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            "\"": "&quot;",
-            "'": "&#39;",
-            "/": "&#x2F;"
-        };
-
-        const _template: string = "<div class=\"message row\">" +
-            "<div class=\"col-xs-2 message-author\" title=\"<%= author %> on <%= date %>\">" +
-            "<div class=\"author ellipsis\" style=\"color: <%= color %>;\" ><%= author %></div>" +
-            "<div class=\"date\"><%= date %></div>" +
-            "</div>" +
-            "<div class=\"col-xs-10 message-body\"><%= message %></div>" +
+        const _statusTemplate: string = "<div class=\"message col-xs-12\">" +
+            "<div class=\"message-status font-italic\">[ <%= date %>: <%= nickname %> has <%= status %> the room ]</div>" +
             "</div>";
+
+        const _otherMessageTemplate: string = "<div class=\"message-wrapper\">" +
+            "<div class=\"other message col-xs-12 col-md-10\">" +
+            "<div class=\"message-body-wrapper\">" +
+            "<div class=\"message-body\" style=\"background-color: <%= messageColor %>;\"><%= message %></div>" +
+            "</div>" +
+            "<div class=\"message-author text-right\" title=\"<%= author %> on <%= date %>\">" +
+            "<span class=\"author\" style=\"color: <%= authorColor %>;\"><%= author %></span>" +
+            "<span class=\"particle\">on</span>" +
+            "<span class=\"date\"><%= date %></span>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+
+        const _userMessageTemplate: string = "<div class=\"message-wrapper\">" +
+            "<div class=\"me message col-xs-12 col-md-10 offset-md-2\">" +
+            "<div class=\"message-body-wrapper\">" +
+            "<div class=\"message-body\" style=\"background-color: <%= messageColor %>;\"><%= message %></div>" +
+            "</div>" +
+            "<div class=\"message-author\" title=\"<%= author %> on <%= date %>\">" +
+            "<span class=\"author\" style=\"color: <%= authorColor %>;\"><%= author %></span>" +
+            "<span class=\"particle\">on</span>" +
+            "<span class=\"date\"><%= date %></span>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+
+        const _messagesColor: Array<string> = [
+            "#FF9500",
+            "#FF3B30",
+            "#FF1300",
+            "#CEA500",
+            "#4CD964",
+            "#34AADC",
+            "#007AFF",
+            "#5856D6",
+            "#FF2D55",
+            "#8E8E93",
+            "#FF4981",
+            "#FF3A2D"
+        ];
 
         export class Messages extends bs.core.Core {
 
@@ -29,17 +57,13 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            private _writingLock: boolean = false;
-            private _waitForWriting: Array<People> = [];
-
             private _socket: bs.core.Socket = null;
             private _$input: JQuery = null;
-            private _colors: { [id: string]: string } = {};
+            private _colors: { [id: string]: { author: string, message: string } } = {};
             private _session: People = null;
             private _messages: string = "";
             private _$element: JQuery = null;
             private _$container: JQuery = null;
-            private _peopleWriting: { [id: string]: People } = {};
             private _unbindNickname: Function = null;
             private _debounceMessageCheck: Function = null;
             private _$messageWritingIndicator: JQuery = null;
@@ -66,8 +90,10 @@ namespace bs {
                 this._debounceMessageCheck = $.throttle(500, _checkForMessageBeingWritten.bind(this));
 
                 bs.events.on("BS::SOCKET::MESSAGE", _message.bind(this));
-                bs.events.on("BS::SOCKET::SOMEONE_IS_WRITING", _someoneIsWriting.bind(this));
-                bs.events.on("BS::SOCKET::SOMEONE_STOPPED_WRITING", _someoneStoppedWriting.bind(this));
+                bs.events.on("BS::SOCKET::LEFT_ROOM", _someoneLeftTheRoom.bind(this));
+                bs.events.on("BS::SOCKET::JOIN_ROOM", _someoneJoinedTheRoom.bind(this));
+                bs.events.on("BS::SOCKET::PEOPLE_WRITING", _handlePeopleWriting.bind(this));
+                bs.events.on("BS::SOCKET::PEOPLE_IN_ROOM", console.log.bind(console));
             }
 
             /**********************************************************************************/
@@ -77,7 +103,6 @@ namespace bs {
             /**********************************************************************************/
 
 
-
         }
 
         /**********************************************************************************/
@@ -85,6 +110,23 @@ namespace bs {
         /*                               PRIVATE MEMBERS                                  */
         /*                                                                                */
         /**********************************************************************************/
+
+        function _handlePeopleStatusChange(people: People, status: string): bs.components.Messages {
+            this._messages += _getStatusTemplate.call(this, people.nickname, status);
+            this._$container.html(this._messages);
+            this._$container.scrollTop(this._$container[0].scrollHeight);
+            return this;
+        }
+
+        function _someoneJoinedTheRoom(people: People): bs.components.Messages {
+            _handlePeopleStatusChange.call(this, people, "joined");
+            return this;
+        }
+
+        function _someoneLeftTheRoom(people: People): bs.components.Messages {
+            _handlePeopleStatusChange.call(this, people, "left");
+            return this;
+        }
 
         function _showMessageWritingIndicator(): bs.components.Messages {
             this._$messageWritingIndicator.show();
@@ -122,18 +164,34 @@ namespace bs {
         function _sendMessage(message: string): bs.components.Messages {
             if (bs.utils.isString(message) && message.trim().length) {
                 this._$input.val("");
-                this._socket.emit(BSData.Events.emit.MESSAGE, message);
                 this._socket.emit(BSData.Events.emit.SOMEONE_STOPPED_WRITING);
+                this._socket.emit(BSData.Events.emit.MESSAGE, _htmlEncode(message));
             }
             return this;
         }
 
+        function _htmlEncode(value: string): string {
+            return $("<div/>").text(value).html();
+        }
+
+        function _htmlDecode(value: string): string {
+            return $("<div/>").html(value).text();
+        }
+
+        function _makeSafeStringOf(value: string): string {
+            return _htmlDecode(_htmlEncode(value));
+        }
+
         function _message(message: Message): bs.components.Messages {
             let _message = _parseMessage(message);
-            this._messages += _getTemplate.call(this, _message);
+            this._messages += _getMessageTemplate.call(this, _message);
             this._$container.html(this._messages);
             this._$container.scrollTop(this._$container[0].scrollHeight);
             return this;
+        }
+
+        function _showAuthorIndicator(data) {
+            console.log(this, data);
         }
 
         function _nickname(people: People): bs.components.Messages {
@@ -142,8 +200,11 @@ namespace bs {
             return this;
         }
 
-        function _handlePeopleWriting(people: People): bs.components.Messages {
-            let peopleWriting = Object.keys(this._peopleWriting);
+        function _handlePeopleWriting(people: { [peopleId: string]: People }): bs.components.Messages {
+            // Not including the current session in the algorithm
+            delete people[this._session.id];
+
+            let peopleWriting = Object.keys(people);
             let numOfPeopleWriting = peopleWriting.length;
 
             if (numOfPeopleWriting <= 0) {
@@ -152,63 +213,49 @@ namespace bs {
                 if (numOfPeopleWriting > 2) {
                     this._$messageWritingIndicator.text(numOfPeopleWriting + " people are writing...");
                 } else if (numOfPeopleWriting === 2) {
-                    let names = this._peopleWriting[peopleWriting[0]].nickname + " and " + this._peopleWriting[peopleWriting[1]].nickname;
+                    let names = people[peopleWriting[0]].nickname + " and " + people[peopleWriting[1]].nickname;
                     this._$messageWritingIndicator.text(names + " are writing...");
                 } else if (numOfPeopleWriting > 0) {
-                    this._$messageWritingIndicator.text(people.nickname + " is writing...");
+                    this._$messageWritingIndicator.text(people[peopleWriting[0]].nickname + " is writing...");
                 }
 
                 this._$messageWritingIndicator.removeClass("hidden");
             }
 
-            this._writingLock = false;
-
-            if (this._waitForWriting.length > 0) {
-                this._someoneIsWriting.call(this, this._waitForWriting.pop());
-            }
-
             return this;
         }
 
-        function _someoneIsWriting(people: People): bs.components.Messages {
-            if (this._session.id === people.id) {
-                return this;
-            }
-
-            if (this._writingLock) {
-                this._waitForWriting.push(people);
-                return this;
-            }
-
-            this._writingLock = true;
-
-            this._peopleWriting[people.id] = people;
-            _handlePeopleWriting.call(this, people);
-            return this;
+        function _formatDate(date: string | Date): string {
+            return moment(date).format("DD/MM/YY - HH:mm:ss");
         }
 
-        function _someoneStoppedWriting(people: People): bs.components.Messages {
-            console.log(people.nickname, "stopped writing, removing:", people.id);
-            delete this._peopleWriting[people.id];
-            _handlePeopleWriting.call(this, people);
-            return this;
-        }
+        function _getMessageTemplate(message: Message): string {
 
-        function _formatDate(date: string): string {
-            return moment(date).format("DD/MM/YY - HH:mm");
-        }
+            let isUser = (message.id === this._session.id);
+            let colors = _getColorsFor.call(this, message.id);
+            let template = (isUser ? _userMessageTemplate : _otherMessageTemplate);
 
-        function _getTemplate(message: Message): string {
-            return _template
+            return template
                 .replace(/<%= date %>/g, _formatDate(message.date))
-                .replace(/<%= color %>/g, _getColorFor.call(this, message.id))
-                .replace(/<%= author %>/g, (message.id === this._session.id ? "you" : message.nickname))
-                .replace(/<%= message %>/g, message.message);
+                .replace(/<%= author %>/g, (isUser ? "you" : message.nickname))
+                .replace(/<%= message %>/g, message.message)
+                .replace(/<%= authorColor %>/g, colors.author)
+                .replace(/<%= messageColor %>/g, colors.message);
         }
 
-        function _getColorFor(id: string): string {
+        function _getStatusTemplate(nickname: string, status: string): string {
+            return _statusTemplate
+                .replace(/<%= date %>/g, _formatDate(new Date))
+                .replace(/<%= nickname %>/g, nickname)
+                .replace(/<%= status %>/g, status);
+        }
+
+        function _getColorsFor(id: string): { author: string, message: string } {
             if (bs.utils.isUndefined(this._colors[id])) {
-                this._colors[id] = randomColor({luminosity: "dark"});
+                this._colors[id] = {
+                    author: randomColor({luminosity: "dark"}),
+                    message: _messagesColor[Math.floor(Math.random() * _messagesColor.length)]
+                };
             }
             return this._colors[id];
         }
@@ -217,15 +264,9 @@ namespace bs {
             return {
                 id: _makeSafeStringOf(message.id),
                 date: message.date,
-                message: _makeSafeStringOf(message.message),
+                message: _htmlDecode(message.message),
                 nickname: _makeSafeStringOf(message.nickname)
             };
-        }
-
-        function _makeSafeStringOf(value: string): string {
-            return String(value).replace(/[&<>"'\/]/g, (s: string) => {
-                return _entityMap[s];
-            });
         }
 
     }

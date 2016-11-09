@@ -47,28 +47,102 @@
 
     .messages-container {
         height: 200px;
-        padding: 5px 15px;
-        overflow-y: auto;
+        padding: 5px 0x;
+        overflow-y: scroll;
         background-color: rgba($bs-white, .9);
+
+        .message-wrapper {
+            width: 100%;
+            display: inline-block;
+            padding: 0 15px;
+
+            &:hover {
+                background-color: rgba($bs-black, .1);
+            }
+        }
 
         .message {
             padding: 5px 0;
             word-wrap: break-word;
 
-            &:nth-child(even) {
-                background-color: rgba($bs-black, .05);
-            }
-
             .message-author {
-                .author {
-                    font-weight: 500;
-                }
+                height: 15px;
+                margin-top: -10px;
+
                 .date {
-                    font-size: 10px;
+                    font-size: 11px;
+                }
+
+                .particle {
+                    font-size: 12px;
+                    margin-right: 6px;
+                }
+
+                .author {
+                    font-size: 14px;
+                    font-weight: 400;
+                    margin-right: 6px;
                 }
             }
 
-            .message-body {}
+            .message-body-wrapper {
+                width: 100%;
+                display: inline-block;
+
+                .message-body {
+                    color: $bs-white;
+                    padding: 6px 15px;
+                    display: inline-block;
+                    border-radius: 6px;
+                }
+            }
+
+            .message-status {
+                color: rgba($bs-black, .8);
+                overflow: hidden;
+                font-size: 14px;
+                text-align: center;
+
+                &:before,
+                &:after {
+                    width: 50%;
+                    height: 1px;
+                    content: "";
+                    display: inline-block;
+                    position: relative;
+                    vertical-align: middle;
+                    background-color: rgba($bs-black, .3);
+                }
+                &:before {
+                    right: 0.5em;
+                    margin-left: -50%;
+                }
+                &:after {
+                    left: 0.5em;
+                    margin-right: -50%;
+                }
+
+            }
+
+            &.me {
+                .message-author {
+                    text-align: right;
+                }
+
+                .message-body {
+                    float: right;
+                }
+            }
+
+            &.other {
+                .message-author {
+                    text-align: left;
+                }
+
+                .message-body {
+                    float: left;
+                }
+            }
         }
     }
 }

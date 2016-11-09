@@ -61,12 +61,8 @@ namespace bs {
 
                 _socket.on("disconnect", () => {
                     _connected = false;
+                    console.info("(bs.socket.core) Disconnected from: %s", URL);
                     _unbindSocket();
-                });
-
-                _socket.on("reconnect", () => {
-                    _connected = true;
-                    _bindSocket();
                 });
 
                 _socket.on("reconnecting", (attempt: number) => {
