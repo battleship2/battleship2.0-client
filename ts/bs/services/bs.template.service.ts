@@ -2,7 +2,7 @@
 
 namespace bs {
 
-    export namespace events {
+    export namespace template {
 
         /**********************************************************************************/
         /*                                                                                */
@@ -10,7 +10,7 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        let _listeners: { [name: string]: Array<Function> } = {};
+        let _templates: { [name: string]: string } = {};
 
         /**********************************************************************************/
         /*                                                                                */
@@ -18,51 +18,30 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
-        export function on(name: string, listener: Function) {
-
-            if (!bs.utils.isFunction(listener)) {
-                return;
+        export function register(name: string, template: string): boolean {
+            if (!bs.utils.isString(template)) {
+                console.error("(bs.template.register) Trying to register invalid template: [%s] = %s", name, template);
+                return false;
             }
 
-            let namedListeners = _listeners[name];
-            if (!namedListeners) {
-                _listeners[name] = namedListeners = [];
+            if (bs.utils.isString(_templates[name])) {
+                console.error("(bs.template.register) A template named [%s] already exists!", name);
+                return false;
             }
-            namedListeners.push(listener);
 
-            return function _off() {
-                let indexOfListener = namedListeners.indexOf(listener);
-                if (indexOfListener !== -1) {
-                    namedListeners.splice(indexOfListener, 1);
-                }
-            };
-
+            _templates[name] = template;
+            return true;
         }
 
-        export function flush() {
-            _listeners = {};
-        }
+        export function get(name: string): Function | null {
+            let template = _templates[name];
 
-        export function get(name?: string) {
-            return _listeners[name] || _listeners;
-        }
+            if (!bs.utils.isString(template)) {
+                console.error("(bs.template.get) Requesting unknown template: [%s]", name);
+                return null;
+            }
 
-        export function broadcast(name: string, args?: any) {
-
-            let namedListeners = _listeners[name];
-            if (!namedListeners) return;
-
-            bs.utils.forEach(namedListeners, function (listener) {
-                try {
-                    if (bs.utils.isUndefined(args)) {
-                        listener.apply(null);
-                    } else {
-                        listener.apply(null, [args]);
-                    }
-                }
-                catch (exception) { bs.utils.handleException(exception); }
-            });
-
+            return _mapper(template);
         }
 
         /**********************************************************************************/
@@ -70,6 +49,20 @@ namespace bs {
         /*                              PRIVATE FUNCTIONS                                 */
         /*                                                                                */
         /**********************************************************************************/
+
+        function _mapper(template: string): Function {
+
+            return function (data): string {
+                let _template = String(template);
+
+                bs.utils.forEach(data, (value: any, key: string) => {
+                    _template = _template.replace(new RegExp("{{ " + key + " }}", "g"), value);
+                });
+
+                return _template;
+            };
+
+        }
 
     }
 

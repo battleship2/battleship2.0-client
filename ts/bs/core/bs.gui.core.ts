@@ -51,7 +51,7 @@ namespace bs {
                     _sendCommandButton.click(_sendCommand);
 
                     _hints = new bs.components.Hints("#hints");
-                    _messages = new bs.components.Messages("#messages");
+                    _messages = new bs.components.Messages();
                     _hitCounter = new bs.components.Counter(0, "#hits-counter");
                     _bombCounter = new bs.components.Counter(0, "#bombs-counter");
                     _shipDestroyedCounter = new bs.components.Counter(0, "#ship-destroyed-counter");

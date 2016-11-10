@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Battleship 2.0 &mdash; New Universe</title>
+    <title>Battleship 2.0</title>
     <link rel="icon" type="image/png" href="img/logo.png">
     <link rel="shortcut icon" href="img/logo.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Oswald|Roboto:400,400i,500,500i" rel="stylesheet">
 
     <!-- build:css styles/app.css -->
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- endbower -->
 
     <link rel="stylesheet" href="css/main.css">
@@ -23,7 +25,7 @@
 <div class="container desktop-full-height">
     <div class="row desktop-full-height">
         <div class="col-xs-12 col-lg-6 desktop-full-height">
-            <h1 class="header-title">BattleShip 2.0</h1>
+            <h1 class="header-title">Battleship 2.0</h1>
 
             <div class="row m-1 hidden-xs-down">
                 <div class="col-xs-12 col-sm-4 mt-1">
@@ -56,14 +58,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-10 offset-xs-1 messages" id="messages">
-                    <div class="message-writing-indicator hidden"></div>
-                    <div class="messages-container"></div>
-                    <div class="input-container">
-                        <i class="material-icons pull-xs-0 message-input-icon">keyboard_arrow_right</i>
-                        <input type="text" class="message-input" placeholder="Type here to talk to the other players in the room">
-                    </div>
-                </div>
+                <chat class="col-xs-10 offset-xs-1 messages"></chat>
             </div>
         </div>
 
@@ -100,6 +95,7 @@
 
 <script src="js/release/bs/services/bs.utils.service.js"></script>
 <script src="js/release/bs/services/bs.events.service.js"></script>
+<script src="js/release/bs/services/bs.template.service.js"></script>
 
 <script src="js/release/bs/core/bs.core.js"></script>
 <script src="js/release/bs/core/bs.map.core.js"></script>
@@ -122,6 +118,15 @@
 <script src="js/release/bs/ships/bs.battleship.ship.js"></script>
 
 <!-- endbuild -->
+
+<!-- templates -->
+<script type="text/template" src="templates/chat/chat.html" id="chat"></script>
+<script type="text/template" src="templates/chat/messages/status.html" id="status"></script>
+<script type="text/template" src="templates/chat/messages/user-message.html" id="user-message"></script>
+<script type="text/template" src="templates/chat/messages/other-message.html" id="other-message"></script>
+<script type="text/template" src="templates/chat/people-list/people-list.html" id="people-list"></script>
+<script type="text/template" src="templates/chat/people-list/people-nickname.html" id="people-nickname"></script>
+<!-- endtemplates -->
 
 </body>
 </html>

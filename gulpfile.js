@@ -34,7 +34,9 @@ var paths = {
     js: ['./www/**/*.js'],
     sass: ['./scss/**/*.scss'],
     images: ['./www/img/**/*'],
-    useref: ['./www/*.html', '!./www/index.html']
+    useref: ['./www/*.html', '!./www/index.html'],
+    index: ['./www/index.html'],
+    templates: ['./www/templates/**/*.html']
 };
 
 /**********************************************************************************/
@@ -50,11 +52,12 @@ gulp.task('watch', gulp.series(_watch));
 gulp.task('tslint', gulp.series(_tslint));
 gulp.task('useref', gulp.series(_useref));
 gulp.task('scratch', gulp.series(_scratch));
-gulp.task('copyimgs', gulp.series(_copyimgs));
-gulp.task('copyfonts', gulp.series(_copyfonts));
+gulp.task('copyFonts', gulp.series(_copyFonts));
+gulp.task('copyImages', gulp.series(_copyImages));
+gulp.task('templateCache', gulp.series(_templateCache));
 
 gulp.task('ts', gulp.series('tslint', _ts));
-gulp.task('deploy', gulp.series('ts', 'sass', 'copyimgs', 'copyfonts', _useref));
+gulp.task('deploy', gulp.series('ts', 'sass', 'copyImages', 'copyFonts', _useref, 'templateCache'));
 gulp.task('hook', gulp.series('deploy', _hook));
 gulp.task('serve', gulp.series('deploy', _serve));
 gulp.task('minify', gulp.series('hook', _minify));
@@ -69,6 +72,49 @@ gulp.task('default', gulp.series('scratch', 'browser', 'watch'));
 /*                                     HOOKS                                      */
 /*                                                                                */
 /**********************************************************************************/
+
+function _extractAttributes(script) {
+    var attributes = {};
+    var split = script.replace(/<script /, '').replace(/><\/script>/, '').split(' ');
+
+    split.forEach(function (item) {
+        var itemSplit = item.split('=');
+        if (itemSplit.length <= 1) {
+            return;
+        }
+        attributes[itemSplit[0]] = itemSplit[1].replace(/"/g, '');
+    });
+
+    return attributes;
+}
+
+function _templateCache(done) {
+    var index = fs.readFileSync('./www/dist/index.html', 'utf8');
+    var templates = index.replace(/[^]+<!-- templates -->/, '').replace(/<!-- endtemplates -->[^]+/, '').split('\n');
+    var templateJs = '';
+
+    templates.splice(0, 1);
+    templates.splice(templates.length - 1, 1);
+
+    templates.forEach(function (script, scriptIndex) {
+        if (typeof script === 'string' && script.trim().length) {
+            var attrs = _extractAttributes(script);
+            var template = fs.readFileSync('./www/' + attrs.src, 'utf8').replace(/\n/g, '').replace(/"/g, '\\"');
+            templateJs += 'bs.template.register("' + attrs.id + '", "' + template + '");';
+
+            if (scriptIndex < templates.length - 1) {
+                templateJs += '\n';
+            }
+        }
+    });
+
+    index = index.replace(/<!-- templates -->[^]+<!-- endtemplates -->/, '<script src="js/templates.js"></script>');
+
+    fs.writeFileSync('./www/dist/js/templates.js', templateJs, 'utf8');
+    fs.writeFileSync('./www/dist/index.html', index, 'utf8');
+
+    done();
+}
 
 function _test(done) {
     return new karma({
@@ -202,29 +248,17 @@ function _sass() {
         .pipe(livereload());
 }
 
-function _copyfonts() {
-    var fontsMaterial =
-        gulp.src(['./www/lib/material/*.{ttf,woff,woff2,eot}'])
-            .pipe(gulp.dest('./www/fonts/Material'))
-            .pipe(gulp.dest('./www/css/fonts/Material'))
-            .pipe(gulp.dest('./www/dist/fonts/Material'));
-
-    var fontsRoboto =
-        gulp.src(['./bower_components/roboto-fontface/fonts/roboto/*+(Regular*|Medium*).{ttf,woff,woff2,eot,svg}'])
-            .pipe(gulp.dest('./www/fonts/Roboto'))
-            .pipe(gulp.dest('./www/css/fonts/Roboto'))
-            .pipe(gulp.dest('./www/dist/fonts/Roboto'));
-
+function _copyFonts() {
     var fontsBebasNeue =
         gulp.src(['./www/lib/bebas_neue/*+(Regular).{ttf,otf}'])
             .pipe(gulp.dest('./www/fonts/Bebas-Neue'))
             .pipe(gulp.dest('./www/css/fonts/Bebas-Neue'))
             .pipe(gulp.dest('./www/dist/fonts/Bebas-Neue'));
 
-    return merge(fontsMaterial, fontsRoboto, fontsBebasNeue);
+    return merge(fontsBebasNeue);
 }
 
-function _copyimgs() {
+function _copyImages() {
     return gulp.src(paths.images)
         .pipe(gulp.dest('./www/css/img'))
         .pipe(gulp.dest('./www/dist/img'))
@@ -273,11 +307,11 @@ function _watch(done) {
         port: 35730
     });
 
-    gulp.watch(paths.ts, gulp.series(_tslint, _ts));
-    // gulp.watch(paths.js, gulp.series(_useref));
+    // gulp.watch(paths.index, gulp.series('deploy', _templateCache));
+    gulp.watch(paths.templates, gulp.series('deploy'));
+    gulp.watch(paths.ts, gulp.series('deploy'));
     gulp.watch(paths.sass, gulp.series(_sass));
-    gulp.watch(paths.images, gulp.series(_copyimgs));
-    // gulp.watch(paths.useref, gulp.series(_useref));
+    gulp.watch(paths.images, gulp.series(_copyImages));
     done();
 }
 
@@ -293,6 +327,6 @@ function _serve(done) {
 }
 
 function _browser(done) {
-    opn('http://localhost:8080/www');
+    opn('http://localhost:8080/www/dist');
     done();
 }

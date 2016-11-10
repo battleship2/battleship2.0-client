@@ -4,6 +4,32 @@
     padding: 0;
     margin-bottom: 1rem;
 
+    .people-list {
+        float: left;
+        width: 200px;
+        height: 200px;
+        padding: 5px 10px;
+        display: inline;
+        overflow-y: auto;
+        text-align: center;
+        border-right: 1px solid rgba($bs-black, .2);
+        background-color: rgba($bs-white, .9);
+
+        .people-indicator * {
+            color: rgba($bs-black, .8);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .people-nicknames {
+            text-align: left;
+            margin-top: .5rem;
+            list-style-type: square;
+
+            .people-nickname {}
+        }
+    }
+
     .message-writing-indicator {
         right: 18px;
         color: $bs-white;
@@ -47,8 +73,8 @@
 
     .messages-container {
         height: 200px;
-        padding: 5px 0x;
-        overflow-y: scroll;
+        padding: 5px 0;
+        overflow-y: auto;
         background-color: rgba($bs-white, .9);
 
         .message-wrapper {
@@ -93,6 +119,7 @@
                     color: $bs-white;
                     padding: 6px 15px;
                     display: inline-block;
+                    max-width: 100%;
                     border-radius: 6px;
                 }
             }
