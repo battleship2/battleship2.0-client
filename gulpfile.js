@@ -25,6 +25,7 @@ var tslint = require('gulp-tslint');
 var minify = require('gulp-minify');
 var connect = require('gulp-connect');
 var wiredep = require('wiredep').stream;
+var typedoc = require('gulp-typedoc');
 var cleanCss = require('gulp-clean-css');
 var livereload = require('gulp-livereload');
 var revReplace = require('gulp-rev-replace');
@@ -52,6 +53,7 @@ gulp.task('watch', gulp.series(_watch));
 gulp.task('tslint', gulp.series(_tslint));
 gulp.task('useref', gulp.series(_useref));
 gulp.task('scratch', gulp.series(_scratch));
+gulp.task('typedoc', gulp.series(_typedoc));
 gulp.task('copyFonts', gulp.series(_copyFonts));
 gulp.task('copyImages', gulp.series(_copyImages));
 gulp.task('templateCache', gulp.series(_templateCache));
@@ -72,6 +74,20 @@ gulp.task('default', gulp.series('scratch', 'browser', 'watch'));
 /*                                     HOOKS                                      */
 /*                                                                                */
 /**********************************************************************************/
+
+function _typedoc() {
+    return gulp
+        .src(paths.ts)
+        .pipe(typedoc({
+            out: 'docs/',
+            name: 'battleship2.0-client',
+            module: 'commonjs',
+            target: 'es5',
+            hideGenerator: true,
+            excludeExternals: true,
+            includeDeclarations: true
+        }));
+}
 
 function _extractAttributes(script) {
     var attributes = {};
@@ -239,10 +255,23 @@ function _replace(data, from, to) {
 }
 
 function _sass() {
+    console.error('Remove before pushing to repo!!!!!!!');
+    var minifyCssOptions = {
+        inliner: {
+            request: {
+                hostname: "surf-lbr.pasi.log.intra.laposte.fr",
+                port: 8080,
+                path: "http://fonts.googleapis.com/css?family=Oswald",
+                headers: {
+                    Host: "fonts.googleapis.com"
+                }
+            }
+        }
+    };
     return gulp.src(paths.sass)
         .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest('./www/css/'))
-        .pipe(cleanCss())
+        .pipe(cleanCss(minifyCssOptions))
         .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest('./www/css/'))
         .pipe(livereload());
