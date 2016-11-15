@@ -255,23 +255,10 @@ function _replace(data, from, to) {
 }
 
 function _sass() {
-    console.error('Remove before pushing to repo!!!!!!!');
-    var minifyCssOptions = {
-        inliner: {
-            request: {
-                hostname: "surf-lbr.pasi.log.intra.laposte.fr",
-                port: 8080,
-                path: "http://fonts.googleapis.com/css?family=Oswald",
-                headers: {
-                    Host: "fonts.googleapis.com"
-                }
-            }
-        }
-    };
     return gulp.src(paths.sass)
         .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest('./www/css/'))
-        .pipe(cleanCss(minifyCssOptions))
+        .pipe(cleanCss())
         .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest('./www/css/'))
         .pipe(livereload());
