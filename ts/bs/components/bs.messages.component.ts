@@ -60,10 +60,20 @@ namespace bs {
                 this._$messageWritingIndicator = this._$chat.find(".message-writing-indicator");
 
                 this._$input.keyup(_keyup.bind(this));
-                this._$container.mouseenter(_hideMessageWritingIndicator.bind(this));
-                this._$container.mouseleave(_showMessageWritingIndicator.bind(this));
                 this._unbindNickname = bs.events.on("BS::SOCKET::NICKNAME", _nickname.bind(this));
                 this._debounceMessageCheck = $.throttle(500, _checkForMessageBeingWritten.bind(this));
+
+                bs.events.on("BS::SOCKET::CONNECTED", () => {
+                    _handleConnectionStatusChanges("connected", "connecting disconnected", "Connected to Battleship 2.0 server");
+                });
+
+                bs.events.on("BS::SOCKET::CONNECTING", () => {
+                    _handleConnectionStatusChanges("connecting", "connected disconnected", "Attempting connection on Battleship 2.0 server");
+                });
+
+                bs.events.on("BS::SOCKET::DISCONNECTED", () => {
+                    _handleConnectionStatusChanges("disconnected", "connecting connected", "Disconnected from Battleship 2.0 server");
+                });
 
                 bs.events.on("BS::SOCKET::MESSAGE", _message.bind(this));
                 bs.events.on("BS::SOCKET::LEFT_ROOM", _someoneLeftTheRoom.bind(this));
@@ -86,6 +96,20 @@ namespace bs {
         /*                               PRIVATE MEMBERS                                  */
         /*                                                                                */
         /**********************************************************************************/
+
+        function _tooltip() {
+            $("[data-toggle=\"tooltip\"]").tooltip();
+        }
+
+        function _handleConnectionStatusChanges(classToAdd: string, classesToRemove: string, title: string) {
+            $(".connection-status")
+                .removeClass(classesToRemove)
+                .addClass(classToAdd)
+                .attr("title", title)
+                .attr("data-original-title", title);
+
+            _tooltip();
+        }
 
         function _handlePeopleInRoom(people: { [peopleId: string]: People }): bs.components.Messages {
             console.log(people);
@@ -111,6 +135,8 @@ namespace bs {
                 numberOfPeople: numOfPeopleInTheRoom
             }));
 
+            _tooltip();
+
             return this;
         }
 
@@ -128,16 +154,6 @@ namespace bs {
 
         function _someoneLeftTheRoom(people: People): bs.components.Messages {
             _handlePeopleStatusChange.call(this, people, "left");
-            return this;
-        }
-
-        function _showMessageWritingIndicator(): bs.components.Messages {
-            this._$messageWritingIndicator.show();
-            return this;
-        }
-
-        function _hideMessageWritingIndicator(): bs.components.Messages {
-            this._$messageWritingIndicator.hide();
             return this;
         }
 

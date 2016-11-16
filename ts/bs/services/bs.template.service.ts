@@ -55,8 +55,12 @@ namespace bs {
             return function (data): string {
                 let _template = String(template);
 
+                if (bs.utils.isUndefined(data)) {
+                    return _template.replace(/{{(.*?)}}/g, "");
+                }
+
                 bs.utils.forEach(data, (value: any, key: string) => {
-                    _template = _template.replace(new RegExp("{{ " + key + " }}", "g"), value);
+                    _template = _template.replace(new RegExp("{{( *?)" + key + "( *?)}}", "g"), value);
                 });
 
                 return _template;

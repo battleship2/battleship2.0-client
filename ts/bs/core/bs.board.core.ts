@@ -462,17 +462,9 @@ namespace bs {
         }
 
         function _resize(): bs.core.Board {
-
-            let __width = _canvasParent.width();
-            let __height = _canvasParent.height();
-            let _width = __width * .9;
-            let _height = __height * .9;
+            let _width = _canvasParent.width();
+            let _height = _canvasParent.height();
             let size = Math.min(_width, _height);
-            let marginTop = (__height - size) / 2;
-            let marginLeft = (__width - size) / 2;
-
-            _canvas.css("margin-top", (_width > 384) ? marginTop : 0);
-            _canvas.css("margin-left", marginLeft);
 
             (<HTMLCanvasElement>_instance.stage.canvas).width = size;
             (<HTMLCanvasElement>_instance.stage.canvas).height = size;
@@ -480,7 +472,6 @@ namespace bs {
             _instance.draw();
 
             return _instance;
-
         }
 
     }

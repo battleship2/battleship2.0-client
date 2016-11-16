@@ -18,7 +18,10 @@ $(document).ready(() => {
     ]);
 
     loader.loadAssets(
-        new bs.core.Game().setup,
+        () => {
+            new bs.core.Game().setup();
+            $("[data-toggle=\"tooltip\"]").tooltip();
+        },
         () => { console.error("Error while loading assets..."); }
     );
 

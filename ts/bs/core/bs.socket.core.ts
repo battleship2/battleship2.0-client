@@ -45,10 +45,16 @@ namespace bs {
 
                 _socket = io(URL);
 
+                _socket.on("connecting", () => {
+                    bs.events.broadcast("BS::SOCKET::CONNECTING");
+                    deferred.resolve();
+                });
+
                 _socket.on("connect", () => {
                     _connected = true;
                     console.info("(bs.socket.core) Successfully connected to: %s", URL);
                     _bindSocket();
+                    bs.events.broadcast("BS::SOCKET::CONNECTED");
                     deferred.resolve();
                 });
 
@@ -56,6 +62,7 @@ namespace bs {
                     _connected = false;
                     console.error("(bs.socket.core) Cannot connect to: %s", URL);
                     _unbindSocket();
+                    bs.events.broadcast("BS::SOCKET::DISCONNECTED");
                     deferred.reject(error);
                 });
 
@@ -63,14 +70,17 @@ namespace bs {
                     _connected = false;
                     console.info("(bs.socket.core) Disconnected from: %s", URL);
                     _unbindSocket();
+                    bs.events.broadcast("BS::SOCKET::DISCONNECTED");
                 });
 
                 _socket.on("reconnecting", (attempt: number) => {
                     console.info("(bs.socket.core) Attempting reconnection #%s...", attempt);
+                    bs.events.broadcast("BS::SOCKET::CONNECTING");
                 });
 
                 _socket.on("reconnect_failed", () => {
                     console.error("(bs.socket.core) Cannot reconnect to server.");
+                    bs.events.broadcast("BS::SOCKET::DISCONNECTED");
                 });
 
                 _socket.on("error", console.error.bind(console));

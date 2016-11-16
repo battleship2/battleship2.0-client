@@ -15,6 +15,10 @@
 /*                                                                                */
 /**********************************************************************************/
 
+declare interface JQuery {
+    tooltip();
+}
+
 declare interface JQueryStatic {
     throttle(delay: number, callback: Function): Function;
     debounce(delay: number, callback: Function): Function;

@@ -1,10 +1,17 @@
-<people-list></people-list>
-
-<div class="message-writing-indicator hidden"></div>
-
-<div class="messages-container"></div>
-
-<div class="input-container">
-    <i class="material-icons pull-xs-0 message-input-icon">keyboard_arrow_right</i>
-    <input type="text" class="message-input" placeholder="Type here to talk to the other players in the room">
+<div class="chat">
+    <div class="card messages">
+        <div class="card-header card-info">
+            <div class="float-xs-left bebas-neue">
+                <div class="connection-status connecting" data-toggle="tooltip" data-placement="top" title="Connecting..."></div>
+                Chat
+            </div>
+            <people-list></people-list>
+        </div>
+        <div class="message-writing-indicator hidden"></div>
+        <div class="card-block messages-container"></div>
+        <div class="card-footer input-container">
+            <i class="material-icons pull-xs-0 message-input-icon">keyboard_arrow_right</i>
+            <input type="text" class="message-input" placeholder="Type here to talk to the other players">
+        </div>
+    </div>
 </div>

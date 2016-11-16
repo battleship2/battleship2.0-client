@@ -129,6 +129,7 @@ function _templateCache(done) {
     fs.writeFileSync('./www/dist/js/templates.js', templateJs, 'utf8');
     fs.writeFileSync('./www/dist/index.html', index, 'utf8');
 
+    livereload();
     done();
 }
 
@@ -258,9 +259,11 @@ function _sass() {
     return gulp.src(paths.sass)
         .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest('./www/css/'))
+        .pipe(gulp.dest('./www/dist/css/'))
         .pipe(cleanCss())
         .pipe(rename({extname: '.min.css'}))
         .pipe(gulp.dest('./www/css/'))
+        .pipe(gulp.dest('./www/dist/css/'))
         .pipe(livereload());
 }
 
@@ -298,7 +301,8 @@ function _useref() {
         .pipe(rev())                // Rename the concatenated files (but not index.html)
         .pipe(indexHtmlFilter.restore)
         .pipe(revReplace())         // Substitute in new filenames
-        .pipe(gulp.dest('./www/dist'));
+        .pipe(gulp.dest('./www/dist'))
+        .pipe(livereload());
 }
 
 function _scratch(error, toDelete) {
@@ -323,11 +327,11 @@ function _watch(done) {
         port: 35730
     });
 
-    // gulp.watch(paths.index, gulp.series('deploy', _templateCache));
+    gulp.watch(paths.index, gulp.series('deploy'));
     gulp.watch(paths.templates, gulp.series('deploy'));
     gulp.watch(paths.ts, gulp.series('deploy'));
-    gulp.watch(paths.sass, gulp.series(_sass));
-    gulp.watch(paths.images, gulp.series(_copyImages));
+    gulp.watch(paths.sass, gulp.series('deploy'));
+    gulp.watch(paths.images, gulp.series('deploy'));
     done();
 }
 
