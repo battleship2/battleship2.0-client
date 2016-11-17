@@ -58,6 +58,8 @@ namespace bs {
                 this.setName(name);
                 this.setTemplate(new createjs.Bitmap(_loader.get(name)));
                 this.init();
+
+                bs.events.on("BS::BOARD::RESIZED", this.draw);
             }
 
             /**********************************************************************************/

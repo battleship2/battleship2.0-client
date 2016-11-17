@@ -471,6 +471,8 @@ namespace bs {
 
             _instance.draw();
 
+            bs.events.broadcast("BS::BOARD::RESIZED");
+
             return _instance;
         }
 

@@ -56,6 +56,11 @@
                 padding-left: 25px;
                 padding-right: 10px;
 
+                &[disabled] {
+                    pointer-events: none;
+                    background-color: #d3d3d3;
+                }
+
                 @include placeholder-color($bs-black);
             }
         }

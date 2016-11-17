@@ -311,7 +311,7 @@ namespace bs {
          * {@link merge} for this.
          *
          * @param {Object} dst Destination object.
-         * @param {...Object} src Source object(s).
+         * @param {...Object} sources Source object(s).
          * @returns {Object} Reference to `dst`.
          */
         export function extend(dst: Object, ...sources: Object[]): Object {
@@ -332,7 +332,7 @@ namespace bs {
          * objects, performing a deep copy.
          *
          * @param {Object} dst Destination object.
-         * @param {...Object} src Source object(s).
+         * @param {...Object} sources Source object(s).
          * @returns {Object} Reference to `dst`.
          */
         export function merge(dst: Object, ...sources: Object[]): Object {

@@ -16,6 +16,12 @@ namespace BSData {
         export const OPPONENT: string = "OPPONENT";
     }
 
+    export namespace ConnectionStatus {
+        export const CONNECTED: string = "CONNECTED";
+        export const CONNECTING: string = "CONNECTING";
+        export const DISCONNECTED: string = "DISCONNECTED";
+    }
+
     export namespace Events {
         export const on = {
             "message": "MESSAGE",

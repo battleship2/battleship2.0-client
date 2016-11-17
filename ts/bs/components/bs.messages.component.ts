@@ -4,6 +4,8 @@ namespace bs {
 
     export namespace components {
 
+        let _connectionStatusClasses: Array<string> = ["connected", "connecting", "disconnected"];
+
         export class Messages extends bs.core.Core {
 
             /**********************************************************************************/
@@ -22,6 +24,7 @@ namespace bs {
             private _$container: JQuery = null;
             private _$peopleList: JQuery = null;
             private _unbindNickname: Function = null;
+            private _connectionStatus: string = BSData.ConnectionStatus.DISCONNECTED;
             private _debounceMessageCheck: Function = null;
             private _$messageWritingIndicator: JQuery = null;
 
@@ -64,15 +67,15 @@ namespace bs {
                 this._debounceMessageCheck = $.throttle(500, _checkForMessageBeingWritten.bind(this));
 
                 bs.events.on("BS::SOCKET::CONNECTED", () => {
-                    _handleConnectionStatusChanges("connected", "connecting disconnected", "Connected to Battleship 2.0 server");
+                    _handleConnectionStatusChanges.call(this, "connected", "Connected to Battleship 2.0 server");
                 });
 
                 bs.events.on("BS::SOCKET::CONNECTING", () => {
-                    _handleConnectionStatusChanges("connecting", "connected disconnected", "Attempting connection on Battleship 2.0 server");
+                    _handleConnectionStatusChanges.call(this, "connecting", "Attempting connection on Battleship 2.0 server");
                 });
 
                 bs.events.on("BS::SOCKET::DISCONNECTED", () => {
-                    _handleConnectionStatusChanges("disconnected", "connecting connected", "Disconnected from Battleship 2.0 server");
+                    _handleConnectionStatusChanges.call(this, "disconnected", "Disconnected from Battleship 2.0 server");
                 });
 
                 bs.events.on("BS::SOCKET::MESSAGE", _message.bind(this));
@@ -101,9 +104,24 @@ namespace bs {
             $("[data-toggle=\"tooltip\"]").tooltip();
         }
 
-        function _handleConnectionStatusChanges(classToAdd: string, classesToRemove: string, title: string) {
+        function _handleConnectionStatusChanges(classToAdd: string, title: string) {
+            let _classesToRemove = <Array<string>>bs.utils.merge([], _connectionStatusClasses);
+            _classesToRemove.splice(_connectionStatusClasses.indexOf(classToAdd), 1);
+
+            this._connectionStatus = BSData.ConnectionStatus[classToAdd.trim().toUpperCase()];
+
+            switch (this._connectionStatus) {
+                case BSData.ConnectionStatus.CONNECTED:
+                    this._$input.removeAttr("disabled");
+                    break;
+                case BSData.ConnectionStatus.CONNECTING:
+                case BSData.ConnectionStatus.DISCONNECTED:
+                    this._$input.attr("disabled", "true");
+                    break;
+            }
+
             $(".connection-status")
-                .removeClass(classesToRemove)
+                .removeClass(_classesToRemove.join(" "))
                 .addClass(classToAdd)
                 .attr("title", title)
                 .attr("data-original-title", title);
