@@ -15,6 +15,11 @@
 /*                                                                                */
 /**********************************************************************************/
 
+declare namespace vizhash {
+    function supportCanvas(): boolean;
+    function canvasHash(hash: string, width: number, height: number): { canvas: HTMLCanvasElement };
+}
+
 declare interface JQuery {
     tooltip();
 }

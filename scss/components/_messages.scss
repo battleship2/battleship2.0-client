@@ -12,7 +12,9 @@
         .card-header {
             padding: .75rem;
 
-            * { color: $bs-white; }
+            * {
+                color: $bs-white;
+            }
 
             .connection-status {
                 width: 10px;
@@ -22,9 +24,15 @@
 
                 @include vendor-prefix(border-radius, 100%);
 
-                &.connected { background-color: green; }
-                &.connecting { background-color: orange; }
-                &.disconnected { background-color: red; }
+                &.connected {
+                    background-color: green;
+                }
+                &.connecting {
+                    background-color: orange;
+                }
+                &.disconnected {
+                    background-color: red;
+                }
             }
 
             .people-indicator .material-icons {
@@ -66,56 +74,31 @@
         }
 
         .messages-container {
-            height: 200px;
+            height: 300px;
             padding: 10px 0;
             overflow-y: auto;
+            overflow-x: hidden;
 
-            .message-wrapper {
-                width: 100%;
-                display: inline-block;
-                padding: 0 15px;
+            * {
+                transition: all .3s;
+                @include vendor-prefix(box-sizing, border-box);
+            }
 
-                &:hover {
-                    background-color: rgba($bs-black, .1);
+            .user-avatar {
+                right: 5px;
+                bottom: 20px;
+                z-index: 1000;
+                position: absolute;
+
+                img {
+                    border: 1px solid rgba($bs-black, .125);
+                    @include vendor-prefix(border-radius, 100%);
                 }
             }
 
-            .message {
-                padding: 5px 0;
-                word-wrap: break-word;
-
-                .message-author {
-                    height: 15px;
-                    margin-top: -5px;
-
-                    .date {
-                        font-size: 11px;
-                    }
-
-                    .particle {
-                        font-size: 12px;
-                        margin-right: 6px;
-                    }
-
-                    .author {
-                        font-size: 14px;
-                        font-weight: 400;
-                        margin-right: 6px;
-                    }
-                }
-
-                .message-body-wrapper {
-                    width: 100%;
-                    display: inline-block;
-
-                    .message-body {
-                        color: $bs-white;
-                        padding: 6px 15px;
-                        display: inline-block;
-                        max-width: 100%;
-                        border-radius: 6px;
-                    }
-                }
+            .status {
+                padding: 0;
+                margin-bottom: 20px;
 
                 .message-status {
                     color: rgba($bs-black, .8);
@@ -143,27 +126,127 @@
                     }
 
                 }
+            }
 
-                &.me {
-                    .message-author {
-                        text-align: right;
-                    }
+            .message-wrapper {
+                padding: 0 5px;
 
-                    .message-body {
-                        float: right;
-                    }
-                }
+                &:hover {
+                    transform: translateY(10px);
 
-                &.other {
-                    .message-author {
-                        text-align: left;
-                    }
-
-                    .message-body {
-                        float: left;
+                    .date {
+                        opacity: 1;
                     }
                 }
             }
+
+            .date {
+                top: -25px;
+                color: rgba($bs-black, .8);
+                opacity: 0;
+                position: absolute;
+                font-size: 12px;
+
+                strong {
+                    font-weight: 500;
+                }
+            }
+
+            .message {
+                padding: 10px 15px;
+                position: relative;
+                max-width: 80%;
+                word-wrap: break-word;
+                text-align: justify;
+                border-radius: 10px;
+                margin-bottom: 25px;
+
+                &:before, &:after {
+                    height: 20px;
+                    bottom: -2px;
+                    content: "";
+                    position: absolute;
+                }
+
+                &:before {
+                    -webkit-tranform: translate(0, -2px);
+                    -moz-tranform: translate(0, -2px);
+                    -ms-tranform: translate(0, -2px);
+                    -o-tranform: translate(0, -2px);
+                    transform: translate(0, -2px);
+                }
+
+                &:after {
+                    width: 26px;
+                    background: #ffffff;
+                    -webkit-tranform: translate(-30px, -2px);
+                    -moz-tranform: translate(-30px, -2px);
+                    -ms-tranform: translate(-30px, -2px);
+                    -o-tranform: translate(-30px, -2px);
+                    transform: translate(-30px, -2px);
+                }
+
+                p {
+                    color: $bs-white;
+                    margin: 0;
+                    font-size: 14px;
+                }
+            }
+
+            .from-me-wrapper {
+                .date {
+                    right: 50px;
+                }
+
+                .user-avatar {
+                    right: 5px;
+                }
+
+                .from-me {
+                    right: 45px;
+                    float: right;
+
+                    &:before {
+                        right: -7px;
+                        z-index: 1;
+                        border-bottom-left-radius: 16px 14px;
+                    }
+
+                    &:after {
+                        right: -56px;
+                        z-index: 1;
+                        border-bottom-left-radius: 10px;
+                    }
+                }
+            }
+
+            .from-them-wrapper {
+                .date {
+                    left: 50px;
+                }
+
+                .user-avatar {
+                    left: 5px;
+                }
+
+                .from-them {
+                    left: 45px;
+                    float: left;
+
+                    &:before {
+                        left: -7px;
+                        z-index: 2;
+                        border-bottom-right-radius: 16px 14px;
+                    }
+
+                    &:after {
+                        left: 4px;
+                        z-index: 3;
+                        border-bottom-right-radius: 10px;
+                    }
+                }
+            }
+
         }
     }
 

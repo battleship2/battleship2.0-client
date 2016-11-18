@@ -11,6 +11,29 @@ namespace bs {
         /**********************************************************************************/
 
         /**
+         * @name cssRuleExists
+         * @kind function
+         *
+         * @description
+         * Checks if a given CSS Rule Name is defined.
+         *
+         * @returns {Boolean}
+         */
+        export function cssRuleExists(className: string): boolean {
+            let exists = false;
+            forEach(document.styleSheets, (styleSheet, index) => {
+                if (!exists && isDefined(styleSheet.rules)) {
+                    forEach(styleSheet.rules, rule => {
+                        if (isString(rule.selectorText) && rule.selectorText === ("." + className.trim())) {
+                            exists = true;
+                        }
+                    });
+                }
+            });
+            return exists;
+        }
+
+        /**
          * @name uuid
          * @kind function
          *

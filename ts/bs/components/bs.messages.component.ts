@@ -17,9 +17,8 @@ namespace bs {
             private _$chat: JQuery = null;
             private _socket: bs.core.Socket = null;
             private _$input: JQuery = null;
-            private _colors: { [id: string]: string } = {};
+            private _people: { [id: string]: { color: string, image: string } } = {};
             private _session: People = null;
-            private _messages: string = "";
             private _templates: { [name: string]: Function } = {};
             private _$container: JQuery = null;
             private _$peopleList: JQuery = null;
@@ -49,8 +48,7 @@ namespace bs {
                     "status": bs.template.get("status"),
                     "people-list": bs.template.get("people-list"),
                     "user-message": bs.template.get("user-message"),
-                    "other-message": bs.template.get("other-message"),
-                    "people-nickname": bs.template.get("people-nickname")
+                    "other-message": bs.template.get("other-message")
                 };
 
                 this._socket = new bs.core.Socket();
@@ -130,47 +128,26 @@ namespace bs {
         }
 
         function _handlePeopleInRoom(people: { [peopleId: string]: People }): bs.components.Messages {
-            console.log(people);
-            let template = this._templates["people-nickname"];
-
-            let peopleNicknames = "";
-            let numOfPeopleInTheRoom = 0;
-
-            bs.utils.forEach(people, (thePeople: People) => {
-                let isUser = (thePeople.id === this._session.id);
-                let color = _getColorsFor.call(this, thePeople.id);
-
-                ++numOfPeopleInTheRoom;
-
-                peopleNicknames += template({
-                    color: color,
-                    author: (isUser ? "(you) " : "") + thePeople.nickname
-                });
-            });
-
             this._$peopleList.html(this._templates["people-list"]({
-                nicknames: peopleNicknames,
-                numberOfPeople: numOfPeopleInTheRoom
+                numberOfPeople: Object.keys(people).length
             }));
-
-            _tooltip();
-
             return this;
         }
 
         function _handlePeopleStatusChange(people: People, status: string): bs.components.Messages {
-            this._messages += _getStatusTemplate.call(this, people.nickname, status);
-            this._$container.html(this._messages);
+            this._$container.append(_getStatus.call(this, people.nickname, status));
             this._$container.scrollTop(this._$container[0].scrollHeight);
             return this;
         }
 
         function _someoneJoinedTheRoom(people: People): bs.components.Messages {
+            _setUpPeople.call(this, people.id);
             _handlePeopleStatusChange.call(this, people, "joined");
             return this;
         }
 
         function _someoneLeftTheRoom(people: People): bs.components.Messages {
+            delete this._people[people.id];
             _handlePeopleStatusChange.call(this, people, "left");
             return this;
         }
@@ -221,8 +198,7 @@ namespace bs {
 
         function _message(message: Message): bs.components.Messages {
             let _message = _parseMessage(message);
-            this._messages += _getMessageTemplate.call(this, _message);
-            this._$container.html(this._messages);
+            this._$container.append(_getMessage.call(this, _message));
             this._$container.scrollTop(this._$container[0].scrollHeight);
             return this;
         }
@@ -262,41 +238,75 @@ namespace bs {
             return moment(date).format("DD/MM/YY - HH:mm:ss");
         }
 
-        function _getMessageTemplate(message: Message): string {
+        function _getMessage(message: Message): JQuery {
             let isUser = (message.id === this._session.id);
             let color = _getColorsFor.call(this, message.id);
             let template = this._templates[isUser ? "user-message" : "other-message"];
+            let b64Identifier = btoa(message.id);
 
-            return template({
+            if (!bs.utils.cssRuleExists(b64Identifier)) {
+                $("head").append(
+                    "<style type=\"text/css\"> " +
+                    "." + b64Identifier + " { background-color: " + color + "; } " +
+                    "." + b64Identifier + ":before { border-" +  (isUser ? "right" : "left") + ": 20px solid " + color + "; } " +
+                    "</style>"
+                );
+            }
+
+            return $(template({
                 date: _formatDate(message.date),
+                color: color,
+                avatar: this._people[message.id].image,
                 author: (isUser ? "you" : message.nickname),
                 message: message.message,
-                authorColor: color,
-                messageColor: color
-            });
+                userIdentifier: b64Identifier
+            }));
         }
 
-        function _getStatusTemplate(nickname: string, status: string): string {
-            return this._templates["status"]({
-                date: _formatDate(new Date()),
+        function _getStatus(nickname: string, status: string): JQuery {
+            return $(this._templates["status"]({
                 status: status,
                 nickname: nickname
-            });
+            }));
+        }
+
+        function _getColorFor(id: string): string {
+            return randomColor({seed: id, luminosity: "dark"});
         }
 
         function _getColorsFor(id: string): { author: string, message: string } {
-            if (bs.utils.isUndefined(this._colors[id])) {
-                this._colors[id] = randomColor({seed: id, luminosity: "dark"});
+            if (bs.utils.isUndefined(this._people[id])) {
+                _setUpPeople.call(this, id);
             }
-            return this._colors[id];
+            return this._people[id].color;
         }
 
         function _parseMessage(message: Message): Message {
             return {
                 id: _makeSafeStringOf(message.id),
                 date: message.date,
-                message: _htmlDecode(message.message),
+                message: _htmlDecode(message.message).replace(/{/g, "&#123;").replace(/}/g, "&#125;"),
                 nickname: _makeSafeStringOf(message.nickname)
+            };
+        }
+
+        function _makeAvatar(id: string): string {
+            let imgSource = "img/user_placeholder.png";
+            if (vizhash.supportCanvas()) {
+                try {
+                    imgSource = vizhash.canvasHash(id, 32, 32).canvas.toDataURL();
+                } catch (exception) {
+                    console.error("VizHash error:", exception.message);
+                    return imgSource;
+                }
+            }
+            return imgSource;
+        }
+
+        function _setUpPeople(id: string) {
+            this._people[id] = {
+                image: _makeAvatar(id),
+                color: _getColorFor(id)
             };
         }
 

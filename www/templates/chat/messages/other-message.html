@@ -1,17 +1,11 @@
-<div class="message-wrapper">
-
-    <div class="other message col-xs-12 col-md-10">
-
-        <div class="message-body-wrapper">
-            <div class="message-body" style="background-color: {{ messageColor }};">{{ message }}</div>
-        </div>
-
-        <div class="message-author text-right" title={{ author }} on {{ date }}">
-            <span class="author" style="color: {{ authorColor }};">{{ author }}</span>
-            <!--<span class="particle">on</span>-->
-            <!--<span class="date">{{ date }}</span>-->
-        </div>
-
+<div class="col-xs-11 message-wrapper from-them-wrapper">
+    <div class="user-avatar">
+        <img src="{{ avatar }}" alt="{{ author }}" title="{{ author }}">
     </div>
-
+    <div class="date">
+        <strong style="color: {{ color }};">{{ author }}</strong> on {{ date }}
+    </div>
+    <div class="message from-them {{ userIdentifier }}">
+        <p>{{ message }}</p>
+    </div>
 </div>
