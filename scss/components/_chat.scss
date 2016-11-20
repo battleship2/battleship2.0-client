@@ -5,6 +5,7 @@ chat {
     height: 47px;
     z-index: 9000;
     position: fixed;
+    transition: height .5s ease;
 
     &.opened {
         height: 420px;
