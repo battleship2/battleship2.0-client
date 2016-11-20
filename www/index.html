@@ -13,6 +13,7 @@
     <!-- build:css styles/app.css -->
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- endbower -->
 
@@ -36,64 +37,23 @@
     </a>
 </nav>
 
+<chat class="hidden-sm-down"></chat>
+
 <div class="container">
     <div class="row">
+        <div class="col-xs-12 hidden-md-up">
+            <commands></commands>
+        </div>
+
         <div class="col-xs-12 col-md-6 col-lg-8 text-xs-center">
-            <div class="overlay hidden"></div>
             <canvas id="battlefield" class="battlefield hidden" width="600" height="600"></canvas>
         </div>
 
         <div class="col-xs-12 col-md-6 col-lg-4">
-            <commands></commands>
-            <chat></chat>
+            <counters></counters>
+            <commands class="hidden-sm-down"></commands>
         </div>
     </div>
-
-
-    <!--<div class="row desktop-full-height">-->
-        <!--<div class="col-xs-12 col-lg-6 desktop-full-height">-->
-            <!--<h1 class="header-title">Battleship 2.0</h1>-->
-
-            <!--<div class="row m-1 hidden-xs-down">-->
-                <!--<div class="col-xs-12 col-sm-4 mt-1">-->
-                    <!--<div class="counter" id="bombs-counter"></div>-->
-                    <!--<p class="m-1 text-center bebas-neue">Bombs dropped</p>-->
-                <!--</div>-->
-
-                <!--<div class="col-xs-12 col-sm-4 mt-1">-->
-                    <!--<div class="counter" id="hits-counter"></div>-->
-                    <!--<p class="m-1 text-center bebas-neue">Hits</p>-->
-                <!--</div>-->
-
-                <!--<div class="col-xs-12 col-sm-4 mt-1">-->
-                    <!--<div class="counter" id="ship-destroyed-counter"></div>-->
-                    <!--<p class="m-1 text-center bebas-neue">Ships destroyed</p>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="row">-->
-                <!--<div class="col-xs-10 offset-xs-1 hints hidden" id="hints">-->
-                    <!--<h1 class="hints-title"></h1>-->
-                    <!--<div class="hints-body"></div>-->
-                    <!--<div class="col-xs-12 col-md-6 offset-md-3 action-container">-->
-                        <!--<button class="btn btn-block btn-success bebas-neue md-mb-1" id="startGame">Start game</button>-->
-                    <!--</div>-->
-                    <!--<div class="col-xs-12 col-md-6 offset-md-3 action-container hidden">-->
-                        <!--<button class="btn btn-block btn-primary bebas-neue md-mb-1" id="sendCommand" disabled>Send order</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="row">-->
-                <!--<chat class="col-xs-10 offset-xs-1 messages"></chat>-->
-            <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="col-xs-12 col-lg-6 desktop-full-height">-->
-            <!--<div class="overlay hidden"></div>-->
-            <!--<canvas id="battlefield" class="battlefield hidden" width="600" height="600"></canvas>-->
-        <!--</div>-->
-    <!--</div>-->
 </div>
 
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
@@ -109,9 +69,10 @@
 <!-- endbower -->
 
 <!-- local libraries -->
+<script src="lib/vizhash/vizhash.min.js"></script>
+<script src="lib/animate-css/animate-css-jquery.js"></script>
 <script src="../node_modules/socket.io-client/socket.io.js"></script>
 <script src="lib/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js"></script>
-<script src="lib/vizhash/vizhash.min.js"></script>
 <!-- end local libraries -->
 
 <script src="js/release/bs.js"></script>
@@ -138,6 +99,7 @@
 
 <script src="js/release/bs/components/bs.chat.component.js"></script>
 <script src="js/release/bs/components/bs.counter.component.js"></script>
+<script src="js/release/bs/components/bs.counters.component.js"></script>
 <script src="js/release/bs/components/bs.commands.component.js"></script>
 
 <script src="js/release/bs/ships/bs.abstract.ship.js"></script>
@@ -151,6 +113,8 @@
 
 <!-- templates -->
 <script type="text/template" src="templates/chat/chat.html" id="chat"></script>
+<script type="text/template" src="templates/counters/counter.html" id="counter"></script>
+<script type="text/template" src="templates/counters/counters.html" id="counters"></script>
 <script type="text/template" src="templates/commands/commands.html" id="commands"></script>
 <script type="text/template" src="templates/chat/messages/status.html" id="status"></script>
 <script type="text/template" src="templates/chat/messages/user-message.html" id="user-message"></script>

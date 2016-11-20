@@ -15,6 +15,15 @@
 /*                                                                                */
 /**********************************************************************************/
 
+declare namespace createjs {
+    interface Bitmap {
+        offset: {
+            x: number;
+            y: number;
+        };
+    }
+}
+
 declare namespace vizhash {
     function supportCanvas(): boolean;
     function canvasHash(hash: string, width: number, height: number): { canvas: HTMLCanvasElement };
@@ -22,9 +31,11 @@ declare namespace vizhash {
 
 declare interface JQuery {
     tooltip();
+    animateCss(className: string, callback?: Function);
 }
 
 declare interface JQueryStatic {
+    _data(element: HTMLElement, type: string);
     throttle(delay: number, callback: Function): Function;
     debounce(delay: number, callback: Function): Function;
 }

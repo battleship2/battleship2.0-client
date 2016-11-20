@@ -15,15 +15,18 @@ namespace bs {
             /**********************************************************************************/
 
             private _$chat: JQuery = null;
+            private _opened: boolean = false;
             private _socket: bs.core.Socket = null;
             private _$input: JQuery = null;
             private _people: { [id: string]: { color: string, image: string } } = {};
+            private _$header: JQuery = null;
             private _session: People = null;
             private _templates: { [name: string]: Function } = {};
             private _$container: JQuery = null;
             private _$peopleList: JQuery = null;
             private _unbindNickname: Function = null;
             private _connectionStatus: string = BSData.ConnectionStatus.DISCONNECTED;
+            private _newMessageInterval: number = null;
             private _debounceMessageCheck: Function = null;
             private _$messageWritingIndicator: JQuery = null;
 
@@ -39,7 +42,7 @@ namespace bs {
                 this._$chat = $("chat");
 
                 if (this._$chat.length <= 0) {
-                    console.error("(bs.components.chat) Missing tag <chat></chat>");
+                    console.error("(bs.chat.components) Missing tag <chat></chat>");
                     return this;
                 }
 
@@ -54,15 +57,28 @@ namespace bs {
                 this._socket = new bs.core.Socket();
 
                 this._$chat.html(this._templates["chat"]());
-                this._$peopleList = this._$chat.find("people-list").html(this._templates["people-list"]());
-
                 this._$input = this._$chat.find(".message-input");
+                this._$header = this._$chat.find(".card-header");
                 this._$container = this._$chat.find(".messages-container");
+                this._$peopleList = this._$chat.find("people-list");
                 this._$messageWritingIndicator = this._$chat.find(".message-writing-indicator");
 
                 this._$input.keyup(_keyup.bind(this));
                 this._unbindNickname = bs.events.on("BS::SOCKET::NICKNAME", _nickname.bind(this));
                 this._debounceMessageCheck = $.throttle(500, _checkForMessageBeingWritten.bind(this));
+
+                this._$peopleList.html(this._templates["people-list"]());
+
+                this._$header.click(() => {
+                    this._opened = !this._opened;
+                    this._$chat.toggleClass("opened");
+                    this._$header.removeClass("card-warning-important");
+                    clearInterval(this._newMessageInterval);
+
+                    if (this._$chat.hasClass("opened")) {
+                        this._$input.focus();
+                    }
+                });
 
                 bs.events.on("BS::SOCKET::CONNECTED", () => {
                     _handleConnectionStatusChanges.call(this, "connected", "Connected to Battleship 2.0 server");
@@ -198,8 +214,19 @@ namespace bs {
 
         function _message(message: Message): bs.components.Chat {
             let _message = _parseMessage(message);
-            this._$container.append(_getMessage.call(this, _message));
-            this._$container.scrollTop(this._$container[0].scrollHeight);
+            let _template = _setMessageTemplate.call(this, _message);
+            _template.animateCss("fadeIn", () => {
+                this._$container.scrollTop(this._$container[0].scrollHeight);
+            });
+
+            this._$container.append(_template);
+
+            if (message.id !== this._session && !this._opened) {
+                this._$header.toggleClass("card-warning-important");
+                this._newMessageInterval = setInterval(() => {
+                    this._$header.toggleClass("card-warning-important");
+                }, 1000);
+            }
             return this;
         }
 
@@ -218,6 +245,9 @@ namespace bs {
 
             if (numOfPeopleWriting <= 0) {
                 this._$messageWritingIndicator.addClass("hidden");
+                if (this._opened) {
+                    this._$chat.css("bottom", 0);
+                }
             } else {
                 if (numOfPeopleWriting > 2) {
                     this._$messageWritingIndicator.text(numOfPeopleWriting + " people are writing...");
@@ -228,6 +258,9 @@ namespace bs {
                     this._$messageWritingIndicator.text(people[peopleWriting[0]].nickname + " is writing...");
                 }
 
+                if (this._opened) {
+                    this._$chat.css("bottom", 27);
+                }
                 this._$messageWritingIndicator.removeClass("hidden");
             }
 
@@ -238,7 +271,7 @@ namespace bs {
             return moment(date).format("DD/MM/YY - HH:mm:ss");
         }
 
-        function _getMessage(message: Message): JQuery {
+        function _setMessageTemplate(message: Message): JQuery {
             let isUser = (message.id === this._session.id);
             let color = _getColorsFor.call(this, message.id);
             let template = this._templates[isUser ? "user-message" : "other-message"];
@@ -253,7 +286,7 @@ namespace bs {
                 );
             }
 
-            return $(template({
+            let _$template = $(template({
                 date: _formatDate(message.date),
                 color: color,
                 avatar: this._people[message.id].image,
@@ -261,6 +294,15 @@ namespace bs {
                 message: message.message,
                 userIdentifier: b64Identifier
             }));
+
+            if (!isUser) {
+                _$template.find(".user-avatar").click(() => {
+                    this._$input.val(this._$input.val() + "@" + message.nickname + " ");
+                    this._$input.focus();
+                });
+            }
+
+            return _$template;
         }
 
         function _getStatus(nickname: string, status: string): JQuery {

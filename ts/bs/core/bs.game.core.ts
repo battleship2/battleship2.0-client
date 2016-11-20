@@ -68,7 +68,7 @@ namespace bs {
 
                 _gameStarted = true;
 
-                console.debug("(bs.game.core) TODO: Set state according to who starts first (from server)");
+                console.debug("TODO: (bs.game.core) Set state according to who starts first (from server)");
                 _instance.state(BSData.Names.PLAYER);
 
                 return _instance;
@@ -86,7 +86,7 @@ namespace bs {
 
                 _board.setup();
 
-                console.debug("(bs.game.core) TODO: Create ships depending on server game configuration");
+                console.debug("TODO: (bs.game.core) Create ships depending on server game configuration");
                 _board.addShip(new bs.ships.Destroyer());
                 _board.addShip(new bs.ships.Submarine());
                 _board.addShip(new bs.ships.Cruiser());
@@ -123,7 +123,7 @@ namespace bs {
                 if (this.state() !== BSData.Names.PLAYER) {
                     return _instance;
                 }
-                console.info("TODO: Send bomb coordinates to server here");
+                console.debug("TODO: (bs.game.core) Send bomb coordinates to server here");
                 _map.savePlayerBombLocation(x, y);
                 this.state(BSData.Names.OPPONENT);
                 return _instance;
@@ -141,15 +141,15 @@ namespace bs {
             switch (_gameState) {
                 case BSData.Names.PLAYER:
                     _board.clearShips();
-                    console.info("TODO: Draw player bombs here");
-                    _gui.hideOverlay();
+                    console.debug("TODO: (bs.game.core) Draw player bombs here");
+                    _board.hideOverlay();
                     _gui.showDropBombHint();
                     break;
                 case BSData.Names.OPPONENT:
                     _board.freezeShips();
                     _board.drawShips();
-                    console.info("TODO: Draw opponent bombs here");
-                    _gui.showOverlay();
+                    console.debug("TODO: (bs.game.core) Draw opponent bombs here");
+                    _board.showOverlay();
                     _gui.showWaitingForOpponentHint();
                     break;
             }

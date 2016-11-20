@@ -4,12 +4,9 @@ namespace bs {
 
     export namespace components {
 
-        const _animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend";
+        let _template: Function = null;
 
-        const _template: string = "<span class=\"current top <%= currentSize %>\"><%= count %></span>" +
-            "<span class=\"next top <%= nextSize %>\"><%= nextCount %></span>" +
-            "<span class=\"current bottom <%= currentSize %>\"><%= count %></span>" +
-            "<span class=\"next bottom <%= nextSize %>\"><%= nextCount %></span>";
+        const _animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend";
 
         export class Counter extends bs.core.Core {
 
@@ -32,6 +29,8 @@ namespace bs {
 
             constructor(count: number = 0, element: string = "") {
                 super();
+
+                _template = bs.template.get("counter");
 
                 this._count = count;
                 this._$element = $(element);
@@ -92,11 +91,12 @@ namespace bs {
         /**********************************************************************************/
 
         function _getTemplate(): string {
-            return _template
-                .replace(/<%= count %>/g, String(this._count))
-                .replace(/<%= nextSize %>/g, this._nextSize)
-                .replace(/<%= nextCount %>/g, String(this._count + 1))
-                .replace(/<%= currentSize %>/g, this._currentSize);
+            return _template({
+                count: this._count,
+                nextSize: this._nextSize,
+                nextCount: this._count + 1,
+                currentSize: this._currentSize
+            });
         }
 
     }

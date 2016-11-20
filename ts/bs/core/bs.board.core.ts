@@ -14,6 +14,7 @@ namespace bs {
         let _loader: bs.core.Loader = null;
         let _target: createjs.Bitmap = null;
         let _picture: createjs.Bitmap = null;
+        let _overlay: createjs.Shape = null;
         let _instance: bs.core.Board = null;
         let _constants: bs.core.Constants = null;
         let _updateStage: boolean = false;
@@ -76,6 +77,31 @@ namespace bs {
             /*                                PUBLIC MEMBERS                                  */
             /*                                                                                */
             /**********************************************************************************/
+
+            public showOverlay = (): bs.core.Board => {
+                if (!bs.utils.isNull(_overlay)) {
+                    _removeOverlay();
+                }
+
+                let _canvas = _constants.get("canvas");
+                _overlay = new createjs.Shape();
+                _overlay
+                    .graphics
+                    .beginFill(_constants.get("colors").black)
+                    .drawRect(0, 0, _canvas.size.width, _canvas.size.height)
+                    .endFill();
+                _overlay.alpha = .5;
+                _stageChildren.push(_overlay);
+                _instance.stage.addChild(_overlay);
+                _instance.stage.update();
+                return _instance;
+            };
+
+            public hideOverlay = (): bs.core.Board => {
+                _removeOverlay();
+                _instance.stage.update();
+                return _instance;
+            };
 
             public addShip = (ship: bs.ships.AbstractShip): bs.core.Board => {
                 try {
@@ -233,6 +259,13 @@ namespace bs {
         /*                                                                                */
         /**********************************************************************************/
 
+        function _removeOverlay(): bs.core.Board {
+            _stageChildren.splice(_stageChildren.indexOf(_overlay), 1);
+            _instance.stage.removeChild(_overlay);
+            _overlay = null;
+            return _instance;
+        }
+
         function _clearBombSelection(): bs.core.Board {
             _instance.stage.removeChild(_mark);
             _instance.stage.removeChild(_target);
@@ -313,7 +346,7 @@ namespace bs {
                 return _instance;
             }
 
-            console.info("TODO: Check here that the coords have not already been hit (from map?)");
+            console.debug("TODO: (bs.board.core) Check here that the coords have not already been hit (from map?)");
 
             _drawTargetTemplate("MARK", _mark);
 
@@ -420,6 +453,10 @@ namespace bs {
 
                 }
 
+            }
+
+            if (!bs.utils.isNull(_overlay)) {
+                _instance.showOverlay();
             }
 
             _instance.stage.update();

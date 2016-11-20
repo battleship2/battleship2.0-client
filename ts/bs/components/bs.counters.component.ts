@@ -4,7 +4,11 @@ namespace bs {
 
     export namespace components {
 
-        export class Commands extends bs.core.Core {
+        let _hitCounter: bs.components.Counter = null;
+        let _bombCounter: bs.components.Counter = null;
+        let _shipDestroyedCounter: bs.components.Counter = null;
+
+        export class Counters extends bs.core.Core {
 
             /**********************************************************************************/
             /*                                                                                */
@@ -13,8 +17,7 @@ namespace bs {
             /**********************************************************************************/
 
             private _socket: bs.core.Socket = null;
-            private _$commands: JQuery = null;
-            private _templates: { [name: string]: Function } = {};
+            private _$counters: JQuery = null;
 
             /**********************************************************************************/
             /*                                                                                */
@@ -25,18 +28,26 @@ namespace bs {
             constructor() {
                 super();
 
-                this._$commands = $("commands");
+                this._$counters = $("counters");
 
-                if (this._$commands.length <= 0) {
-                    console.error("(bs.commands.component) Missing tag <commands></commands>");
+                if (this._$counters.length <= 0) {
+                    console.error("(bs.counters.component) Missing tag <counters></counters>");
                     return this;
                 }
 
-                this._templates = {
-                    "commands": bs.template.get("commands")
-                };
+                this._$counters.html(bs.template.get("counters")());
+
+                _hitCounter = new bs.components.Counter(0, "#hits-counter");
+                _bombCounter = new bs.components.Counter(0, "#bombs-counter");
+                _shipDestroyedCounter = new bs.components.Counter(0, "#ships-destroyed-counter");
 
                 this._socket = new bs.core.Socket();
+                console.debug("TODO: (bs.counters.component) Plug hits counter to server response here");
+                console.debug("TODO: (bs.counters.component) Plug bombs counter to server response here");
+                console.debug("TODO: (bs.counters.component) Plug ships destroyed counter to server response here");
+                // bs.events.on(_enum.events.bomb.hit, _hitCounter.increment);
+                // bs.events.on(_enum.events.bomb.hit, _bombCounter.increment);
+                // bs.events.on(_enum.events.ship.destroyed, _shipDestroyedCounter.increment);
             }
 
             /**********************************************************************************/
@@ -45,41 +56,7 @@ namespace bs {
             /*                                                                                */
             /**********************************************************************************/
 
-            public showStarterLayout = (): bs.components.Commands => {
-                this._$commands.html(this._templates["commands"]({
-                    sendOrder: "hidden",
-                    commandType: "card-inverse card-primary",
-                    commandTitle: "Prepare your ships for the battle!",
-                    commandDescription:
-                    "<li>Click on a ship to rotate it.</li>" +
-                    "<li>Drag and drop a ship move it on the map.</li>" +
-                    "<li>Click on the \"Start game\" button once you are ready.</li>"
-                }));
-                return this;
-            };
-
-            public showBombLayout = (): bs.components.Commands => {
-                this._$commands.html(this._templates["commands"]({
-                    startGame: "hidden",
-                    commandType: "card-inverse card-warning",
-                    commandTitle: "Choose your coordinates and fire at will!",
-                    commandDescription:
-                    "<li>Click on the map to select a location for your bomb.</li>" +
-                    "<li>Click on the \"Send order\" button once you are ready.</li>"
-                }));
-                return this;
-            };
-
-            public showWaitingLayout = (): bs.components.Commands => {
-                this._$commands.html(this._templates["commands"]({
-                    startGame: "hidden",
-                    sendOrder: "hidden",
-                    commandType: "card-inverse card-success",
-                    commandTitle: "Strategy never wait.",
-                    commandDescription:
-                    "<li>It is now time for your opponent to make his move.</li>" +
-                    "<li>In the meantime, try to think of your next hit.</li>"
-                }));
+            public showStarterLayout = (): bs.components.Counters => {
                 return this;
             };
 

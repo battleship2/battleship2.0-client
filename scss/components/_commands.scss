@@ -2,8 +2,16 @@
     ul {
         list-style-type: none;
 
-        li {
-            color: $bs-white;
+        li:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    button {
+        &, &:disabled {
+            &, &:hover, &:active, &:focus {
+                border: 1px solid $bs-white;
+            }
         }
     }
 }

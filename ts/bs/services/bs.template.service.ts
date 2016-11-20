@@ -63,6 +63,8 @@ namespace bs {
                     _template = _template.replace(new RegExp("{{( *?)" + key + "( *?)}}", "g"), value);
                 });
 
+                _template = _template.replace(/{{(.*?)}}/g, "");
+
                 return _template;
             };
 

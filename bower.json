@@ -5,6 +5,7 @@
     "jquery": "^3.1.1",
     "bootstrap": "v4.0.0-alpha.5",
     "randomcolor": "^0.4.4",
-    "moment": "^2.15.2"
+    "moment": "^2.15.2",
+    "animate.css": "^3.5.2"
   }
 }

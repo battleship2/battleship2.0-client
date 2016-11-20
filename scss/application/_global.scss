@@ -66,7 +66,18 @@ html, body {
     }
 }
 
-.overlay {
-    position: absolute;
-    background: rgba($bs-black, .5);
+.card-inverse * {
+    color: $bs-white;
+}
+
+.card-darken {
+    background-color: $bs-black;
+}
+
+.card-warning-important {
+    background-color: #f0ad4e !important;
+}
+
+.tooltip {
+    z-index: 10000;
 }

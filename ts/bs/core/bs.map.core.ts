@@ -63,7 +63,7 @@ namespace bs {
             };
 
             public savePlayerBombLocation = (x: number, y: number): bs.core.Map => {
-                console.info("TODO: Save player bomb here");
+                console.debug("TODO: (bs.map.core) Save player bomb here");
                 return _instance;
             };
 
