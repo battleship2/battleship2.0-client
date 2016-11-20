@@ -144,7 +144,6 @@ namespace bs {
                     console.info("TODO: Draw player bombs here");
                     _gui.hideOverlay();
                     _gui.showDropBombHint();
-                    _gui.showCommand();
                     break;
                 case BSData.Names.OPPONENT:
                     _board.freezeShips();

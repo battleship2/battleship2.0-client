@@ -402,8 +402,8 @@ namespace bs {
                     let textScale = (lineWidth / 2),
                         verticalText = _map.indexes.vertical[index - 1],
                         horizontalText = _map.indexes.horizontal[index - 1],
-                        verticalIndexText = new createjs.Text(verticalText, textScale + "px Arial", _colors.white),
-                        horizontalIndexText = new createjs.Text(horizontalText, textScale + "px Arial", _colors.white);
+                        verticalIndexText = new createjs.Text(verticalText, textScale + "px Bebas Neue", _colors.white),
+                        horizontalIndexText = new createjs.Text(horizontalText, textScale + "px Bebas Neue", _colors.white);
 
                     verticalIndexText.x = (currentVerticalPosition + lineWidth / 2 - verticalIndexText.getBounds().width / 2);
                     verticalIndexText.y = (lineHeight / 2);

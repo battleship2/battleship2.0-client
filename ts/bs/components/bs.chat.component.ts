@@ -6,7 +6,7 @@ namespace bs {
 
         let _connectionStatusClasses: Array<string> = ["connected", "connecting", "disconnected"];
 
-        export class Messages extends bs.core.Core {
+        export class Chat extends bs.core.Core {
 
             /**********************************************************************************/
             /*                                                                                */
@@ -39,7 +39,7 @@ namespace bs {
                 this._$chat = $("chat");
 
                 if (this._$chat.length <= 0) {
-                    console.error("(bs.components.messages) Missing tag <chat></chat>");
+                    console.error("(bs.components.chat) Missing tag <chat></chat>");
                     return this;
                 }
 
@@ -127,32 +127,32 @@ namespace bs {
             _tooltip();
         }
 
-        function _handlePeopleInRoom(people: { [peopleId: string]: People }): bs.components.Messages {
+        function _handlePeopleInRoom(people: { [peopleId: string]: People }): bs.components.Chat {
             this._$peopleList.html(this._templates["people-list"]({
                 numberOfPeople: Object.keys(people).length
             }));
             return this;
         }
 
-        function _handlePeopleStatusChange(people: People, status: string): bs.components.Messages {
+        function _handlePeopleStatusChange(people: People, status: string): bs.components.Chat {
             this._$container.append(_getStatus.call(this, people.nickname, status));
             this._$container.scrollTop(this._$container[0].scrollHeight);
             return this;
         }
 
-        function _someoneJoinedTheRoom(people: People): bs.components.Messages {
+        function _someoneJoinedTheRoom(people: People): bs.components.Chat {
             _setUpPeople.call(this, people.id);
             _handlePeopleStatusChange.call(this, people, "joined");
             return this;
         }
 
-        function _someoneLeftTheRoom(people: People): bs.components.Messages {
+        function _someoneLeftTheRoom(people: People): bs.components.Chat {
             delete this._people[people.id];
             _handlePeopleStatusChange.call(this, people, "left");
             return this;
         }
 
-        function _keyup(event?: any): bs.components.Messages {
+        function _keyup(event?: any): bs.components.Chat {
             let keycode = event.keyCode || event.which;
 
             switch (keycode) {
@@ -165,7 +165,7 @@ namespace bs {
             return this;
         }
 
-        function _checkForMessageBeingWritten(): bs.components.Messages {
+        function _checkForMessageBeingWritten(): bs.components.Chat {
             let message = this._$input.val();
             if (bs.utils.isString(message) && message.trim().length > 0) {
                 this._socket.emit(BSData.Events.emit.SOMEONE_IS_WRITING);
@@ -175,7 +175,7 @@ namespace bs {
             return this;
         }
 
-        function _sendMessage(message: string): bs.components.Messages {
+        function _sendMessage(message: string): bs.components.Chat {
             if (bs.utils.isString(message) && message.trim().length) {
                 this._$input.val("");
                 this._socket.emit(BSData.Events.emit.SOMEONE_STOPPED_WRITING);
@@ -196,20 +196,20 @@ namespace bs {
             return _htmlDecode(_htmlEncode(value));
         }
 
-        function _message(message: Message): bs.components.Messages {
+        function _message(message: Message): bs.components.Chat {
             let _message = _parseMessage(message);
             this._$container.append(_getMessage.call(this, _message));
             this._$container.scrollTop(this._$container[0].scrollHeight);
             return this;
         }
 
-        function _nickname(people: People): bs.components.Messages {
+        function _nickname(people: People): bs.components.Chat {
             this._session = people;
             this._unbindNickname();
             return this;
         }
 
-        function _handlePeopleWriting(people: { [peopleId: string]: People }): bs.components.Messages {
+        function _handlePeopleWriting(people: { [peopleId: string]: People }): bs.components.Chat {
             // Not including the current session in the algorithm
             delete people[this._session.id];
 

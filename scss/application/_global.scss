@@ -65,3 +65,8 @@ html, body {
         }
     }
 }
+
+.overlay {
+    position: absolute;
+    background: rgba($bs-black, .5);
+}

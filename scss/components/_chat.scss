@@ -74,7 +74,7 @@
         }
 
         .messages-container {
-            height: 300px;
+            height: 250px;
             padding: 10px 0;
             overflow-y: auto;
             overflow-x: hidden;
@@ -169,20 +169,12 @@
                 }
 
                 &:before {
-                    -webkit-tranform: translate(0, -2px);
-                    -moz-tranform: translate(0, -2px);
-                    -ms-tranform: translate(0, -2px);
-                    -o-tranform: translate(0, -2px);
                     transform: translate(0, -2px);
                 }
 
                 &:after {
                     width: 26px;
                     background: #ffffff;
-                    -webkit-tranform: translate(-30px, -2px);
-                    -moz-tranform: translate(-30px, -2px);
-                    -ms-tranform: translate(-30px, -2px);
-                    -o-tranform: translate(-30px, -2px);
                     transform: translate(-30px, -2px);
                 }
 
