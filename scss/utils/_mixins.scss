@@ -38,8 +38,8 @@
  * @include placeholder-color(#ffffff);
  */
 @mixin placeholder-color($color) {
-    :-moz-placeholder           { color: #{$color}; opacity: .5; } /* Mozilla Firefox 4 to 18 */
-    ::-moz-placeholder          { color: #{$color}; opacity: .5; } /* Mozilla Firefox 19+ */
-    :-ms-input-placeholder      { color: #{$color}; opacity: .5; } /* Internet Explorer 10-11 */
-    ::-webkit-input-placeholder { color: #{$color}; opacity: .5; } /* WebKit, Blink, Edge */
+    &:-moz-placeholder           { color: #{$color}; opacity: .5; } /* Mozilla Firefox 4 to 18 */
+    &::-moz-placeholder          { color: #{$color}; opacity: .5; } /* Mozilla Firefox 19+ */
+    &:-ms-input-placeholder      { color: #{$color}; opacity: .5; } /* Internet Explorer 10-11 */
+    &::-webkit-input-placeholder { color: #{$color}; opacity: .5; } /* WebKit, Blink, Edge */
 }
