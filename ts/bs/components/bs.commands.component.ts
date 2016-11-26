@@ -48,7 +48,7 @@ namespace bs {
             public showStarterLayout = (): bs.components.Commands => {
                 this._$commands.html(this._templates["commands"]({
                     sendOrder: "hidden",
-                    commandType: "card-inverse card-primary",
+                    commandType: "card-inverse card-blue",
                     commandTitle: "Prepare your ships for the battle!",
                     commandDescription:
                     "<li>Click on a ship to rotate it.</li>" +
@@ -61,7 +61,7 @@ namespace bs {
             public showBombLayout = (): bs.components.Commands => {
                 this._$commands.html(this._templates["commands"]({
                     startGame: "hidden",
-                    commandType: "card-inverse card-warning",
+                    commandType: "card-inverse card-orange",
                     commandTitle: "Choose your coordinates and fire at will!",
                     commandDescription:
                     "<li>Click on the map to select a location for your bomb.</li>" +
@@ -74,7 +74,7 @@ namespace bs {
                 this._$commands.html(this._templates["commands"]({
                     startGame: "hidden",
                     sendOrder: "hidden",
-                    commandType: "card-inverse card-success",
+                    commandType: "card-inverse card-green",
                     commandTitle: "Strategy never wait.",
                     commandDescription:
                     "<li>It is now time for your opponent to make his move.</li>" +

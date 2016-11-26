@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-full navbar-light">
+<nav class="navbar navbar-full navbar-black hidden">
     <a class="navbar-brand" href="#">
         <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="Battleship 2 Logo">
         <span class="bebas-neue title">Battleship 2.0</span>
@@ -37,24 +37,8 @@
     </a>
 </nav>
 
-<chat class="hidden-sm-down"></chat>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 hidden-md-up">
-            <commands></commands>
-        </div>
-
-        <div class="col-xs-12 col-md-6 col-lg-8 text-xs-center">
-            <canvas id="battlefield" class="battlefield hidden" width="600" height="600"></canvas>
-        </div>
-
-        <div class="col-xs-12 col-md-6 col-lg-4">
-            <counters></counters>
-            <commands class="hidden-sm-down"></commands>
-        </div>
-    </div>
-</div>
+<battleship-game></battleship-game>
+<battleship-setup></battleship-setup>
 
 <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
 
@@ -101,6 +85,8 @@
 <script src="js/release/bs/components/bs.counter.component.js"></script>
 <script src="js/release/bs/components/bs.counters.component.js"></script>
 <script src="js/release/bs/components/bs.commands.component.js"></script>
+<script src="js/release/bs/components/bs.battleship-game.component.js"></script>
+<script src="js/release/bs/components/bs.battleship-setup.component.js"></script>
 
 <script src="js/release/bs/ships/bs.abstract.ship.js"></script>
 <script src="js/release/bs/ships/bs.cruiser.ship.js"></script>
@@ -112,14 +98,19 @@
 <!-- endbuild -->
 
 <!-- templates -->
-<script type="text/template" src="templates/chat/chat.html" id="chat"></script>
+<script type="text/template" src="templates/commands/commands.html" id="commands"></script>
+
 <script type="text/template" src="templates/counters/counter.html" id="counter"></script>
 <script type="text/template" src="templates/counters/counters.html" id="counters"></script>
-<script type="text/template" src="templates/commands/commands.html" id="commands"></script>
+
+<script type="text/template" src="templates/chat/chat.html" id="chat"></script>
 <script type="text/template" src="templates/chat/messages/status.html" id="status"></script>
 <script type="text/template" src="templates/chat/messages/user-message.html" id="user-message"></script>
 <script type="text/template" src="templates/chat/messages/other-message.html" id="other-message"></script>
 <script type="text/template" src="templates/chat/people-list/people-list.html" id="people-list"></script>
+
+<script type="text/template" src="templates/battleship/battleship-game.html" id="battleship-game"></script>
+<script type="text/template" src="templates/battleship/battleship-setup.html" id="battleship-setup"></script>
 <!-- endtemplates -->
 
 </body>

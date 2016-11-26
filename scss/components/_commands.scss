@@ -6,12 +6,4 @@
             margin-bottom: 1rem;
         }
     }
-
-    button {
-        &, &:disabled {
-            &, &:hover, &:active, &:focus {
-                border: 1px solid $bs-white;
-            }
-        }
-    }
 }

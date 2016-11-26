@@ -20,8 +20,9 @@ $bebas-neue-font-path: "../fonts/Bebas-Neue/";
 @include bebas-neue-font("BebasNeue", "Regular");
 
 .bebas-neue {
+    font-size: 1.2rem;
     font-family: "Bebas Neue", serif;
-    letter-spacing: .1rem;
+    letter-spacing: .05rem;
 
     /* Support for all WebKit browsers. */
     -webkit-font-smoothing: antialiased;

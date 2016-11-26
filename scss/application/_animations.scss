@@ -1,0 +1,75 @@
+$fade-distance: 20%;
+$fade-duration: .5s;
+
+/**
+ * Fade in/out left
+ */
+@keyframes BSFadeInLeft {
+    from {
+        opacity: 0;
+        transform: translate3d(-$fade-distance, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.BSFadeInLeft {
+    animation-name: BSFadeInLeft;
+    animation-duration: $fade-duration;
+}
+
+@keyframes BSFadeOutLeft {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(-$fade-distance, 0, 0);
+    }
+}
+
+.BSFadeOutLeft {
+    animation-name: BSFadeOutLeft;
+    animation-duration: $fade-duration;
+}
+
+/**
+ * Fade in/out right
+ */
+
+@keyframes BSFadeInRight {
+    from {
+        opacity: 0;
+        transform: translate3d($fade-distance, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.BSFadeInRight {
+    animation-name: BSFadeInRight;
+    animation-duration: $fade-duration;
+}
+
+@keyframes BSFadeOutRight {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d($fade-distance, 0, 0);
+    }
+}
+
+.BSFadeOutRight {
+    animation-name: BSFadeOutRight;
+    animation-duration: $fade-duration;
+}

@@ -1,0 +1,78 @@
+battleship-setup {
+    .github-logo {
+        left: 8px;
+        bottom: 4px;
+        z-index: 1000;
+        position: absolute;
+    }
+
+    .card {
+        height: 500px;
+
+        .card-header {
+            h1 {
+                position: relative;
+                font-size: 2rem;
+            }
+
+            h2 {
+                position: relative;
+            }
+
+            &.card-header-background {
+                position: relative;
+                background: url("../img/bg-setup.jpg") no-repeat;
+                background-size: cover;
+                background-position-y: 70%;
+            }
+
+            .card-header-tabs {
+                position: relative;
+                margin-left: 30px;
+
+                .nav-link {
+                    cursor: pointer;
+                    border-bottom: 0;
+
+                    &.active {
+                        color: rgba($bs-black, .9) !important;
+                    }
+                }
+            }
+        }
+
+        .card-block {
+            .bs-form-layout {
+                left: 0;
+                right: 0;
+                width: 100%;
+                position: absolute;
+            }
+
+            label {
+                width: 100%;
+
+                i {
+                    top: 2px;
+                    float: right;
+                    cursor: pointer;
+                    position: relative;
+                }
+            }
+        }
+
+        .card-footer {
+            width: 100%;
+            bottom: 0;
+            border: none;
+            padding: 0;
+            position: absolute;
+            background: none;
+
+            .btn {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        }
+    }
+}

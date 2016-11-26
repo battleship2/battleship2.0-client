@@ -42,7 +42,7 @@ namespace bs {
                 this._$chat = $("chat");
 
                 if (this._$chat.length <= 0) {
-                    console.error("(bs.chat.components) Missing tag <chat></chat>");
+                    console.error("(bs.chat.component) Missing tag <chat></chat>");
                     return this;
                 }
 

@@ -18,6 +18,7 @@ html, body {
     height: 100%;
     overflow-x: hidden;
     background-color: $bs-white;
+    background-image: url("../img/bg-body.png");
 }
 
 .card {
@@ -35,10 +36,14 @@ html, body {
     visibility: hidden;
 }
 
-.navbar-light {
-    //box-shadow: 0 0 5px rgba($bs-black, .2);
-    background-color: #ffffff;
+.navbar-black {
+    box-shadow: 0 0 5px rgba($bs-black, .2);
     border-bottom: 1px solid rgba($bs-black, .125);
+    background-image: url("../img/bg-mixed-black.png");
+
+    &, * {
+        color: $bs-white;
+    }
 
     .navbar-brand {
         padding-bottom: 0;
@@ -57,7 +62,7 @@ html, body {
     padding-left: 4px;
 
     svg {
-        fill: currentColor;
+        fill: $bs-white;
         vertical-align: text-bottom;
 
         &:not(:root) {
@@ -66,12 +71,30 @@ html, body {
     }
 }
 
-.card-inverse * {
-    color: $bs-white;
+.card-inverse {
+    .card-text {
+        color: rgba($bs-white, .9) !important;
+    }
+
+    *:not(.card-text):not(input) {
+        color: $bs-white !important;
+    }
 }
 
-.card-darken {
-    background-color: $bs-black;
+.card-black {
+    background-image: url("../img/bg-mixed-black.png");
+}
+
+.card-blue {
+    background-image: url("../img/bg-mixed-blue.png");
+}
+
+.card-orange{
+    background-image: url("../img/bg-mixed-orange.png");
+}
+
+.card-green {
+    background-image: url("../img/bg-mixed-green.png");
 }
 
 .card-warning-important {
