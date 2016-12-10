@@ -1,4 +1,4 @@
-<div class="container animated bounceIn">
+<div class="container animated fadeIn">
     <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
 
@@ -14,53 +14,75 @@
                     <h1 class="bebas-neue mb-1">&mdash; Battleship 2.0 &mdash;</h1>
                     <h2 class="bebas-neue mb-1 hidden-xs-down">There will be blood</h2>
 
-                    <ul class="nav nav-tabs card-header-tabs float-xs-left">
+                    <ul class="nav nav-tabs card-header-tabs float-xs-left" role="tablist">
                         <li class="nav-item">
-                            <div class="nav-link public-wars active">Public Wars</div>
+                            <a class="nav-link active" data-toggle="tab" href="#public-wars" role="tab">Public Wars</a>
                         </li>
                         <li class="nav-item">
-                            <div class="nav-link create-war">Create a War</div>
+                            <a class="nav-link" data-toggle="tab" href="#create-war" role="tab">Create a War</a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="card-block">
-                    <div class="bs-form-layout public-wars-layout">
-                        <form class="col-xs-12 col-md-10 offset-md-1">
-                            <div class="form-group">
-                                <label for="pick-war" class="card-text bebas-neue">
-                                    Pick your war
-                                    <i class="material-icons refresh-war-list"
-                                       data-toggle="tooltip" data-placement="right" title="Refresh the list">refresh</i>
-                                </label>
-                                <input type="text" class="form-control" id="pick-war" placeholder="Atomic Navy Warfare">
-                            </div>
-                        </form>
-                    </div>
+                <div class="card-block tab-content">
+                    <form class="col-xs-12 tab-pane fade in active" id="public-wars" role="tabpanel">
+                        <div class="form-group">
+                            <label for="pick-war" class="card-text bebas-neue">
+                                Pick your war
+                                <i class="material-icons refresh-war-list"
+                                   data-toggle="tooltip" data-placement="right" title="Refresh the list">refresh</i>
+                            </label>
 
-                    <div class="bs-form-layout create-war-layout hidden">
-                        <form class="col-xs-12 col-md-10 offset-md-1">
-                            <div class="form-group">
-                                <label for="game-name" class="card-text bebas-neue">Name your war</label>
-                                <input type="text" class="form-control" id="game-name" placeholder="Atomic Navy Warfare">
-                                <small class="form-text text-muted font-italic">This will identify the game so other players know which mood your into.</small>
-                            </div>
+                            <img class="separator" src="img/sidebar-separator-top.png">
 
-                            <div class="form-group">
-                                <label for="max-players" class="card-text bebas-neue">Count your opponents</label>
-                                <input type="number" step="1" class="form-control" id="max-players" min="2" value="2">
-                                <small class="form-text text-muted font-italic">How many people should you slaughter during your little war?</small>
-                            </div>
+                            <div id="pick-war" class="games-list">
+                                <div class="war-item">
+                                    <div class="name ellipsis">
+                                        <span class="ellipsis">This is spartaa!!</span>
+                                    </div>
+                                    <div class="people">
+                                        <i class="material-icons">people</i>
+                                        <span>2/6</span>
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"> This is a private war
-                                    </label>
+                                <div class="war-item">
+                                    <div class="name ellipsis">
+                                        <i class="material-icons">lock</i>
+                                        <span class="ellipsis">Yamakassi bitch hell yeah gros !</span>
+                                    </div>
+                                    <div class="people">
+                                        <i class="material-icons">people</i>
+                                        <span>2/6</span>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <img class="separator" src="img/sidebar-separator-bottom.png">
+                        </div>
+                    </form>
+
+                    <form class="col-xs-12 tab-pane fade" id="create-war" role="tabpanel">
+                        <div class="form-group">
+                            <label for="game-name" class="card-text bebas-neue">Name your war</label>
+                            <input type="text" class="form-control" id="game-name" placeholder="Atomic Navy Warfare">
+                            <small class="form-text text-muted font-italic">This will identify the game so other players know which mood your into.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="max-players" class="card-text bebas-neue">Count your opponents</label>
+                            <input type="number" step="1" class="form-control" id="max-players" min="2" value="2">
+                            <small class="form-text text-muted font-italic">How many people should you slaughter during your little war?</small>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"> This is a private war
+                                </label>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="card-footer">

@@ -45,12 +45,6 @@ namespace bs {
 
                     _$battleshipSetup.html(bs.template.get("battleship-setup")());
 
-                    _$createWarLayout = _$battleshipSetup.find(".create-war-layout");
-                    _$createWarTab = _$battleshipSetup.find(".create-war").click(_switchToCreateWar);
-
-                    _$publicWarsLayout = _$battleshipSetup.find(".public-wars-layout");
-                    _$publicWarsTab = _$battleshipSetup.find(".public-wars").click(_switchToPublicWars);
-
                     _$joinTheWarButton = _$battleshipSetup.find(".join-the-war").click(_joinTheWar);
                 }
 
@@ -85,36 +79,6 @@ namespace bs {
                 $("battleship-game")
                     .find("container")
                     .animateCss("fadeInRightBig");
-            }, 150);
-        }
-
-        function _switchToCreateWar() {
-            _$publicWarsTab.removeClass("active");
-            _$createWarTab.addClass("active");
-
-            _$publicWarsLayout.animateCss("BSFadeOutLeft", () => {
-                _$publicWarsLayout.addClass("hidden");
-            });
-
-            setTimeout(() => {
-                _$createWarLayout
-                    .removeClass("hidden")
-                    .animateCss("BSFadeInRight");
-            }, 150);
-        }
-
-        function _switchToPublicWars() {
-            _$createWarTab.removeClass("active");
-            _$publicWarsTab.addClass("active");
-
-            _$createWarLayout.animateCss("BSFadeOutRight", () => {
-                _$createWarLayout.addClass("hidden");
-            });
-
-            setTimeout(() => {
-                _$publicWarsLayout
-                    .removeClass("hidden")
-                    .animateCss("BSFadeInLeft");
             }, 150);
         }
 
