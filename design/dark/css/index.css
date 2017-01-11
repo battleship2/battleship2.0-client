@@ -54,7 +54,7 @@ html, body, .bg, svg {
 }
 
 .branding-content {
-    top: 25%;
+    top: 10%;
     position: relative;
     text-shadow: 0 0 20px black;
     z-index: 200;
@@ -76,7 +76,7 @@ html, body, .bg, svg {
 }
 
 .branding-content h2 {
-    font-size: 2rem;
+    font-size: 1.95rem;
     font-weight: 100;
     margin-top: 1rem;
     font-family: Roboto, serif;
@@ -84,10 +84,10 @@ html, body, .bg, svg {
 }
 
 .branding-background {
-    background: url("../img/background.jpg") no-repeat center center;
+    background: url(https://static.pexels.com/photos/19678/pexels-photo.jpg) no-repeat center center;
     border-top-right-radius: 1px;
     border-bottom-right-radius: 1px;
-    filter: brightness(50%);
+    filter: brightness(40%) hue-rotate(200deg);
     background-size: cover;
     height: 100%;
     width: 100%;
