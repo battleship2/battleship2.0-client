@@ -20,7 +20,7 @@ html, body, .bg, svg {
 }
 
 #waves-background {
-    filter: grayscale(100%) brightness(40%);
+    filter: grayscale(100%) brightness(30%);
 
     position: fixed;
     top: 0;
@@ -33,62 +33,61 @@ html, body, .bg, svg {
 
 .block {
     width: 60%;
-    height: 600px;
+    height: 80%;
     position: relative;
-    top: calc(50% - 300px);
-    background: ghostwhite;
+    top: 10%;
     margin: auto;
-    border-radius: 3px;
+    border-radius: 4px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+    background-color: #121219;
 }
 
 .branding {
     float: right;
     position: relative;
-    width: calc(100% - 350px);
+    width: 66.6666%;
     height: 100%;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
     display: inline-block;
     color: ghostwhite;
 }
 
 .branding-content {
-    top: 10%;
+    top: 15%;
     position: relative;
     text-shadow: 0 0 20px black;
     z-index: 200;
-    padding-left: 80px;
-    width: calc(100% - 80px);
+    width: 100%;
+    text-align: center;
 }
 
 .branding-content h1 {
     font-size: 5rem;
     font-weight: 100;
     margin-top: 1rem;
-    font-family: Decadence, serif;
-    line-height: 4rem;
+    font-family: "Decadence", serif;
+    line-height: 20px;
     text-transform: uppercase;
 }
 
 .branding-content h1 span {
-    font-family: Starz2, serif;
+    font-family: "Starz2", serif;
+    font-size: 3rem;
+    position: relative;
+    top: -10px;
+    left: -2px;
 }
 
 .branding-content h2 {
-    font-size: 1.95rem;
+    font-size: 1.94rem;
     font-weight: 100;
     margin-top: 1rem;
-    font-family: Roboto, serif;
+    font-family: "Segoe UI", "Roboto", serif;
     line-height: 4rem;
 }
 
 .branding-background {
-    background: url(https://static.pexels.com/photos/19678/pexels-photo.jpg) no-repeat center center;
-    border-top-right-radius: 1px;
-    border-bottom-right-radius: 1px;
-    filter: brightness(40%) hue-rotate(200deg);
-    background-size: cover;
+    background: url("../img/radar_blurred.png");
+    filter: brightness(40%);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -99,6 +98,121 @@ html, body, .bg, svg {
 
 .signin-block {
     display: inline-block;
-    width: 350px;
+    width: 33.3333%;
     height: 100%;
+}
+
+.scanning:before {
+    background: linear-gradient(225deg, transparent 50%, rgba(0, 255, 0, .5) 55%, rgba(0, 255, 0, 1) 56%, transparent 56%);
+    background-position: -25% center;
+    -webkit-animation: reverse-scan 5s infinite ease;
+}
+
+.scanning:after {
+    background: linear-gradient(45deg, transparent 50%, rgba(0, 255, 0, .5) 55%, rgba(0, 255, 0, 1) 56%, transparent 56%);
+    background-position: 125% center;
+    -webkit-animation: scan 5s infinite ease;
+}
+
+.scanning:before, .scanning:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-size: 300% 100%;
+    background-repeat: no-repeat;
+    opacity: .4;
+}
+
+.target {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: rgba(0, 255, 0, .6);
+    opacity: 0;
+    left: calc(50% - 8px);
+    top: calc(50% - 8px);
+    z-index: 3000;
+    box-shadow: 0 0 20px 4px lime;
+    -webkit-animation: blip 5s infinite ease;
+}
+
+@-webkit-keyframes scan {
+    100% {
+        background-position: 0 center;
+    }
+}
+
+@-webkit-keyframes reverse-scan {
+    100% {
+        background-position: 100% center;
+    }
+}
+
+@-webkit-keyframes blip {
+    30% {
+        opacity: 0;
+    }
+    31% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+.logo {
+    background: url(../img/logo_white.png) no-repeat center center;
+    width: 70px;
+    height: 70px;
+    border: 2px solid ghostwhite;
+    border-radius: 50%;
+    background-size: 70%;
+    margin: 4rem auto auto;
+}
+
+.subtitle {
+    text-align: center;
+    margin: 4rem auto auto;
+    font-family: Segoe UI, Roboto, serif;
+    color: rgba(248, 248, 255, 0.4);
+}
+
+.subtitle h2 {
+     font-weight: 100;
+}
+
+.socials {
+    text-align: center;
+    margin: 4rem auto auto;
+    font-family: Segoe UI, Roboto, serif;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.socials button {
+    width: 100%;
+    height: 44px;
+    margin-bottom: 1rem;
+    text-align: left;
+    color: ghostwhite;
+}
+
+.socials button.facebook {
+    background-color: blue;
+}
+
+.socials button.twitter {
+    background-color: lightskyblue;
+}
+
+.socials button.google {
+    background-color: red;
 }
