@@ -1,5 +1,5 @@
-# Battleship2.0 | Client repository
-This is the client-side repository of the `Battleship2.0` game.
+# Battleship 2 | Client repository
+This is the client-side repository of the `Battleship 2` game.
 The server (NodeJS) repository is hosted at [https://github.com/battleship2/battleship2.0-server](https://github.com/battleship2/battleship2.0-server).
 
 ## Dependencies
@@ -78,3 +78,6 @@ Creates a zip archive of the `dist` directory for easy deployment purposes.
 - Send bomb coordinates to server
 - Save player bomb
 - Draw opponent bombs
+
+* * *
+*Logo made with ❤ by [Arun Thomas](https://www.iconfinder.com/arunxthomas) from [Iconfinder](https://www.iconfinder.com/icons/1342928/citycons_sea_ship_icon#size=128)*
