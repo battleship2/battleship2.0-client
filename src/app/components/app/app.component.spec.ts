@@ -16,7 +16,6 @@ import { LoggerService } from '../../services/logger.service';
 import { HeaderBarComponent } from '../header-bar/header-bar.component';
 
 describe('Component: SgApp', () => {
-
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(() => {

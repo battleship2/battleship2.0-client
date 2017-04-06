@@ -6,6 +6,7 @@ bower_components
 .bowerrc
 dist/
 old/
+*.iml
 
 # Config files
 *.swp

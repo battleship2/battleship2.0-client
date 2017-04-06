@@ -20,11 +20,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     // Registering icons used throughout the app
     const icons = [
-      { name: 'build_svg', path: 'assets/img/icons/icon-build.svg' },
-      { name: 'brush_svg', path: 'assets/img/icons/icon-brush.svg' },
-      { name: 'memory_svg', path: 'assets/img/icons/icon-memory.svg' },
-      { name: 'grid_on_svg', path: 'assets/img/icons/icon-grid_on.svg' },
-      { name: 'folder_open_svg', path: 'assets/img/icons/icon-folder_open.svg' }
+      { name: 'build_svg', path: 'assets/img/icons/icon-build.svg' }
     ];
 
     icons.forEach(icon => {
