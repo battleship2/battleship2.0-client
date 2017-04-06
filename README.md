@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/battleship2/battleship2.0-client/master/src/assets/img/logos/logo.png" alt="battleship 2 logo"/>
+</p>
+
 # Battleship 2 | Client repository
 This is the client-side repository of the `Battleship 2` game.
 The server (NodeJS) repository is hosted at [https://github.com/battleship2/battleship2.0-server](https://github.com/battleship2/battleship2.0-server).
@@ -7,6 +11,7 @@ The client relies on several well-known libraries such as:
 - [Socket.IO](http://socket.io/)
 - [Karma](https://karma-runner.github.io)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Angular](https://angular.io/)
 - [Gulp](http://gulpjs.com/)
 - ...
 
@@ -18,14 +23,13 @@ Please refer to this [link](https://demisx.github.io/gulp4/2015/01/15/install-gu
 From the project's root directory, type the following commands:
 
 1. `npm install` -> Install the required NPM dependencies
-1. `bower install` -> Install the required Bower dependencies
 2. `gulp` or `npm start` -> Start the project
 
 ## Tests, Bugs & Contributions
 While we do our best to get the whole project tested, do not hesitate to PR us if you ever find a bug. 
 To launch all the tests, type the following command:
 
-`gulp test` or `npm test`
+`npm test`
 
 ## Working with the sources
 
@@ -34,40 +38,29 @@ Refer to this guide to know how and when to use them.
 
 #### Cleaning up
 
-* `gulp scratch`:
+* `gulp clean`:
 Clear the temporary files and set the project into a clean state.
 
-#### Development
+#### Bundling
 
-* `gulp ts`:
-Compile TypeScript sources to JavaScript.
+* `gulp build`:
+Build and prepare the files into the `dist` directory with development target.
+**N.B: This does not compile the project for release purposes. See `gulp build:prod` for that.**
 
-* `gulp serve && gulp browser`:
-Starts the livereload server and opens the browser.
+* `gulp build:staging`:
+Build and prepare the files into the `dist` directory with staging target.
+This step imitates the production bundle with all the development assets (console logging, debugging, tools, etc.)
+**N.B: This does not compile the project for release purposes. See `gulp build:prod` for that.**
 
-* `gulp bower`:
-Binds the bower dependencies directly where they belong in the `index.html` file.
+* `gulp build:prod`:
+Build and prepare the files into the `dist` directory with production target.
+Will produce a minified, optimized bundle for fast delivery into browsers.
 
-* `gulp watch`:
-Starts the watchers for any changes in the code.
-
-* `gulp sass`:
-Compiles all the SASS files into the `main.css` and `main.min.css` files.
-
-* `gulp deploy`:
-Build and prepare the files into the `dist` directory.
-**N.B: This does not compile the project for release purposes. See `gulp build` for that.**
-
-#### Compiling
-
-* `gulp build [--{ dev (default) | staging | prod }]`:
-Builds the project for the selected environment. See the `./config/environments.json` hook file for more information.
-
-* `gulp zip`:
-Creates a zip archive of the `dist` directory for easy deployment purposes.
+Please note that each of the above environments is configured through a property file (see `./src/environments/environment[.TARGET].ts`).
 
 # What's next?
 
+- Finish Angular 2 migration
 - Check for warning when leaving or refreshing page if a game is playing
 - Plug hits counter to server response
 - Plug ships destroyed counter to server response
