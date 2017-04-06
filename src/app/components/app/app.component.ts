@@ -5,7 +5,7 @@ import { AppReadyEventService } from '../../services/app-ready-event.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'bs-app',
+  selector: 'bsc-app',
   styleUrls: [ 'app.component.scss' ],
   templateUrl: 'app.component.html',
   encapsulation: ViewEncapsulation.None

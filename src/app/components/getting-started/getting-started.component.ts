@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 
 @Component({
-  selector: 'bs-getting-started',
+  selector: 'bsc-getting-started',
   styleUrls: [ 'getting-started.component.scss' ],
   templateUrl: 'getting-started.component.html'
 })

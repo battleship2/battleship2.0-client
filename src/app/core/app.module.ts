@@ -16,6 +16,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AuthService } from '../services/auth.service';
 import { PickYourBattleComponent } from '../components/pick-your-battle/pick-your-battle.component';
 import { firebaseConfig } from './config/firebase.config';
+import { HeaderBarComponent } from '../components/header-bar/header-bar.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { firebaseConfig } from './config/firebase.config';
   ],
   declarations: [
     AppComponent,
+    HeaderBarComponent,
     PageNotFoundComponent,
     PickYourBattleComponent,
     GettingStartedComponent,

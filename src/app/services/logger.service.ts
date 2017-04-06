@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-
 import { ILogger } from '../interfaces/logger.interface';
-
 import { environment } from '../../environments/environment';
 
 declare const console: any;
@@ -10,13 +8,6 @@ declare const console: any;
 export class LoggerService implements ILogger {
   private _loggingActivated = environment.useConsole;
 
-  public on(): void {
-    this._loggingActivated = true;
-  }
-
-  public off(): void {
-    this._loggingActivated = false;
-  }
   public log(...args: any[]): void {
     // tslint:disable-next-line
     this._loggingActivated && (console && console.log) && console.log(...args);

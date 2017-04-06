@@ -10,3 +10,11 @@
 // STYLES
 //
 // ------------------------
+.navbar {
+  background-image: linear-gradient(to right bottom, $bs-color-black 0%, lighten($bs-color-black, 15%) 100%);
+}
+
+.nav-title {
+  top: 2px;
+  position: relative;
+}

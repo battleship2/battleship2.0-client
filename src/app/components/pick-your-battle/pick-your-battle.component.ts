@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'bs-pick-your-battle',
+  selector: 'bsc-pick-your-battle',
   styleUrls: [ 'pick-your-battle.component.scss' ],
   templateUrl: 'pick-your-battle.component.html'
 })

@@ -13,6 +13,7 @@ import { firebaseConfig } from '../../core/config/firebase.config';
 import { AngularFireModule } from 'angularfire2';
 import { AuthService } from '../../services/auth.service';
 import { LoggerService } from '../../services/logger.service';
+import { HeaderBarComponent } from '../header-bar/header-bar.component';
 
 describe('Component: SgApp', () => {
 
@@ -27,6 +28,7 @@ describe('Component: SgApp', () => {
       ],
       declarations: [
         AppComponent,
+        HeaderBarComponent,
         PageNotFoundComponent,
         PickYourBattleComponent,
         GettingStartedComponent,
