@@ -1,8 +1,8 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/battleship2/battleship2.0-client/master/src/assets/img/logos/logo.png" alt="battleship 2 logo"/>
+  <h1 align="center">Battleship 2 | Client repository</h1>
 </p>
 
-# Battleship 2 | Client repository
 This is the client-side repository of the `Battleship 2` game.
 The server (NodeJS) repository is hosted at [https://github.com/battleship2/battleship2.0-server](https://github.com/battleship2/battleship2.0-server).
 
