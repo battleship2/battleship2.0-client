@@ -26,4 +26,8 @@ export class GettingStartedComponent {
       .then(user => console.log(user))
       .catch(error => console.log(error));
   }
+
+  public signOut(): void {
+    this._auth.signOut();
+  }
 }

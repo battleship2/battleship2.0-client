@@ -1,6 +1,6 @@
 {
-  "name": "site2",
-  "version": "0.0.1-alpha",
+  "name": "battleship2",
+  "version": "0.0.1-alpha.0",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {

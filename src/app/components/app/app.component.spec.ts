@@ -14,6 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AuthService } from '../../services/auth.service';
 import { LoggerService } from '../../services/logger.service';
 import { HeaderBarComponent } from '../header-bar/header-bar.component';
+import { IconRegistryService } from '../../services/icon-registry/icon-registry.service';
 
 describe('Component: SgApp', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -35,9 +36,12 @@ describe('Component: SgApp', () => {
       providers: [
         AuthService,
         LoggerService,
+        IconRegistryService,
         AppReadyEventService
       ]
     });
+
+    TestBed.compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();

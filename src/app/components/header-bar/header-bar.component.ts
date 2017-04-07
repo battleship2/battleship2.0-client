@@ -13,17 +13,16 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
   private _userStatusChanges$: Subscription;
 
   public userData: firebase.UserInfo;
-  public isUserAuthenticated = false;
+  public isUserAuthenticated = null;
 
   constructor(private _auth: AuthService) {
-    console.error('Implement logic in this component to show/hide user menu depending on user state (cf. AuthService).');
   }
 
   public ngOnInit(): void {
     this._userStatusChanges$ =
       this._auth.userStatusChanges.subscribe((userData: firebase.UserInfo) => {
         this.userData = userData;
-        this.isUserAuthenticated = !isNull(userData);
+        this.isUserAuthenticated = (isNull(userData) ? null : !userData[ 'anonymous' ]);
       });
   }
 

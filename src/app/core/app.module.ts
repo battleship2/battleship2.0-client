@@ -17,6 +17,7 @@ import { AuthService } from '../services/auth.service';
 import { PickYourBattleComponent } from '../components/pick-your-battle/pick-your-battle.component';
 import { firebaseConfig } from './config/firebase.config';
 import { HeaderBarComponent } from '../components/header-bar/header-bar.component';
+import { IconRegistryService } from '../services/icon-registry/icon-registry.service';
 
 @NgModule({
   imports: [
@@ -32,12 +33,13 @@ import { HeaderBarComponent } from '../components/header-bar/header-bar.componen
     HeaderBarComponent,
     PageNotFoundComponent,
     PickYourBattleComponent,
-    GettingStartedComponent,
+    GettingStartedComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
     AuthService,
     LoggerService,
+    IconRegistryService,
     AppReadyEventService,
 
     { provide: APP_BASE_HREF, useValue: environment.baseHref }

@@ -1,5 +1,39 @@
+// ------------------------
+//
+// IMPORTS
+//
+// ------------------------
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "variables/variables";
+
+// ------------------------
+//
+// STYLES
+//
+// ------------------------
 * {
   margin: 0;
   padding: 0;
   font-family: "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+}
+
+.btn-light {
+  @include button-variant($bs-color-black, $bs-color-white, darken($bs-color-white, 5%));
+}
+
+.btn-outline-light {
+  @include button-outline-variant($bs-color-white, $bs-color-black);
+}
+
+.btn-link-light {
+  color: $bs-color-white;
+
+  @include hover-focus {
+    color: darken($bs-color-white, 15%);
+    text-decoration: none;
+  }
+  &:disabled {
+    color: darken($bs-color-white, 50%);
+  }
 }

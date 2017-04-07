@@ -5,10 +5,26 @@
     <span class="nav-title">B&aring;ttleship 2</span>
   </a>
 
-  <div class="navbar-nav ml-auto" *ngIf="isUserAuthenticated && !userData['anonymous']">
-    <a class="nav-item mr-0" href="/">
-      <img src="{{ userData.photoURL }}" *ngIf="userData.photoURL" width="50" height="50" class="d-inline-block align-middle rounded-circle">
-    </a>
+  <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated">
+    <ng-container *ngSwitchCase="true">
+      <a class="nav-item mr-0" href="/" [ngSwitch]="userData.photoURL">
+        <img src="{{ userData.photoURL }}" *ngSwitchDefault width="50" height="50" class="d-inline-block align-middle rounded-circle">
+        <md-icon svgIcon="person_pin_svg" class="user-anonymous" *ngSwitchCase="null"></md-icon>
+      </a>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="false">
+      <a href="/" class="btn btn-link btn-link-light mr-3">Sign in</a>
+      <a href="/" class="btn btn-outline-light">Sign up</a>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <div class="loading-spinner">
+        <svg viewBox="0 0 64 64">
+          <circle transform="translate(32,32)" r="26"></circle>
+        </svg>
+      </div>
+    </ng-container>
   </div>
 
 </nav>
