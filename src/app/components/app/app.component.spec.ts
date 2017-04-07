@@ -15,8 +15,11 @@ import { AuthService } from '../../services/auth.service';
 import { LoggerService } from '../../services/logger.service';
 import { HeaderBarComponent } from '../header-bar/header-bar.component';
 import { IconRegistryService } from '../../services/icon-registry/icon-registry.service';
+import { RankBoardComponent } from "../rank-board/rank-board.component";
+import { SignInComponent } from "../sign-in/sign-in.component";
+import { SignUpComponent } from "../sign-up/sign-up.component";
 
-describe('Component: SgApp', () => {
+describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(() => {
@@ -28,7 +31,10 @@ describe('Component: SgApp', () => {
       ],
       declarations: [
         AppComponent,
+        SignInComponent,
+        SignUpComponent,
         HeaderBarComponent,
+        RankBoardComponent,
         PageNotFoundComponent,
         PickYourBattleComponent,
         GettingStartedComponent,
@@ -52,6 +58,6 @@ describe('Component: SgApp', () => {
   });
 
   it('should create the app', () => {
-    expect(fixture.componentInstance).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy('Expected application to be created.');
   });
 });

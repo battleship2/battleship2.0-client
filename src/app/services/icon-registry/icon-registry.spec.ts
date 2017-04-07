@@ -12,7 +12,7 @@ class IconRegistryServiceTestComponent {
   public ariaLabel: string = null;
 
   constructor(public irs: IconRegistryService) {
-    irs.register({ name: 'arrow_back_svg', path: 'toto' });
+    irs.register({ name: 'person_pin_svg', path: '../../assets/img/icons/icon-person_pin.svg' });
   }
 }
 
@@ -31,13 +31,13 @@ describe('Component: LbpApp', () => {
     fixture = TestBed.createComponent(IconRegistryServiceTestComponent);
   });
 
-  it('should load a given SVG icon', () => {
+  it('should register a given SVG icon', () => {
     const testComponent = fixture.componentInstance;
     const mdIconElement = fixture.debugElement.nativeElement.querySelector('md-icon');
 
-    testComponent.iconName = 'arrow_back_svg';
+    testComponent.iconName = 'person_pin_svg';
     fixture.detectChanges();
 
-    expect(mdIconElement.getAttribute('aria-label')).toBe('arrow_back_svg');
+    expect(mdIconElement.getAttribute('aria-label')).toBe('person_pin_svg');
   });
 });

@@ -18,6 +18,10 @@ import { PickYourBattleComponent } from '../components/pick-your-battle/pick-you
 import { firebaseConfig } from './config/firebase.config';
 import { HeaderBarComponent } from '../components/header-bar/header-bar.component';
 import { IconRegistryService } from '../services/icon-registry/icon-registry.service';
+import { RankBoardComponent } from "../components/rank-board/rank-board.component";
+import { SignInComponent } from "../components/sign-in/sign-in.component";
+import { SignUpComponent } from "../components/sign-up/sign-up.component";
+import { SubscriptionCleanerService } from "../services/subscription-cleaner.service";
 
 @NgModule({
   imports: [
@@ -30,6 +34,9 @@ import { IconRegistryService } from '../services/icon-registry/icon-registry.ser
   ],
   declarations: [
     AppComponent,
+    SignInComponent,
+    SignUpComponent,
+    RankBoardComponent,
     HeaderBarComponent,
     PageNotFoundComponent,
     PickYourBattleComponent,
@@ -41,6 +48,7 @@ import { IconRegistryService } from '../services/icon-registry/icon-registry.ser
     LoggerService,
     IconRegistryService,
     AppReadyEventService,
+    SubscriptionCleanerService,
 
     { provide: APP_BASE_HREF, useValue: environment.baseHref }
   ]

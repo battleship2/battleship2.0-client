@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
-import { FirebaseAuthState } from "angularfire2";
 import { Subscription } from "rxjs/Subscription";
 import { isNull } from "../../core/utils/utils";
+import { UserInfo } from "firebase/app";
+import { NavigationEnd, Router, Event } from "@angular/router";
+import { SubscriptionCleanerService } from "../../services/subscription-cleaner.service";
 
 @Component({
   selector: 'bsc-header-bar',
@@ -10,25 +12,43 @@ import { isNull } from "../../core/utils/utils";
   templateUrl: 'header-bar.component.html'
 })
 export class HeaderBarComponent implements OnInit, OnDestroy {
+  private _routeChanges$: Subscription;
   private _userStatusChanges$: Subscription;
 
-  public userData: firebase.UserInfo;
+  public userData: UserInfo;
+  public isLightHeader = false;
   public isUserAuthenticated = null;
 
-  constructor(private _auth: AuthService) {
+  constructor(private _auth: AuthService, private _router: Router) {
   }
 
   public ngOnInit(): void {
+    this._routeChanges$ =
+      this._router.events
+        .filter((event: Event) => event instanceof NavigationEnd)
+        .subscribe((event: NavigationEnd) => this._handleRouteChange(event));
+
     this._userStatusChanges$ =
-      this._auth.userStatusChanges.subscribe((userData: firebase.UserInfo) => {
-        this.userData = userData;
-        this.isUserAuthenticated = (isNull(userData) ? null : !userData[ 'anonymous' ]);
-      });
+      this._auth.userStatusChanges.subscribe((userData: UserInfo) => this._handleUserStatusChange(userData));
   }
 
   public ngOnDestroy(): void {
-    if (!this._userStatusChanges$.closed) {
-      this._userStatusChanges$.unsubscribe();
+    SubscriptionCleanerService.handleSome([ this._userStatusChanges$, this._routeChanges$ ]);
+  }
+
+  private _handleRouteChange(event: NavigationEnd): void {
+    switch (event.url) {
+      case '/sign-in':
+      case '/sign-up':
+        this.isLightHeader = true;
+        break;
+      default:
+        this.isLightHeader = false;
     }
+  }
+
+  private _handleUserStatusChange(userData: UserInfo): void {
+    this.userData = userData;
+    this.isUserAuthenticated = (isNull(userData) ? null : !userData[ 'anonymous' ]);
   }
 }

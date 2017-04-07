@@ -1,21 +1,37 @@
-<nav class="navbar navbar-toggleable-xl navbar-inverse bg-inverse">
+<nav class="navbar navbar-toggleable-xl" [ngClass]="{ 'navbar-inverse bg-inverse': !isLightHeader, 'navbar-light bg-faded': isLightHeader }">
 
-  <a class="navbar-brand" href="/">
-    <img src="assets/img/logos/logo.svg" width="50" height="50" alt="battleship 2 logo" class="d-inline-block align-middle">
-    <span class="nav-title">B&aring;ttleship 2</span>
+  <a class="navbar-brand" routerLink="/pick-your-battle">
+    <img src="assets/img/logos/logo.png" width="40" height="40" alt="battleship 2 logo" class="d-inline-block align-middle mr-2">
+    <span class="nav-title hidden-sm-down">B&aring;ttleship 2</span>
+    <span class="nav-title hidden-md-up">BS 2</span>
   </a>
 
-  <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated">
+  <div class="navbar-nav mr-auto" id="rank-board-zone" [class.hidden-xs-down]="!isUserAuthenticated">
+    <a routerLink="/rank-board" routerLinkActive="active" class="nav-item nav-link">Rank board</a>
+  </div>
+
+  <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated" id="user-account-zone">
     <ng-container *ngSwitchCase="true">
-      <a class="nav-item mr-0" href="/" [ngSwitch]="userData.photoURL">
-        <img src="{{ userData.photoURL }}" *ngSwitchDefault width="50" height="50" class="d-inline-block align-middle rounded-circle">
-        <md-icon svgIcon="person_pin_svg" class="user-anonymous" *ngSwitchCase="null"></md-icon>
+      <!-- This link should display a dropdown menu -->
+      <a class="nav-item dropdown mr-0 user-menu" [ngSwitch]="userData.photoURL">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="{{ userData.photoURL }}" *ngSwitchDefault width="40" height="40" class="d-inline-block align-middle rounded-circle">
+          <md-icon svgIcon="person_pin_svg" class="user-anonymous" *ngSwitchCase="null"></md-icon>
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
       </a>
     </ng-container>
 
     <ng-container *ngSwitchCase="false">
-      <a href="/" class="btn btn-link btn-link-light mr-3">Sign in</a>
-      <a href="/" class="btn btn-outline-light">Sign up</a>
+      <div class="connection-form">
+        <a routerLink="/sign-in" routerLinkActive="hidden-xl-down" class="btn btn-link btn-link-light mr-3">Sign in</a>
+        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down" class="btn btn-outline-light">Sign up</a>
+      </div>
     </ng-container>
 
     <ng-container *ngSwitchDefault>

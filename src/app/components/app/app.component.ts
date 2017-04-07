@@ -1,17 +1,17 @@
-import { DomSanitizer } from '@angular/platform-browser';
-import { MdIconRegistry } from '@angular/material';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppReadyEventService } from '../../services/app-ready-event.service';
-import { AuthService } from '../../services/auth.service';
-import { IconRegistryService } from '../../services/icon-registry/icon-registry.service';
-import { isNull } from '../../core/utils/utils';
-import { Subscription } from 'rxjs/Subscription';
+import { DomSanitizer } from "@angular/platform-browser";
+import { MdIconRegistry } from "@angular/material";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { AppReadyEventService } from "../../services/app-ready-event.service";
+import { AuthService } from "../../services/auth.service";
+import { IconRegistryService } from "../../services/icon-registry/icon-registry.service";
+import { isNull } from "../../core/utils/utils";
+import { Subscription } from "rxjs/Subscription";
+import { UserInfo } from "firebase/app";
 
 @Component({
   selector: 'bsc-app',
   styleUrls: [ 'app.component.scss' ],
-  templateUrl: 'app.component.html',
-  encapsulation: ViewEncapsulation.None
+  templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy  {
   private _userStatusChanges$: Subscription;
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy  {
 
   public ngOnInit(): void {
     this._userStatusChanges$ =
-      this._auth.userStatusChanges.subscribe((userData: firebase.UserInfo) => {
+      this._auth.userStatusChanges.subscribe((userData: UserInfo) => {
         if (isNull(userData)) {
           this._auth.signInAnonymously();
         }

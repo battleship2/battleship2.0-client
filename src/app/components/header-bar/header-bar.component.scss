@@ -11,7 +11,13 @@
 //
 // ------------------------
 .navbar {
-  background-image: linear-gradient(to right bottom, $bs-color-black 0%, lighten($bs-color-black, 15%) 100%);
+  &.bg-faded {
+    background-color: $bs-color-white-dark;
+  }
+
+  &.bg-inverse {
+    background: $bs-color-black linear-gradient(to right bottom, $bs-color-black 0%, lighten($bs-color-black, 15%) 100%);
+  }
 }
 
 .nav-title {
