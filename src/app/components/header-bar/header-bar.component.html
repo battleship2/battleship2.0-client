@@ -12,24 +12,16 @@
 
   <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated" id="user-account-zone">
     <ng-container *ngSwitchCase="true">
-      <!-- This link should display a dropdown menu -->
-      <a class="nav-item dropdown mr-0 user-menu" [ngSwitch]="userData.photoURL">
-        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="{{ userData.photoURL }}" *ngSwitchDefault width="40" height="40" class="d-inline-block align-middle rounded-circle">
-          <md-icon svgIcon="person_pin_svg" class="user-anonymous" *ngSwitchCase="null"></md-icon>
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+      <a class="nav-link nav-item mr-0 user-menu" [ngSwitch]="userData.photoURL" (click)="__menuOpen = !__menuOpen">
+        <span class="sr-only">User menu</span>
+        <img src="{{ userData.photoURL }}" *ngSwitchDefault width="40" height="40" class="d-inline-block align-middle rounded-circle">
+        <md-icon svgIcon="person_pin_svg" class="user-anonymous" *ngSwitchCase="null"></md-icon>
       </a>
     </ng-container>
 
     <ng-container *ngSwitchCase="false">
       <div class="connection-form">
-        <a routerLink="/sign-in" routerLinkActive="hidden-xl-down" class="btn btn-link btn-link-light mr-3">Sign in</a>
+        <a routerLink="/sign-in" routerLinkActive="hidden-xl-down" class="btn btn-link btn-link-light mr-auto">Sign in</a>
         <a routerLink="/sign-up" routerLinkActive="hidden-xl-down" class="btn btn-outline-light">Sign up</a>
       </div>
     </ng-container>
@@ -41,6 +33,14 @@
         </svg>
       </div>
     </ng-container>
+  </div>
+
+  <div class="dropdown" [class.show]="__menuOpen">
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
   </div>
 
 </nav>
