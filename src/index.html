@@ -1,101 +1,148 @@
 <!doctype html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
 
-    <title>Battleship 2</title>
+  <title>Battleship 2</title>
 
-    <link rel="icon" type="image/x-icon" href="assets/img/logos/logo.png">
+  <link rel="icon" type="image/x-icon" href="assets/img/logos/logo.png">
 
-    <style>
-      #pre-bootstrap {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 1;
-        position: fixed;
-        z-index: 999999;
+  <style id="pre-bootstrap-style">
+    #pre-bootstrap {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 1;
+      position: fixed;
+      z-index: 999999;
 
-        background-color: #222228;
-        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=1, startColorstr='#FF222228', endColorstr='#FF454551');
-        background-image: -owg-linear-gradient(to right bottom, #222228 0%, #454551 100%);
-        background-image: -webkit-linear-gradient(to right bottom, #222228 0%, #454551 100%);
-        background-image: -webkit-linear-gradient(left top, #222228 0%, #454551 100%);
-        background-image: linear-gradient(to right bottom, #222228 0%, #454551 100%);
+      background-color: #222228;
+      filter: progid:DXImageTransform.Microsoft.gradient(gradientType=1, startColorstr='#FF222228', endColorstr='#FF454551');
+      background-image: -owg-linear-gradient(to right bottom, #222228 0%, #454551 100%);
+      background-image: -webkit-linear-gradient(to right bottom, #222228 0%, #454551 100%);
+      background-image: -webkit-linear-gradient(left top, #222228 0%, #454551 100%);
+      background-image: linear-gradient(to right bottom, #222228 0%, #454551 100%);
 
-        -webkit-transition: all linear 300ms;
-        transition: all linear 300ms;
-      }
+      -webkit-transition: all linear 300ms;
+      transition: all linear 300ms;
+    }
 
-      #pre-bootstrap.loaded {
-        opacity: 0;
-      }
+    #pre-bootstrap.loaded {
+      opacity: 0;
+    }
 
-      #pre-bootstrap .logo {
-        top: 50%;
-        left: 0;
-        right: 0;
-        color: #ffffff;
-        position: absolute;
-        margin-top: -75px;
-        text-align: center;
-        font-family: monospace;
-      }
+    #pre-bootstrap .logo {
+      top: 50%;
+      left: 0;
+      right: 0;
+      color: #ffffff;
+      position: absolute;
+      margin-top: -56px;
+      text-align: center;
+      font-family: monospace;
+    }
 
-      #pre-bootstrap .loader {
-        top: 50%;
-        position: relative;
-        margin: -75px auto auto;
-        border: 16px solid rgba(255, 255, 255, .3);
-        border-radius: 50%;
-        border-top: 16px solid #ffffff;
-        border-bottom: 16px solid #ffffff;
-        width: 150px;
-        height: 150px;
+    #pre-bootstrap .logo .loader {
+      width: 50%;
+      height: 14px;
+      z-index: -1;
+      content: '';
+      position: absolute;
+      background-color: rgba(255, 255, 255, .02);
+    }
 
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-      }
+    #pre-bootstrap .loader-before {
+      top: 28px;
+      left: 0;
+    }
 
-      @-webkit-keyframes spin {
-          0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
-      }
+    #pre-bootstrap .loader-after {
+      top: 70px;
+      right: 0;
+    }
 
-      @keyframes spin {
-          0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    </style>
-  </head>
-  <body>
-    <bsc-app></bsc-app>
+    #pre-bootstrap .logo img {
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, .1);
+      border-radius: 50%;
+    }
 
-    <div id="pre-bootstrap-container">
-      <script>
-        document.addEventListener('appready', handleAppReady);
+    #pre-bootstrap .loading-spinner {
+      top: 50%;
+      left: 0;
+      right: 0;
+      width: 130px;
+      height: 130px;
+      margin: -65px auto auto;
+      position: absolute;
+    }
 
-        function handleAppReady(event) {
-          document.getElementById('pre-bootstrap').className = 'loaded';
-          setTimeout(removePreBootstrap, 300);
-        }
+    #pre-bootstrap .loading-spinner svg {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      animation: spin 1s linear infinite;
+    }
 
-        function removePreBootstrap() {
-          var preBootstrapContainer = document.getElementById('pre-bootstrap-container');
-          preBootstrapContainer.parentNode.removeChild(preBootstrapContainer);
-        }
-      </script>
+    #pre-bootstrap svg circle {
+      fill: transparent;
+      stroke: #FFFFFF;
+      stroke-width: 4px;
+      stroke-dasharray: 128px;
+      stroke-dashoffset: 82px;
+    }
 
-      <div id="pre-bootstrap">
-        <div class="loader"></div>
-        <div class="logo">
-          <img src="assets/img/logos/logo.svg" alt="batlleship 2 logo" width="150">
-        </div>
-      </div>
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<bsc-app></bsc-app>
+
+<div id="pre-bootstrap-container">
+  <script>
+    document.addEventListener('appready', handleAppReady);
+
+    function handleAppReady(event) {
+      document.getElementById('pre-bootstrap').className = 'loaded';
+      setTimeout(removePreBootstrap, 300);
+    }
+
+    function removePreBootstrap() {
+      removeElementFromDOM(document.getElementById('pre-bootstrap-container'));
+      removeElementFromDOM(document.getElementById('pre-bootstrap-style'));
+    }
+
+    function removeElementFromDOM(element) {
+      element.parentNode.removeChild(element);
+    }
+  </script>
+
+  <div id="pre-bootstrap">
+    <div class="loading-spinner">
+      <svg viewBox="0 0 64 64">
+        <circle transform="translate(32,32)" r="26"></circle>
+      </svg>
     </div>
 
-  </body>
+    <div class="logo">
+      <div class="loader loader-before"></div>
+      <img src="assets/img/logos/logo.png" alt="batlleship 2 logo">
+      <div class="loader loader-after"></div>
+    </div>
+  </div>
+</div>
+
+</body>
 </html>

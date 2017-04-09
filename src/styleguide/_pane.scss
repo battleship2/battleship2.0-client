@@ -1,0 +1,46 @@
+// ------------------------
+//
+// IMPORTS
+//
+// ------------------------
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins/breakpoints";
+
+// ------------------------
+//
+// STYLES
+//
+// ------------------------
+.pane-fullscreen {
+  top: calc(-1 * (#{$bs-header-height} + 1.5rem)); // Header height + margins
+  height: 100vh;
+  z-index: 0;
+  position: relative;
+}
+
+.pane {
+  height: 100vh;
+  padding-top: calc(72px + 1.5rem);
+}
+
+.pane-left {
+  //background-color: red;
+}
+
+.pane-right {
+  color: $bs-color-white;
+  padding-left: 4rem;
+  background-size: cover;
+  background-color: $bs-color-blue-green;
+}
+
+// ------------------------
+//
+// RESPONSIVE BREAKPOINTS
+//
+// ------------------------
+@include media-breakpoint-up(md) {
+  .pane {
+    padding-top: 8rem;
+  }
+}

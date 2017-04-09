@@ -1,0 +1,55 @@
+<div class="row pane-fullscreen">
+  <div class="d-inline-block col-12 col-md-7 pr-md-0">
+    <div class="pane pane-left">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 col-12 text-center ml-auto mr-auto">
+            <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
+            <h4 class="mb-5">
+              Log into
+              <span class="hidden-sm-down">B&aring;ttleship 2</span>
+              <span class="hidden-md-up">BS 2</span>
+            </h4>
+
+            <form class="user-data-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="email" name="user-email" autofocus autocomplete="true" tabindex="1" class="form-control" id="user-email">
+                  <label for="user-email">Email</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <a class="btn-inset" routerLink="/reset-password" title="Forgot your password?" tabindex="4">?</a>
+
+                <div class="input-group">
+                  <input type="password" name="user-password" autocomplete="true" tabindex="2" class="form-control" id="user-password">
+                  <label for="user-password">Password</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
+                  Log in
+                </button>
+              </div>
+            </form>
+
+            <p>
+              <small>
+                Don't have an account? <a routerLink="/sign-up">Sign up</a>.
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-inline-block hidden-sm-down col-md-5 pl-md-0">
+    <div class="pane pane-right">
+      <h3>Join the war now!</h3>
+    </div>
+  </div>
+
+</div>

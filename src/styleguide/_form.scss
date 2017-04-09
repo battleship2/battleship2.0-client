@@ -1,0 +1,61 @@
+// ------------------------
+//
+// IMPORTS
+//
+// ------------------------
+@import "variables/variables";
+
+// ------------------------
+//
+// STYLES
+//
+// ------------------------
+.user-data-form {
+  input {
+    color: $bs-color-black;
+    height: 48px;
+    border: 1px solid $bs-color-gray;
+    margin-top: 11px;
+    transition: .15s border-color;
+    box-shadow: inset 0 1px 5px rgba($bs-color-black, .08);
+    padding-top: 23px;
+    padding-left: 15px;
+    border-radius: 2px;
+    padding-bottom: 5px;
+
+    &:hover {
+      border-color: $bs-color-blue-green;
+    }
+
+    & + label {
+      top: 22px;
+      left: 16px;
+      cursor: text;
+      z-index: 2;
+      position: absolute;
+      transition: .15s top,.15s font-size;
+      font-weight: 400;
+
+      &, &:hover {
+        color: #bdc3cd;
+      }
+    }
+
+    &.not-empty + label {
+      top: 16px;
+      font-size: 11px;
+      font-weight: 400;
+    }
+  }
+
+  .btn-submit {
+    font-size: 1.2rem;
+    border-radius: 2px;
+  }
+}
+
+// ------------------------
+//
+// RESPONSIVE BREAKPOINTS
+//
+// ------------------------

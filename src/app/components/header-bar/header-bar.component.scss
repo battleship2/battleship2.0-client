@@ -3,6 +3,7 @@
 // IMPORTS
 //
 // ------------------------
+@import "../../../../node_modules/bootstrap/scss/variables";
 @import "../../../styleguide/variables/variables";
 
 // ------------------------
@@ -10,13 +11,8 @@
 // STYLES
 //
 // ------------------------
-
 #user-account-zone {
   height: 56px;
-
-  .user-menu {
-    cursor: pointer;
-  }
 
   .connection-form {
     padding-top: 9px;
@@ -24,12 +20,15 @@
 }
 
 .navbar {
+  height: $bs-header-height;
+  z-index: 10000;
+
   &.bg-faded {
-    background-color: $bs-color-white-dark;
+    background-color: transparent;
   }
 
   &.bg-inverse {
-    background: $bs-color-black linear-gradient(to right bottom, $bs-color-black 0%, lighten($bs-color-black, 15%) 100%);
+    background: $bs-color-black linear-gradient(to right bottom, $bs-color-black 0%, $bs-color-black-light 100%);
   }
 }
 
@@ -56,7 +55,6 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    transform: translateZ(0);
     animation: loading-spinner-rotate 600ms linear infinite;
 
     &:not(:root) {
@@ -80,6 +78,36 @@
 
 .dropdown {
   .dropdown-menu {
-    top: 33px;
+    top: 36px;
+    margin: 0;
+    padding: 0;
+    border-top: 0;
+    background-color: $bs-color-black-light;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    .dropdown-header {
+      letter-spacing: .5px;
+      color: rgba($bs-color-white-dark, .8);
+    }
+
+    .dropdown-divider {
+      margin: 0;
+    }
+
+    .dropdown-item {
+      color: $bs-color-white;
+      padding: 10px 1.5rem;
+
+      &:hover {
+        color: $bs-color-black-light;
+        background-color: $bs-color-white;
+
+        &.dropdown-item-danger {
+          color: $bs-color-white;
+          background-color: $red;
+        }
+      }
+    }
   }
 }

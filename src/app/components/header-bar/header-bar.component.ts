@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
 import { Subscription } from "rxjs/Subscription";
-import { isNull } from "../../core/utils/utils";
+import { isNull, truncate } from "../../core/utils/utils";
 import { UserInfo } from "firebase/app";
-import { NavigationEnd, Router, Event } from "@angular/router";
+import { Event, NavigationEnd, Router } from "@angular/router";
 import { SubscriptionCleanerService } from "../../services/subscription-cleaner.service";
 
 @Component({
@@ -17,6 +17,7 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
 
   public userData: UserInfo;
   public isLightHeader = false;
+  public userMenuVisible = false;
   public isUserAuthenticated = null;
 
   constructor(private _auth: AuthService, private _router: Router) {
@@ -36,9 +37,25 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
     SubscriptionCleanerService.handleSome([ this._userStatusChanges$, this._routeChanges$ ]);
   }
 
+  public showUserMenu(): void {
+    this.userMenuVisible = true;
+  }
+
+  public hideUserMenu(): void {
+    this.userMenuVisible = false;
+  }
+
+  public signOut(): Promise<void> {
+    return this._auth.signOut();
+  }
+
+  public getMenuTitle(): string {
+    return (this.userData && truncate(this.userData.displayName || this.userData.email, 30, '...')) || 'Menu';
+  }
+
   private _handleRouteChange(event: NavigationEnd): void {
     switch (event.url) {
-      case '/sign-in':
+      case '/log-in':
       case '/sign-up':
         this.isLightHeader = true;
         break;
@@ -48,6 +65,7 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
   }
 
   private _handleUserStatusChange(userData: UserInfo): void {
+    console.log('HeaderBar User changed to:', userData);
     this.userData = userData;
     this.isUserAuthenticated = (isNull(userData) ? null : !userData[ 'anonymous' ]);
   }

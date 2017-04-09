@@ -16,7 +16,7 @@ import { LoggerService } from '../../services/logger.service';
 import { HeaderBarComponent } from '../header-bar/header-bar.component';
 import { IconRegistryService } from '../../services/icon-registry/icon-registry.service';
 import { RankBoardComponent } from "../rank-board/rank-board.component";
-import { SignInComponent } from "../sign-in/sign-in.component";
+import { LogInComponent } from "../log-in/log-in.component";
 import { SignUpComponent } from "../sign-up/sign-up.component";
 
 describe('AppComponent', () => {
@@ -31,13 +31,13 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-        SignInComponent,
+        LogInComponent,
         SignUpComponent,
         HeaderBarComponent,
         RankBoardComponent,
         PageNotFoundComponent,
         PickYourBattleComponent,
-        GettingStartedComponent,
+        GettingStartedComponent
       ],
       providers: [
         AuthService,

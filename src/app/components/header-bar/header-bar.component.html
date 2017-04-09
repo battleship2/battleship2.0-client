@@ -12,7 +12,7 @@
 
   <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated" id="user-account-zone">
     <ng-container *ngSwitchCase="true">
-      <a class="nav-link nav-item mr-0 user-menu" [ngSwitch]="userData.photoURL" (click)="__menuOpen = !__menuOpen">
+      <a class="nav-link nav-item mr-0 user-menu cursor-pointer" [ngSwitch]="userData.photoURL" (mouseenter)="showUserMenu()">
         <span class="sr-only">User menu</span>
         <img src="{{ userData.photoURL }}" *ngSwitchDefault width="40" height="40" class="d-inline-block align-middle rounded-circle">
         <md-icon svgIcon="person_pin_svg" class="user-anonymous" *ngSwitchCase="null"></md-icon>
@@ -21,8 +21,13 @@
 
     <ng-container *ngSwitchCase="false">
       <div class="connection-form">
-        <a routerLink="/sign-in" routerLinkActive="hidden-xl-down" class="btn btn-link btn-link-light mr-auto">Sign in</a>
-        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down" class="btn btn-outline-light">Sign up</a>
+        <a routerLink="/log-in" routerLinkActive="hidden-xl-down" class="btn btn-link mr-auto btn-link-light">
+          Log in
+        </a>
+
+        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down" class="btn btn-outline-light">
+          Sign up
+        </a>
       </div>
     </ng-container>
 
@@ -35,11 +40,13 @@
     </ng-container>
   </div>
 
-  <div class="dropdown" [class.show]="__menuOpen">
+  <div class="dropdown" [class.show]="isUserAuthenticated && userMenuVisible" (mouseleave)="hideUserMenu()" (click)="hideUserMenu()">
     <div class="dropdown-menu dropdown-menu-right">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
+      <h6 class="dropdown-header text-center">{{ getMenuTitle() }}</h6>
+      <a class="dropdown-item" href="/">My profile</a>
+      <a class="dropdown-item" href="/">Settings</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item dropdown-item-danger text-center cursor-pointer" (click)="signOut()">Sign out</a>
     </div>
   </div>
 

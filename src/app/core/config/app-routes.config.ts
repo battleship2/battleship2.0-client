@@ -1,10 +1,10 @@
-import { Routes } from '@angular/router';
-import { PageNotFoundComponent } from '../../components/page-not-found/page-not-found.component';
-import { GettingStartedComponent } from '../../components/getting-started/getting-started.component';
+import { Routes } from "@angular/router";
+import { PageNotFoundComponent } from "../../components/page-not-found/page-not-found.component";
+import { GettingStartedComponent } from "../../components/getting-started/getting-started.component";
 import { PickYourBattleComponent } from "../../components/pick-your-battle/pick-your-battle.component";
 import { RankBoardComponent } from "../../components/rank-board/rank-board.component";
 import { SignUpComponent } from "../../components/sign-up/sign-up.component";
-import { SignInComponent } from "../../components/sign-in/sign-in.component";
+import { LogInComponent } from "../../components/log-in/log-in.component";
 
 export const AppRoutes: Routes = [
   {
@@ -13,8 +13,8 @@ export const AppRoutes: Routes = [
   },
 
   {
-    path: 'sign-in',
-    component: SignInComponent
+    path: 'log-in',
+    component: LogInComponent
   },
 
   {

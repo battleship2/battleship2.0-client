@@ -5,6 +5,31 @@
 /**********************************************************************************/
 
 /**
+ * @name truncate
+ * @kind function
+ *
+ * @description
+ * Truncate the given string if needed, and append the given suffix if truncated.
+ *
+ * @returns {string | null} null if the string was not valid, truncated string otherwise.
+ */
+export const truncate = (value: string, size: number, suffix?: string): string | null => {
+  if (isNumber(size) && size >= 1 && isString(value)) {
+    if (value.length <= size) {
+      return value;
+    }
+
+    suffix = isString(suffix) ? suffix : '...';
+
+    if (suffix.length < size) {
+      return value.trim().substr(0, size - suffix.length) + suffix;
+    }
+  }
+
+  return null;
+};
+
+/**
  * @name cssRuleExists
  * @kind function
  *
@@ -213,7 +238,7 @@ export const isRegExp = (value: any): boolean => toString.call(value) === '[obje
  * A function that performs no operations. This function can be useful when writing code in the
  * functional style.
  */
-export const noop = () => {};
+export const noop = (): void => {};
 
 /**
  * @name getAspectRatioFit

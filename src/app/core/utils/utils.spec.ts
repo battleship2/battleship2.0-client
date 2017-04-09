@@ -22,12 +22,21 @@ describe('Core: utils', () => {
     itemsB = [ 0, 'a', new Date().toJSON(), null ];
   });
 
+  it('truncate', () => {
+    const toBeTruncated = 'Lorem ipsum dolore sit amet.';
+
+    expect(utils.truncate(toBeTruncated, 100)).toBe(toBeTruncated);
+    expect(utils.truncate(toBeTruncated, 3, 'a')).toBe('Loa');
+    expect(utils.truncate(toBeTruncated, 1, 'aaa')).toBe(null);
+    expect(utils.truncate(toBeTruncated, -5)).toBe(null);
+    expect(utils.truncate(toBeTruncated, null)).toBe(null);
+    expect(utils.truncate(null, 12)).toBe(null);
+  });
+
   it('cssRuleExists', () => {
     const style = document.createElement('style');
     style.innerHTML = '.myClass { color: #F00; }';
     document.head.appendChild(style);
-
-    expect(true).toBeTruthy();
 
     expect(utils.cssRuleExists('falseClass')).toBeFalsy();
     expect(utils.cssRuleExists('myClass')).toBeTruthy();

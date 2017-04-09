@@ -12,6 +12,13 @@ import { By } from "@angular/platform-browser";
 import { DebugElement } from "@angular/core";
 import { UserInfo } from "firebase/app";
 import { IconRegistryService } from "../../services/icon-registry/icon-registry.service";
+import { LogInComponent } from "../log-in/log-in.component";
+import { SignUpComponent } from "../sign-up/sign-up.component";
+import { RankBoardComponent } from "../rank-board/rank-board.component";
+import { PickYourBattleComponent } from "../pick-your-battle/pick-your-battle.component";
+import { AppRoutingModule } from "../../core/app-routing.module";
+import { GettingStartedComponent } from "../getting-started/getting-started.component";
+import { PageNotFoundComponent } from "../page-not-found/page-not-found.component";
 
 describe('HeaderBarComponent', () => {
   let fixture: ComponentFixture<HeaderBarComponent>;
@@ -23,10 +30,17 @@ describe('HeaderBarComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
+        AppRoutingModule,
         AngularFireModule.initializeApp(firebaseConfig)
       ],
       declarations: [
-        HeaderBarComponent
+        LogInComponent,
+        SignUpComponent,
+        HeaderBarComponent,
+        RankBoardComponent,
+        PageNotFoundComponent,
+        GettingStartedComponent,
+        PickYourBattleComponent
       ],
       providers: [
         AuthService,

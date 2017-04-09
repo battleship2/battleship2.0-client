@@ -19,7 +19,7 @@ import { firebaseConfig } from './config/firebase.config';
 import { HeaderBarComponent } from '../components/header-bar/header-bar.component';
 import { IconRegistryService } from '../services/icon-registry/icon-registry.service';
 import { RankBoardComponent } from "../components/rank-board/rank-board.component";
-import { SignInComponent } from "../components/sign-in/sign-in.component";
+import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { SubscriptionCleanerService } from "../services/subscription-cleaner.service";
 
@@ -34,7 +34,7 @@ import { SubscriptionCleanerService } from "../services/subscription-cleaner.ser
   ],
   declarations: [
     AppComponent,
-    SignInComponent,
+    LogInComponent,
     SignUpComponent,
     RankBoardComponent,
     HeaderBarComponent,
