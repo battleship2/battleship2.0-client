@@ -72,7 +72,7 @@
 }
 
 @keyframes loading-spinner-rotate {
-    0% { transform: rotate(0deg); }
+  0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
@@ -97,11 +97,24 @@
 
     .dropdown-item {
       color: $bs-color-white;
-      padding: 10px 1.5rem;
+      padding: 10px 1rem;
+
+      .mat-icon {
+        float: left;
+        margin-right: 1rem;
+
+        /deep/ svg {
+          fill: $bs-color-white;
+        }
+      }
 
       &:hover {
         color: $bs-color-black-light;
         background-color: $bs-color-white;
+
+        &:not(.dropdown-item-danger) .mat-icon /deep/ svg {
+          fill: $bs-color-black-light;
+        }
 
         &.dropdown-item-danger {
           color: $bs-color-white;

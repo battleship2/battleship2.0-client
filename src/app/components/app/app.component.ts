@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy  {
     this._userStatusChanges$ =
       this._auth.userStatusChanges.subscribe((userData: UserInfo) => {
         if (isNull(userData)) {
-          this._auth.signInAnonymously();
+          this._auth.logInAnonymously();
         }
       });
 

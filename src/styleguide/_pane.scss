@@ -29,9 +29,11 @@
 
 .pane-right {
   color: $bs-color-white;
-  padding-left: 4rem;
-  background-size: cover;
   background-color: $bs-color-blue-green;
+}
+
+.pane-body {
+  padding-left: 4rem;
 }
 
 // ------------------------

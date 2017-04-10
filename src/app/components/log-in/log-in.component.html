@@ -5,31 +5,46 @@
         <div class="row">
           <div class="col-md-5 col-12 text-center ml-auto mr-auto">
             <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
-            <h4 class="mb-5">
+            <h4 class="mb-4">
               Log into
               <span class="hidden-sm-down">B&aring;ttleship 2</span>
               <span class="hidden-md-up">BS 2</span>
             </h4>
 
-            <form class="user-data-form">
-              <div class="form-group">
+            <div class="alert alert-danger" *ngIf="errorLogIn">
+              <strong>Oopsy...</strong>
+              {{ errorLogIn.message }}
+            </div>
+
+            <form class="user-data-form" #loginForm="ngForm">
+              <div class="form-group p-relative">
                 <div class="input-group">
-                  <input type="email" name="user-email" autofocus autocomplete="true" tabindex="1" class="form-control" id="user-email">
+                  <input type="email" name="user-email" autofocus autocomplete="true" tabindex="1" #userEmail="ngModel"
+                         class="form-control" id="user-email" required [(ngModel)]="user.email" [pattern]="emailPattern"
+                         [class.not-empty]="!isEmpty(userEmail.value)"
+                         [class.invalid]="!isEmpty(userEmail.value) && userEmail.invalid && !userEmail.pristine">
                   <label for="user-email">Email</label>
                 </div>
               </div>
 
-              <div class="form-group">
-                <a class="btn-inset" routerLink="/reset-password" title="Forgot your password?" tabindex="4">?</a>
+              <div class="form-group p-relative">
+                <a class="reset-password cursor-pointer" routerLink="/reset-password" title="Forgot your password?" tabindex="4"
+                   data-toggle="tooltip" data-placement="top">
+                  <md-icon svgIcon="help_outline_svg"></md-icon>
+                </a>
 
                 <div class="input-group">
-                  <input type="password" name="user-password" autocomplete="true" tabindex="2" class="form-control" id="user-password">
-                  <label for="user-password">Password</label>
+                  <input type="password" name="user-password" autocomplete="true" tabindex="2" #userPassword="ngModel"
+                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="6"
+                         [class.not-empty]="!isEmpty(userPassword.value)"
+                         [class.invalid]="!isEmpty(userPassword.value) && userPassword.invalid && !userPassword.pristine">
+                  <label for="user-password">Password (6 chars min.)</label>
                 </div>
               </div>
 
-              <div class="form-group">
-                <button class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
+              <div class="form-group p-relative">
+                <button [disabled]="!loginForm.form.valid" (click)="loginWithPassword(); loginForm.reset();"
+                        class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
                   Log in
                 </button>
               </div>
@@ -37,9 +52,29 @@
 
             <p>
               <small>
-                Don't have an account? <a routerLink="/sign-up">Sign up</a>.
+                Don't have an account? <a routerLink="/sign-up" tabindex="5">Sign up</a>.
               </small>
             </p>
+
+            <div class="row mb-3">
+              <div class="col-5 pr-0"><hr></div>
+
+              <div class="col-2 px-0 pt-1">
+                <small class="text-muted">OR</small>
+              </div>
+
+              <div class="col-5 pl-0"><hr></div>
+            </div>
+
+            <form class="user-data-form">
+              <div class="form-group p-relative">
+                <button class="btn btn-facebook btn-lg btn-block btn-submit cursor-pointer"
+                        tabindex="6" (click)="loginWithFacebook()">
+                  <img src="assets/img/logos/fb.png" alt="facebook logo" class="facebook-logo">
+                  Facebook
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -48,7 +83,9 @@
 
   <div class="d-inline-block hidden-sm-down col-md-5 pl-md-0">
     <div class="pane pane-right">
-      <h3>Join the war now!</h3>
+      <div class="pane-body">
+        <h3>Join the war now!</h3>
+      </div>
     </div>
   </div>
 

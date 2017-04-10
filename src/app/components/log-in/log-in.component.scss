@@ -12,7 +12,23 @@
 // STYLES
 //
 // ------------------------
+.reset-password {
+  top: 12px;
+  right: 14px;
+  z-index: 4;
+  outline: none;
+  position: absolute;
 
+  /deep/ svg {
+    fill: $bs-color-black-light;
+  }
+
+  &:hover {
+    /deep/ svg {
+      fill: $bs-color-blue-green;
+    }
+  }
+}
 
 // ------------------------
 //

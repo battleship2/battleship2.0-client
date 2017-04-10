@@ -12,6 +12,23 @@
 // STYLES
 //
 // ------------------------
+.p-relative {
+  position: relative;
+}
+
+.p-absolute {
+  position: absolute;
+}
+
+.btn-facebook {
+  @include button-variant($bs-color-white, $bs-color-facebook, darken($bs-color-facebook, 5%));
+
+  .facebook-logo {
+    width: 23px;
+    float: left;
+  }
+}
+
 .btn-light {
   @include button-variant($bs-color-black, $bs-color-white, darken($bs-color-white, 5%));
 }

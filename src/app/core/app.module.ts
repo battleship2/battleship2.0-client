@@ -22,6 +22,7 @@ import { RankBoardComponent } from "../components/rank-board/rank-board.componen
 import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { SubscriptionCleanerService } from "../services/subscription-cleaner.service";
+import { TooltipService } from '../services/tooltip.service';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { SubscriptionCleanerService } from "../services/subscription-cleaner.ser
   providers: [
     AuthService,
     LoggerService,
+    TooltipService,
     IconRegistryService,
     AppReadyEventService,
     SubscriptionCleanerService,

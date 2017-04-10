@@ -10,15 +10,15 @@ export class GettingStartedComponent {
   constructor(private _auth: AuthService) {}
 
   public fbLogin(): void {
-    this._auth.signInWithFacebook();
+    this._auth.logInWithFacebook();
   }
 
   public anLogin(): void {
-    this._auth.signInAnonymously();
+    this._auth.logInAnonymously();
   }
 
   public login(): void {
-    this._auth.signIn({ email: 'adrael_boy@live.fr', password: 'tototo' });
+    this._auth.logIn({ email: 'adrael_boy@live.fr', password: 'tototo' });
   }
 
   public signUp(): void {

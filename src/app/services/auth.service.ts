@@ -48,7 +48,7 @@ export class AuthService implements OnDestroy {
     return isDefined(this._authState) && !isNull(this._authState);
   }
 
-  public signIn(credentials: EmailPasswordCredentials): firebase.Promise<FirebaseAuthState> {
+  public logIn(credentials: EmailPasswordCredentials): firebase.Promise<FirebaseAuthState> {
     return this._ngAuth.login(credentials, {
       provider: AuthProviders.Password,
       method: AuthMethods.Password
@@ -59,14 +59,14 @@ export class AuthService implements OnDestroy {
     return this._ngAuth.createUser(credentials);
   }
 
-  public signInWithFacebook(): firebase.Promise<FirebaseAuthState> {
+  public logInWithFacebook(): firebase.Promise<FirebaseAuthState> {
     return this._ngAuth.login({
       provider: AuthProviders.Facebook,
       method: AuthMethods.Popup
     });
   }
 
-  public signInAnonymously(): firebase.Promise<FirebaseAuthState> {
+  public logInAnonymously(): firebase.Promise<FirebaseAuthState> {
     return this._ngAuth.login({
       provider: AuthProviders.Anonymous,
       method: AuthMethods.Anonymous

@@ -15,7 +15,6 @@
     color: $bs-color-black;
     height: 48px;
     border: 1px solid $bs-color-gray;
-    margin-top: 11px;
     transition: .15s border-color;
     box-shadow: inset 0 1px 5px rgba($bs-color-black, .08);
     padding-top: 23px;
@@ -28,10 +27,10 @@
     }
 
     & + label {
-      top: 22px;
+      top: 12px;
       left: 16px;
       cursor: text;
-      z-index: 2;
+      z-index: 4;
       position: absolute;
       transition: .15s top,.15s font-size;
       font-weight: 400;
@@ -41,10 +40,18 @@
       }
     }
 
-    &.not-empty + label {
-      top: 16px;
+    &:focus + label, &.not-empty + label {
+      top: 5px;
       font-size: 11px;
       font-weight: 400;
+    }
+
+    &.invalid {
+      border: 1px solid $bs-color-red;
+
+      & + label, & + label:hover {
+        color: $bs-color-red;
+      }
     }
   }
 
