@@ -1,17 +1,15 @@
 <div class="row pane-fullscreen">
-  <div class="d-inline-block col-12 col-md-7 pr-md-0">
+  <div class="d-inline-block col-12 col-lg-7 col-md-6 pr-md-0">
     <div class="pane pane-left">
       <div class="container">
         <div class="row">
-          <div class="col-md-5 col-12 text-center ml-auto mr-auto">
+          <div class="col-xl-5 col-lg-7 col-md-10 col-12 text-center ml-auto mr-auto">
             <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
             <h4 class="mb-4">
-              Log into
-              <span class="hidden-sm-down">B&aring;ttleship 2</span>
-              <span class="hidden-md-up">BS 2</span>
+              Log into B&aring;ttleship 2
             </h4>
 
-            <div class="alert alert-danger" *ngIf="errorLogIn">
+            <div class="alert alert-danger text-left" *ngIf="errorLogIn">
               <strong>Oopsy...</strong>
               {{ errorLogIn.message }}
             </div>
@@ -21,8 +19,7 @@
                 <div class="input-group">
                   <input type="email" name="user-email" autofocus autocomplete="true" tabindex="1" #userEmail="ngModel"
                          class="form-control" id="user-email" required [(ngModel)]="user.email" [pattern]="emailPattern"
-                         [class.not-empty]="!isEmpty(userEmail.value)"
-                         [class.invalid]="!isEmpty(userEmail.value) && userEmail.invalid && !userEmail.pristine">
+                         [class.not-empty]="!isEmpty(userEmail.value)">
                   <label for="user-email">Email</label>
                 </div>
               </div>
@@ -36,14 +33,13 @@
                 <div class="input-group">
                   <input type="password" name="user-password" autocomplete="true" tabindex="2" #userPassword="ngModel"
                          class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="6"
-                         [class.not-empty]="!isEmpty(userPassword.value)"
-                         [class.invalid]="!isEmpty(userPassword.value) && userPassword.invalid && !userPassword.pristine">
+                         [class.not-empty]="!isEmpty(userPassword.value)">
                   <label for="user-password">Password (6 chars min.)</label>
                 </div>
               </div>
 
               <div class="form-group p-relative">
-                <button [disabled]="!loginForm.form.valid" (click)="loginWithPassword(); loginForm.reset();"
+                <button [disabled]="!loginForm.form.valid" (click)="loginWithPassword()"
                         class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
                   Log in
                 </button>
@@ -81,10 +77,46 @@
     </div>
   </div>
 
-  <div class="d-inline-block hidden-sm-down col-md-5 pl-md-0">
+  <div class="d-inline-block hidden-sm-down col-lg-5 col-md-6 pl-md-0">
+    <div class="pane-background"></div>
     <div class="pane pane-right">
-      <div class="pane-body">
-        <h3>Join the war now!</h3>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="pane-body">
+            <div class="col-12">
+              <h4 class="mb-5">Join the war now!</h4>
+            </div>
+
+            <div class="col-12">
+              <ul class="pane-motto">
+                <li>
+                  <md-icon svgIcon="history_svg"></md-icon>
+                  <h6>Unlimited access</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="explore_svg"></md-icon>
+                  <h6>Discover new tactics</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="build_svg"></md-icon>
+                  <h6>Engineer your destiny</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="compare_arrows_svg"></md-icon>
+                  <h6>Fight relentless enemies</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="extension_svg"></md-icon>
+                  <h6>Play the way you always wanted to</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="favorite_svg"></md-icon>
+                  <h6>Amaze yourself with incredible strategies</h6>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

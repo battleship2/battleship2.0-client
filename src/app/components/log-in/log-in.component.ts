@@ -20,7 +20,7 @@ export class LogInComponent implements OnInit {
   public errorLogIn: Error = null;
 
   public emailPattern =
-    new RegExp(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i);
+    new RegExp(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i);
 
   constructor(private _auth: AuthService, private _router: Router) {}
 

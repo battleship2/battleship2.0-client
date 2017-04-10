@@ -46,7 +46,15 @@
       font-weight: 400;
     }
 
-    &.invalid {
+    &.ng-valid:not(.ng-pristine) {
+      border: 1px solid $bs-color-green;
+
+      & + label, & + label:hover {
+        color: $bs-color-green;
+      }
+    }
+
+    &.ng-invalid:not(.ng-pristine) {
       border: 1px solid $bs-color-red;
 
       & + label, & + label:hover {
