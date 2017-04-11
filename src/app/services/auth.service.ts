@@ -5,6 +5,7 @@ import { AngularFire, AngularFireAuth, AuthMethods, AuthProviders, FirebaseAuthS
 import { isDefined, isNull, merge } from "../core/utils/utils";
 import { LoggerService } from "./logger.service";
 import { UserInfo } from "firebase/app";
+import { SubscriptionCleanerService } from "./subscription-cleaner.service";
 
 @Injectable()
 export class AuthService implements OnDestroy {
@@ -99,8 +100,6 @@ export class AuthService implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (!this._ngAuth$.closed) {
-      this._ngAuth$.unsubscribe();
-    }
+    SubscriptionCleanerService.handleOne(this._ngAuth$);
   }
 }

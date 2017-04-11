@@ -7,6 +7,7 @@ import { IconRegistryService } from "../../services/icon-registry/icon-registry.
 import { isNull } from "../../core/utils/utils";
 import { Subscription } from "rxjs/Subscription";
 import { UserInfo } from "firebase/app";
+import { SubscriptionCleanerService } from "../../services/subscription-cleaner.service";
 
 @Component({
   selector: 'bsc-app',
@@ -40,8 +41,6 @@ export class AppComponent implements OnInit, OnDestroy  {
   }
 
   public ngOnDestroy(): void {
-    if (!this._userStatusChanges$.closed) {
-      this._userStatusChanges$.unsubscribe();
-    }
+    SubscriptionCleanerService.handleOne(this._userStatusChanges$);
   }
 }
