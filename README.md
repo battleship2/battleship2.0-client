@@ -1,6 +1,8 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/battleship2/battleship2.0-client/master/src/assets/img/logos/logo.png" alt="battleship 2 logo"/>
-  <h1 align="center">Battleship 2 | Client repository</h1>
+  <h1 align="center">Battleship 2 | Client</h1>
+  <h5 align="center">"Together, we are an ocean"</h5>
+  <small align="center">RYUONOSUKE SATORO</small>
 </p>
 
 This is the client-side repository of the `Battleship 2` game.
@@ -73,4 +75,4 @@ Please note that each of the above environments is configured through a property
 - Draw opponent bombs
 
 * * *
-*Logo made with ❤ by [Arun Thomas](https://www.iconfinder.com/arunxthomas) from [Iconfinder](https://www.iconfinder.com/icons/1342928/citycons_sea_ship_icon#size=128)*
+*Logo made with ❤  by [Arun Thomas](https://www.iconfinder.com/arunxthomas) from [Iconfinder](https://www.iconfinder.com/icons/1342928/citycons_sea_ship_icon#size=128)*
