@@ -9,3 +9,4 @@ $bs-color-blue-green:   #13818D;
 $bs-color-facebook:     #3B5998;
 $bs-color-red:          #E8271D;
 $bs-color-green:        #16B42A;
+$bs-color-green-light:  lighten($bs-color-green, 15%);

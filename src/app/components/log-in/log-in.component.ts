@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserInfo } from 'firebase/app';
-import { isNull, isString } from '../../core/utils/utils';
+import { emailPattern, passwordPattern, isNull, isString } from '../../core/utils/utils';
 import { TooltipService } from '../../services/tooltip.service';
 import { EmailPasswordCredentials } from 'angularfire2/auth';
 
@@ -18,9 +18,8 @@ export class LogInComponent implements OnInit {
   };
 
   public errorLogIn: Error = null;
-
-  public emailPattern =
-    new RegExp(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i);
+  public emailPattern = emailPattern;
+  public passwordPattern = passwordPattern;
 
   constructor(private _auth: AuthService, private _router: Router) {}
 
@@ -39,7 +38,7 @@ export class LogInComponent implements OnInit {
     return (isString(data) && data.trim().length <= 0);
   }
 
-  public loginWithPassword(): void {
+  public logInWithPassword(): void {
     this.errorLogIn = null;
 
     this._auth
@@ -48,7 +47,7 @@ export class LogInComponent implements OnInit {
       .catch((error: Error) => this.errorLogIn = error);
   }
 
-  public loginWithFacebook(): void {
+  public logInWithFacebook(): void {
     this.errorLogIn = null;
 
     this._auth

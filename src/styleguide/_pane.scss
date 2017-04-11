@@ -36,6 +36,14 @@
 
 .pane-body {
   padding-left: 2rem;
+
+  .valid-input {
+    color: $bs-color-green-light;
+
+    .mat-icon /deep/ svg {
+      fill: $bs-color-green-light;
+    }
+  }
 }
 
 .pane-background {
@@ -57,7 +65,7 @@
   }
 
   .mat-icon {
-    top: -2px;
+    top: -3px;
     float: left;
     position: relative;
     margin-right: 1rem;

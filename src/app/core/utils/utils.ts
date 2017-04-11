@@ -5,6 +5,25 @@
 /**********************************************************************************/
 
 /**
+ * @name emailPattern
+ * @kind RegExp
+ *
+ * @description
+ * Email regular expression shared across the application.
+ */
+export const emailPattern: RegExp =
+  /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i;
+
+/**
+ * @name passwordPattern
+ * @kind RegExp
+ *
+ * @description
+ * Password regular expression shared across the application.
+ */
+export const passwordPattern: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/g;
+
+/**
  * @name truncate
  * @kind function
  *

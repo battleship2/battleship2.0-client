@@ -1,1 +1,245 @@
-<h1>Sign up</h1>
+<div class="row pane-fullscreen">
+  <div class="d-inline-block col-12 col-lg-7 col-md-6 pr-md-0">
+    <div class="pane pane-left">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-5 col-lg-7 col-md-10 col-12 text-center ml-auto mr-auto">
+            <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
+            <h4 class="mb-2">
+              Sign up for free, forever
+            </h4>
+
+            <p class="mb-4">
+              <small class="text-muted">
+                You have never been so close to war.
+              </small>
+            </p>
+
+            <div class="alert alert-danger text-left" *ngIf="errorSignUp">
+              <strong>Oopsy...</strong>
+              {{ errorSignUp.message }}
+            </div>
+
+            <form class="user-data-form" #signUpForm="ngForm">
+
+              <div class="form-group p-relative">
+                <div class="input-group">
+                  <input type="text" name="user-name" autofocus autocomplete="true" tabindex="1" #userName="ngModel"
+                         class="form-control" id="user-name" required [(ngModel)]="userDisplayName"
+                         [class.not-empty]="!isEmpty(userName.value)" minlength="8"
+                         (focus)="inputCurrentlyFocused = 'USERNAME'" (blur)="inputCurrentlyFocused = 'NONE'">
+                  <label for="user-name">Username</label>
+                </div>
+              </div>
+
+              <div class="form-group p-relative">
+                <div class="input-group">
+                  <input type="email" name="user-email" autocomplete="true" tabindex="2" #userEmail="ngModel"
+                         class="form-control" id="user-email" required [(ngModel)]="user.email" [pattern]="emailPattern"
+                         [class.not-empty]="!isEmpty(userEmail.value)">
+                  <label for="user-email">Email</label>
+                </div>
+              </div>
+
+              <div class="form-group p-relative">
+                <div class="input-group">
+                  <input type="password" name="user-password" autocomplete="true" tabindex="3" #userPassword="ngModel"
+                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="8"
+                         [class.not-empty]="!isEmpty(userPassword.value)" [pattern]="passwordPattern"
+                         (focus)="inputCurrentlyFocused = 'PASSWORD'" (blur)="inputCurrentlyFocused = 'NONE'">
+                  <label for="user-password">Password</label>
+                </div>
+              </div>
+
+              <div class="form-group p-relative">
+                <button [disabled]="!signUpForm.form.valid" (click)="signUpWithPassword()"
+                        class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
+                  Sign up
+                </button>
+
+                <small class="text-muted text-really-small">
+                  By signing up you agree to our
+                  <a routerLink="/terms-of-service">
+                    <strong>Terms of Service</strong>
+                  </a>
+                  and
+                  <a routerLink="/privacy-policy">
+                    <strong>Privacy Policy</strong>
+                  </a>
+                </small>
+              </div>
+
+            </form>
+
+            <p>
+              <small>
+                Already have an account? <a routerLink="/log-in" tabindex="4">Log in</a>.
+              </small>
+            </p>
+
+            <div class="row mb-3">
+              <div class="col-5 pr-0"><hr></div>
+
+              <div class="col-2 px-0 pt-1">
+                <small class="text-muted">OR</small>
+              </div>
+
+              <div class="col-5 pl-0"><hr></div>
+            </div>
+
+            <form class="user-data-form">
+              <div class="form-group p-relative">
+                <button class="btn btn-facebook btn-lg btn-block btn-submit cursor-pointer"
+                        tabindex="6" (click)="signUpWithFacebook()">
+                  <img src="assets/img/logos/fb.png" alt="facebook logo" class="facebook-logo">
+                  Facebook
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-inline-block hidden-sm-down col-lg-5 col-md-6 pl-md-0">
+    <div class="pane-background"></div>
+    <div class="pane pane-right">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="pane-body" [ngSwitch]="inputCurrentlyFocused">
+
+            <ng-container *ngSwitchCase="'USERNAME'">
+              <div class="col-12 mb-4">
+                <h4>Common kiddo, let's go!</h4>
+              </div>
+
+              <div class="col-12 mb-5">
+                Nothing better than a good old-fashioned
+                <br>
+                freak-ass username to start your legend.
+              </div>
+
+              <div class="col-12">
+                <ul class="pane-motto">
+                  <li>
+                    <ng-container [ngSwitch]="userNameRules.length">
+                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
+                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
+                    </ng-container>
+                    <h6 [class.text-line-through]="userNameRules.length">Minimum 8 chars</h6>
+                  </li>
+
+                  <li *ngIf="userName.valid" class="valid-input">
+                    <hr class="jumbotron-hr">
+                    <md-icon svgIcon="check_svg"></md-icon>
+                    <h6>Damn, this name looks good!</h6>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'PASSWORD'">
+              <div class="col-12 mb-4">
+                <h4>Crack it already!</h4>
+              </div>
+
+              <div class="col-12 mb-5">
+                What would your mother think if she were
+                <br>
+                to find your hidden thoughts?
+              </div>
+
+              <div class="col-12">
+                <ul class="pane-motto">
+                  <li>
+                    <ng-container [ngSwitch]="passwordRules.length">
+                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
+                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
+                    </ng-container>
+                    <h6 [class.text-line-through]="passwordRules.length">Minimum 8 chars</h6>
+                  </li>
+
+                  <li>
+                    <ng-container [ngSwitch]="passwordRules.uppercase">
+                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
+                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
+                    </ng-container>
+                    <h6 [class.text-line-through]="passwordRules.uppercase">One uppercase letter</h6>
+                  </li>
+
+                  <li>
+                    <ng-container [ngSwitch]="passwordRules.lowercase">
+                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
+                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
+                    </ng-container>
+                    <h6 [class.text-line-through]="passwordRules.lowercase">One lowercase letter</h6>
+                  </li>
+
+                  <li>
+                    <ng-container [ngSwitch]="passwordRules.digit">
+                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
+                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
+                    </ng-container>
+                    <h6 [class.text-line-through]="passwordRules.digit">One digit</h6>
+                  </li>
+
+                  <li>
+                    <ng-container [ngSwitch]="passwordRules.symbol">
+                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
+                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
+                    </ng-container>
+                    <h6 [class.text-line-through]="passwordRules.symbol">One special character</h6>
+                  </li>
+
+                  <li *ngIf="userPassword.valid" class="valid-input">
+                    <hr class="jumbotron-hr">
+                    <md-icon svgIcon="check_svg"></md-icon>
+                    <h6>That is what I call "secure"!</h6>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+              <div class="col-12">
+                <h4 class="mb-5">Join the war now!</h4>
+              </div>
+
+              <div class="col-12">
+                <ul class="pane-motto">
+                  <li>
+                    <md-icon svgIcon="history_svg"></md-icon>
+                    <h6>Unlimited access</h6>
+                  </li>
+                  <li>
+                    <md-icon svgIcon="explore_svg"></md-icon>
+                    <h6>Discover new tactics</h6>
+                  </li>
+                  <li>
+                    <md-icon svgIcon="build_svg"></md-icon>
+                    <h6>Engineer your destiny</h6>
+                  </li>
+                  <li>
+                    <md-icon svgIcon="compare_arrows_svg"></md-icon>
+                    <h6>Fight relentless enemies</h6>
+                  </li>
+                  <li>
+                    <md-icon svgIcon="extension_svg"></md-icon>
+                    <h6>Play the way you always wanted to</h6>
+                  </li>
+                  <li>
+                    <md-icon svgIcon="favorite_svg"></md-icon>
+                    <h6>Amaze yourself with incredible strategies</h6>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

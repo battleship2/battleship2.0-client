@@ -12,6 +12,14 @@
 // STYLES
 //
 // ------------------------
+.text-muted a {
+  color: $gray-light !important
+}
+
+.text-line-through {
+  text-decoration: line-through;
+}
+
 .p-relative {
   position: relative;
 }
@@ -24,8 +32,9 @@
   @include button-variant($bs-color-white, $bs-color-facebook, darken($bs-color-facebook, 5%));
 
   .facebook-logo {
+    left: 1.5rem;
     width: 23px;
-    float: left;
+    position: absolute;
   }
 }
 

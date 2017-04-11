@@ -14,7 +14,7 @@
               {{ errorLogIn.message }}
             </div>
 
-            <form class="user-data-form" #loginForm="ngForm">
+            <form class="user-data-form" #logInForm="ngForm">
               <div class="form-group p-relative">
                 <div class="input-group">
                   <input type="email" name="user-email" autofocus autocomplete="true" tabindex="1" #userEmail="ngModel"
@@ -32,14 +32,14 @@
 
                 <div class="input-group">
                   <input type="password" name="user-password" autocomplete="true" tabindex="2" #userPassword="ngModel"
-                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="6"
-                         [class.not-empty]="!isEmpty(userPassword.value)">
-                  <label for="user-password">Password (6 chars min.)</label>
+                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="8"
+                         [class.not-empty]="!isEmpty(userPassword.value)" [pattern]="passwordPattern">
+                  <label for="user-password">Password</label>
                 </div>
               </div>
 
               <div class="form-group p-relative">
-                <button [disabled]="!loginForm.form.valid" (click)="loginWithPassword()"
+                <button [disabled]="!logInForm.form.valid" (click)="logInWithPassword()"
                         class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
                   Log in
                 </button>
@@ -65,7 +65,7 @@
             <form class="user-data-form">
               <div class="form-group p-relative">
                 <button class="btn btn-facebook btn-lg btn-block btn-submit cursor-pointer"
-                        tabindex="6" (click)="loginWithFacebook()">
+                        tabindex="6" (click)="logInWithFacebook()">
                   <img src="assets/img/logos/fb.png" alt="facebook logo" class="facebook-logo">
                   Facebook
                 </button>
@@ -83,8 +83,8 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="pane-body">
-            <div class="col-12">
-              <h4 class="mb-5">Join the war now!</h4>
+            <div class="col-12 mb-5">
+              <h4>Join the war now!</h4>
             </div>
 
             <div class="col-12">
