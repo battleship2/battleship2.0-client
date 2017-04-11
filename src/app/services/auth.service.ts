@@ -66,6 +66,27 @@ export class AuthService implements OnDestroy {
     });
   }
 
+  public logInWithGithub(): firebase.Promise<FirebaseAuthState> {
+    return this._ngAuth.login({
+      provider: AuthProviders.Github,
+      method: AuthMethods.Popup
+    });
+  }
+
+  public logInWithGoogle(): firebase.Promise<FirebaseAuthState> {
+    return this._ngAuth.login({
+      provider: AuthProviders.Google,
+      method: AuthMethods.Popup
+    });
+  }
+
+  public logInWithTwitter(): firebase.Promise<FirebaseAuthState> {
+    return this._ngAuth.login({
+      provider: AuthProviders.Twitter,
+      method: AuthMethods.Popup
+    });
+  }
+
   public logInAnonymously(): firebase.Promise<FirebaseAuthState> {
     return this._ngAuth.login({
       provider: AuthProviders.Anonymous,

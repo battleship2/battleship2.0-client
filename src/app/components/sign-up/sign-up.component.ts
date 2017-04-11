@@ -1,9 +1,9 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { UserInfo } from 'firebase/app';
-import { emailPattern, isNull, isString, passwordPattern } from '../../core/utils/utils';
-import { EmailPasswordCredentials } from 'angularfire2/auth';
+import { Component, DoCheck, OnInit } from "@angular/core";
+import { emailPattern, passwordPattern } from "../../core/utils/utils";
+import { EmailPasswordCredentials } from "angularfire2/auth";
+import { TooltipService } from "../../services/tooltip.service";
+import { EmailStats, FormHandlerService, PasswordStats, UserNameStats } from "../../services/form-handler.service";
+import { AuthProviders } from "angularfire2";
 
 @Component({
   selector: 'bsc-sign-up',
@@ -20,82 +20,40 @@ export class SignUpComponent implements OnInit, DoCheck {
   public emailPattern = emailPattern;
   public userDisplayName = '';
   public passwordPattern = passwordPattern;
+
+  public providerTriggered: AuthProviders;
   public inputCurrentlyFocused = 'NONE';
 
-  public emailRules = {
-    valid: false
-  };
+  public emailStats: EmailStats;
+  public userNameStats: UserNameStats;
+  public passwordStats: PasswordStats;
 
-  public userNameRules = {
-    length: false
-  };
+  constructor(private _fh: FormHandlerService) {}
 
-  public passwordRules = {
-    valid: false,
-    digit: false,
-    length: false,
-    symbol: false,
-    uppercase: false,
-    lowercase: false
-  };
-
-  constructor(private _auth: AuthService, private _router: Router) {}
+  public isEmpty(data: string): boolean {
+    return this._fh.isEmpty(data);
+  }
 
   public ngDoCheck(): void {
-    this._updateEmailRules();
-    this._updatePasswordRules();
-    this._updateUsernameRules();
+    this.emailStats = FormHandlerService.getEmailStats(this.user.email);
+    this.passwordStats = FormHandlerService.getPasswordStats(this.user.password);
+    this.userNameStats = FormHandlerService.getUserNameStats(this.userDisplayName);
   }
 
   public ngOnInit(): void {
-    const user: UserInfo = this._auth.user;
-
-    if (!isNull(user) && !user['anonymous']) {
-      this._handleUserLoggedIn();
-      return;
-    }
+    this._fh.setup();
+    TooltipService.setup();
   }
 
-  public isEmpty(data: string): boolean {
-    return (isString(data) && data.trim().length <= 0);
-  }
+  public submit(provider: AuthProviders, credentials?: EmailPasswordCredentials, creation?: boolean): void {
+    this.providerTriggered = provider;
 
-  public signUpWithPassword(): void {
-    this.errorSignUp = null;
-
-    this._auth
-      .signUp(this.user)
-      .then(() => this._handleUserLoggedIn())
-      .catch((error: Error) => this.errorSignUp = error);
-  }
-
-  public signUpWithFacebook(): void {
-    this.errorSignUp = null;
-
-    this._auth
-      .logInWithFacebook()
-      .then(() => this._handleUserLoggedIn())
-      .catch((error: Error) => this.errorSignUp = error);
-  }
-
-  private _handleUserLoggedIn(): Promise<boolean> {
-    return this._router.navigateByUrl('/pick-your-battle', { replaceUrl: true });
-  }
-
-  private _updateEmailRules(): void {
-    this.emailRules.valid = emailPattern.test(this.user.email);
-  }
-
-  private _updatePasswordRules(): void {
-    this.passwordRules.valid = passwordPattern.test(this.user.password);
-    this.passwordRules.digit = /^(?=.*\d).+$/ig.test(this.user.password);
-    this.passwordRules.length = /^.{8,}$/ig.test(this.user.password);
-    this.passwordRules.symbol = /^(?=.*(_|[^\w])).+$/ig.test(this.user.password);
-    this.passwordRules.uppercase = /^(?=.*[A-Z]).+$/g.test(this.user.password);
-    this.passwordRules.lowercase = /^(?=.*[a-z]).+$/g.test(this.user.password);
-  }
-
-  private _updateUsernameRules(): void {
-    this.userNameRules.length = /^.{8,}$/ig.test(this.userDisplayName);
+    this._fh
+      .submit(provider, credentials, creation)
+      .then(() => this.providerTriggered = null)
+      .catch((error: Error) => {
+        this.errorSignUp = error;
+        this.providerTriggered = null;
+      });
   }
 }

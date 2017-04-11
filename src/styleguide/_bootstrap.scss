@@ -28,16 +28,6 @@
   position: absolute;
 }
 
-.btn-facebook {
-  @include button-variant($bs-color-white, $bs-color-facebook, darken($bs-color-facebook, 5%));
-
-  .facebook-logo {
-    left: 1.5rem;
-    width: 23px;
-    position: absolute;
-  }
-}
-
 .btn-light {
   @include button-variant($bs-color-black, $bs-color-white, darken($bs-color-white, 5%));
 }
@@ -78,4 +68,20 @@
   &:disabled {
     color: lighten($bs-color-black, 50%);
   }
+}
+
+.btn-facebook {
+  @include button-variant($bs-color-white, $bs-color-facebook, darken($bs-color-facebook, 5%));
+}
+
+.btn-github {
+  @include button-variant($bs-color-white, $bs-color-github, darken($bs-color-github, 5%));
+}
+
+.btn-twitter {
+  @include button-variant($bs-color-white, $bs-color-twitter, darken($bs-color-twitter, 5%));
+}
+
+.btn-google {
+  @include button-variant($bs-color-white, $bs-color-google, darken($bs-color-google, 5%));
 }

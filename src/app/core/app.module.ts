@@ -23,6 +23,7 @@ import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { SubscriptionCleanerService } from "../services/subscription-cleaner.service";
 import { TooltipService } from '../services/tooltip.service';
+import { FormHandlerService } from "../services/form-handler.service";
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { TooltipService } from '../services/tooltip.service';
     AuthService,
     LoggerService,
     TooltipService,
+    FormHandlerService,
     IconRegistryService,
     AppReadyEventService,
     SubscriptionCleanerService,

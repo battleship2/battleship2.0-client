@@ -42,40 +42,6 @@
   height: 40px;
 }
 
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  margin: .5rem;
-  display: inline-block;
-  position: relative;
-
-  svg {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    animation: loading-spinner-rotate 600ms linear infinite;
-
-    &:not(:root) {
-      overflow: hidden;
-    }
-
-    circle {
-      fill: transparent;
-      stroke: white;
-      stroke-width: 4px;
-      stroke-dasharray: 128px;
-      stroke-dashoffset: 82px;
-    }
-  }
-}
-
-@keyframes loading-spinner-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .dropdown {
   .dropdown-menu {
     top: 36px;

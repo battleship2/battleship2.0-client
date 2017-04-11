@@ -52,8 +52,16 @@
               </div>
 
               <div class="form-group p-relative">
-                <button [disabled]="!signUpForm.form.valid" (click)="signUpWithPassword()"
+                <button [disabled]="providerTriggered === 4 || !signUpForm.form.valid" (click)="submit(4, user, true)"
                         class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
+                  <ng-container *ngIf="providerTriggered === 4">
+                    <div class="loading-spinner">
+                      <svg viewBox="0 0 64 64">
+                        <circle transform="translate(32,32)" r="26"></circle>
+                      </svg>
+                    </div>
+                  </ng-container>
+
                   Sign up
                 </button>
 
@@ -89,10 +97,32 @@
 
             <form class="user-data-form">
               <div class="form-group p-relative">
-                <button class="btn btn-facebook btn-lg btn-block btn-submit cursor-pointer"
-                        tabindex="6" (click)="signUpWithFacebook()">
-                  <img src="assets/img/logos/fb.png" alt="facebook logo" class="facebook-logo">
-                  Facebook
+                <button class="btn btn-facebook btn-lg btn-submit btn-icon cursor-pointer"
+                        [disabled]="providerTriggered === 2"
+                        tabindex="6" (click)="submit(2)" title="Sign up with Facebook"
+                        data-toggle="tooltip" data-placement="top">
+                  <img src="assets/img/logos/fb.png" alt="facebook logo" width="25">
+                </button>
+
+                <button class="btn btn-github btn-lg btn-submit btn-icon cursor-pointer" title="Sign up with Github"
+                        [disabled]="providerTriggered === 0"
+                        data-toggle="tooltip" data-placement="top"
+                        tabindex="7" (click)="submit(0)">
+                  <img src="assets/img/logos/github.png" alt="github logo" width="25">
+                </button>
+
+                <button class="btn btn-google btn-lg btn-submit btn-icon cursor-pointer" title="Sign up with Google"
+                        [disabled]="providerTriggered === 3"
+                        data-toggle="tooltip" data-placement="top"
+                        tabindex="8" (click)="submit(3)">
+                  <img src="assets/img/logos/google.png" alt="google plus logo" width="25">
+                </button>
+
+                <button class="btn btn-twitter btn-lg btn-submit btn-icon cursor-pointer" title="Sign up with Twitter"
+                        [disabled]="providerTriggered === 1"
+                        data-toggle="tooltip" data-placement="top"
+                        tabindex="9" (click)="submit(1)">
+                  <img src="assets/img/logos/twitter.png" alt="twitter logo" width="25">
                 </button>
               </div>
             </form>
@@ -123,11 +153,11 @@
               <div class="col-12">
                 <ul class="pane-motto">
                   <li>
-                    <ng-container [ngSwitch]="userNameRules.length">
+                    <ng-container [ngSwitch]="userNameStats.length">
                       <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
                       <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
                     </ng-container>
-                    <h6 [class.text-line-through]="userNameRules.length">Minimum 8 chars</h6>
+                    <h6 [class.text-line-through]="userNameStats.length">Minimum 8 chars</h6>
                   </li>
 
                   <li *ngIf="userName.valid" class="valid-input">
@@ -153,43 +183,43 @@
               <div class="col-12">
                 <ul class="pane-motto">
                   <li>
-                    <ng-container [ngSwitch]="passwordRules.length">
+                    <ng-container [ngSwitch]="passwordStats.length">
                       <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
                       <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
                     </ng-container>
-                    <h6 [class.text-line-through]="passwordRules.length">Minimum 8 chars</h6>
+                    <h6 [class.text-line-through]="passwordStats.length">Minimum 8 chars</h6>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordRules.uppercase">
+                    <ng-container [ngSwitch]="passwordStats.uppercase">
                       <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
                       <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
                     </ng-container>
-                    <h6 [class.text-line-through]="passwordRules.uppercase">One uppercase letter</h6>
+                    <h6 [class.text-line-through]="passwordStats.uppercase">One uppercase letter</h6>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordRules.lowercase">
+                    <ng-container [ngSwitch]="passwordStats.lowercase">
                       <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
                       <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
                     </ng-container>
-                    <h6 [class.text-line-through]="passwordRules.lowercase">One lowercase letter</h6>
+                    <h6 [class.text-line-through]="passwordStats.lowercase">One lowercase letter</h6>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordRules.digit">
+                    <ng-container [ngSwitch]="passwordStats.digit">
                       <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
                       <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
                     </ng-container>
-                    <h6 [class.text-line-through]="passwordRules.digit">One digit</h6>
+                    <h6 [class.text-line-through]="passwordStats.digit">One digit</h6>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordRules.symbol">
+                    <ng-container [ngSwitch]="passwordStats.symbol">
                       <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
                       <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
                     </ng-container>
-                    <h6 [class.text-line-through]="passwordRules.symbol">One special character</h6>
+                    <h6 [class.text-line-through]="passwordStats.symbol">One special character</h6>
                   </li>
 
                   <li *ngIf="userPassword.valid" class="valid-input">

@@ -3,6 +3,8 @@
 // IMPORTS
 //
 // ------------------------
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
 @import "variables/variables";
 
 // ------------------------
@@ -18,7 +20,6 @@
 
 html, body {
   height: 100vh;
-  overflow-y: hidden;
   background-color: $bs-color-white-dark;
 }
 
@@ -28,4 +29,49 @@ html, body {
 
 .text-really-small {
   font-size: 65%;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: .5rem;
+  display: inline-block;
+  position: relative;
+
+  svg {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    animation: loading-spinner-rotate 600ms linear infinite;
+
+    &:not(:root) {
+      overflow: hidden;
+    }
+
+    circle {
+      fill: transparent;
+      stroke: white;
+      stroke-width: 4px;
+      stroke-dasharray: 128px;
+      stroke-dashoffset: 82px;
+    }
+  }
+}
+
+@keyframes loading-spinner-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// ------------------------
+//
+// RESPONSIVE BREAKPOINTS
+//
+// ------------------------
+@include media-breakpoint-up(md) {
+  html, body {
+    overflow-y: hidden;
+  }
 }

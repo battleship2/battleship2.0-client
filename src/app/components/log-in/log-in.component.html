@@ -32,15 +32,22 @@
 
                 <div class="input-group">
                   <input type="password" name="user-password" autocomplete="true" tabindex="2" #userPassword="ngModel"
-                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="8"
-                         [class.not-empty]="!isEmpty(userPassword.value)" [pattern]="passwordPattern">
+                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password"
+                         [class.not-empty]="!isEmpty(userPassword.value)">
                   <label for="user-password">Password</label>
                 </div>
               </div>
 
               <div class="form-group p-relative">
-                <button [disabled]="!logInForm.form.valid" (click)="logInWithPassword()"
+                <button [disabled]="submittedBy.password || !logInForm.form.valid" (click)="logInWithPassword()"
                         class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
+                  <ng-container *ngIf="submittedBy.password">
+                    <div class="loading-spinner">
+                      <svg viewBox="0 0 64 64">
+                        <circle transform="translate(32,32)" r="26"></circle>
+                      </svg>
+                    </div>
+                  </ng-container>
                   Log in
                 </button>
               </div>
@@ -64,10 +71,32 @@
 
             <form class="user-data-form">
               <div class="form-group p-relative">
-                <button class="btn btn-facebook btn-lg btn-block btn-submit cursor-pointer"
-                        tabindex="6" (click)="logInWithFacebook()">
-                  <img src="assets/img/logos/fb.png" alt="facebook logo" class="facebook-logo">
-                  Facebook
+                <button class="btn btn-facebook btn-lg btn-submit btn-icon cursor-pointer"
+                        tabindex="6" (click)="logInWithFacebook()" title="Log in with Facebook"
+                        [disabled]="submittedBy.facebook"
+                        data-toggle="tooltip" data-placement="top">
+                  <img src="assets/img/logos/fb.png" alt="facebook logo" width="25">
+                </button>
+
+                <button class="btn btn-github btn-lg btn-submit btn-icon cursor-pointer" title="Log in with Github"
+                        [disabled]="submittedBy.github"
+                        data-toggle="tooltip" data-placement="top"
+                        tabindex="7" (click)="logInWithGithub()">
+                  <img src="assets/img/logos/github.png" alt="github logo" width="25">
+                </button>
+
+                <button class="btn btn-google btn-lg btn-submit btn-icon cursor-pointer" title="Log in with Google"
+                        [disabled]="submittedBy.google"
+                        data-toggle="tooltip" data-placement="top"
+                        tabindex="8" (click)="logInWithGoogle()">
+                  <img src="assets/img/logos/google.png" alt="google plus logo" width="25">
+                </button>
+
+                <button class="btn btn-twitter btn-lg btn-submit btn-icon cursor-pointer" title="Log in with Twitter"
+                        [disabled]="submittedBy.twitter"
+                        data-toggle="tooltip" data-placement="top"
+                        tabindex="9" (click)="logInWithTwitter()">
+                  <img src="assets/img/logos/twitter.png" alt="twitter logo" width="25">
                 </button>
               </div>
             </form>
