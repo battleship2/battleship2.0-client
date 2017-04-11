@@ -50,13 +50,14 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
   }
 
   public getMenuTitle(): string {
-    return (this.userData && truncate(this.userData.displayName || this.userData.email, 30, '...')) || 'Menu';
+    return (this.userData && truncate(this.userData.displayName || this.userData.email, 30, '...')) || 'Unknown';
   }
 
   private _handleRouteChange(event: NavigationEnd): void {
     switch (event.url) {
       case '/log-in':
       case '/sign-up':
+      case '/reset-password':
         this.isLightHeader = true;
         break;
       default:

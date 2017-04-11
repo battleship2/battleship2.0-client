@@ -42,7 +42,10 @@
 
   <div class="dropdown" [class.show]="isUserAuthenticated && userMenuVisible" (mouseleave)="hideUserMenu()" (click)="hideUserMenu()">
     <div class="dropdown-menu dropdown-menu-right">
-      <h6 class="dropdown-header text-center">{{ getMenuTitle() }}</h6>
+      <h6 class="dropdown-header text-center">
+        Signed in as {{ getMenuTitle() }}
+      </h6>
+      <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="/">
         <md-icon svgIcon="perm_identity_svg"></md-icon>
         My account
