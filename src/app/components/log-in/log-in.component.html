@@ -9,9 +9,13 @@
               Log into B&aring;ttleship 2
             </h4>
 
-            <div class="alert alert-danger text-left" *ngIf="errorLogIn">
+            <div class="alert alert-danger text-left" *ngIf="!providerTriggered && errorLogIn">
               <strong>Oopsy...</strong>
               {{ errorLogIn.message }}
+            </div>
+
+            <div class="alert alert-info text-left" *ngIf="providerTriggered && !errorLogIn">
+              Please wait while we log you in...
             </div>
 
             <form class="user-data-form" #logInForm="ngForm">
@@ -39,9 +43,9 @@
               </div>
 
               <div class="form-group p-relative">
-                <button [disabled]="submittedBy.password || !logInForm.form.valid" (click)="logInWithPassword()"
+                <button [disabled]="providerTriggered === 4 || !logInForm.form.valid" (click)="submit(4, user)"
                         class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
-                  <ng-container *ngIf="submittedBy.password">
+                  <ng-container *ngIf="providerTriggered === 4">
                     <div class="loading-spinner">
                       <svg viewBox="0 0 64 64">
                         <circle transform="translate(32,32)" r="26"></circle>
@@ -72,30 +76,30 @@
             <form class="user-data-form">
               <div class="form-group p-relative">
                 <button class="btn btn-facebook btn-lg btn-submit btn-icon cursor-pointer"
-                        tabindex="6" (click)="logInWithFacebook()" title="Log in with Facebook"
-                        [disabled]="submittedBy.facebook"
+                        tabindex="6" (click)="submit(2)" title="Log in with Facebook"
+                        [disabled]="providerTriggered === 2"
                         data-toggle="tooltip" data-placement="top">
                   <img src="assets/img/logos/fb.png" alt="facebook logo" width="25">
                 </button>
 
                 <button class="btn btn-github btn-lg btn-submit btn-icon cursor-pointer" title="Log in with Github"
-                        [disabled]="submittedBy.github"
+                        [disabled]="providerTriggered === 0"
                         data-toggle="tooltip" data-placement="top"
-                        tabindex="7" (click)="logInWithGithub()">
+                        tabindex="7" (click)="submit(0)">
                   <img src="assets/img/logos/github.png" alt="github logo" width="25">
                 </button>
 
                 <button class="btn btn-google btn-lg btn-submit btn-icon cursor-pointer" title="Log in with Google"
-                        [disabled]="submittedBy.google"
+                        [disabled]="providerTriggered === 3"
                         data-toggle="tooltip" data-placement="top"
-                        tabindex="8" (click)="logInWithGoogle()">
+                        tabindex="8" (click)="submit(3)">
                   <img src="assets/img/logos/google.png" alt="google plus logo" width="25">
                 </button>
 
                 <button class="btn btn-twitter btn-lg btn-submit btn-icon cursor-pointer" title="Log in with Twitter"
-                        [disabled]="submittedBy.twitter"
+                        [disabled]="providerTriggered === 1"
                         data-toggle="tooltip" data-placement="top"
-                        tabindex="9" (click)="logInWithTwitter()">
+                        tabindex="9" (click)="submit(1)">
                   <img src="assets/img/logos/twitter.png" alt="twitter logo" width="25">
                 </button>
               </div>

@@ -15,9 +15,13 @@
               </small>
             </p>
 
-            <div class="alert alert-danger text-left" *ngIf="errorSignUp">
+            <div class="alert alert-danger text-left" *ngIf="!providerTriggered && errorSignUp">
               <strong>Oopsy...</strong>
               {{ errorSignUp.message }}
+            </div>
+
+            <div class="alert alert-info text-left" *ngIf="providerTriggered && !errorSignUp">
+              Please wait while we sign you up...
             </div>
 
             <form class="user-data-form" #signUpForm="ngForm">
@@ -67,11 +71,11 @@
 
                 <small class="text-muted text-really-small">
                   By signing up you agree to our
-                  <a routerLink="/terms-of-service">
+                  <a routerLink="/privacy-terms">
                     <strong>Terms of Service</strong>
                   </a>
                   and
-                  <a routerLink="/privacy-policy">
+                  <a routerLink="/privacy-terms">
                     <strong>Privacy Policy</strong>
                   </a>
                 </small>

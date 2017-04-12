@@ -33,6 +33,11 @@ export const AppRoutes: Routes = [
   },
 
   {
+    path: '404',
+    component: PageNotFoundComponent
+  },
+
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: '/pick-your-battle'
@@ -40,6 +45,6 @@ export const AppRoutes: Routes = [
 
   {
     path: '**',
-    component: PageNotFoundComponent
+    redirectTo: '/404'
   }
 ];

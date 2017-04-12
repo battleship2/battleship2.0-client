@@ -1,9 +1,9 @@
-import { Component, DoCheck, OnInit } from "@angular/core";
-import { emailPattern, passwordPattern } from "../../core/utils/utils";
-import { EmailPasswordCredentials } from "angularfire2/auth";
-import { TooltipService } from "../../services/tooltip.service";
-import { EmailStats, FormHandlerService, PasswordStats, UserNameStats } from "../../services/form-handler.service";
-import { AuthProviders } from "angularfire2";
+import { Component, DoCheck, OnInit } from '@angular/core';
+import { emailPattern, passwordPattern } from '../../core/utils/utils';
+import { EmailPasswordCredentials } from 'angularfire2/auth';
+import { TooltipService } from '../../services/tooltip.service';
+import { EmailStats, FormHandlerService, PasswordStats, UserNameStats } from '../../services/form-handler.service';
+import { AuthProviders } from 'angularfire2';
 
 @Component({
   selector: 'bsc-sign-up',
@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit, DoCheck {
   public userDisplayName = '';
   public passwordPattern = passwordPattern;
 
-  public providerTriggered: AuthProviders;
+  public providerTriggered: AuthProviders = null;
   public inputCurrentlyFocused = 'NONE';
 
   public emailStats: EmailStats;
@@ -46,6 +46,7 @@ export class SignUpComponent implements OnInit, DoCheck {
   }
 
   public submit(provider: AuthProviders, credentials?: EmailPasswordCredentials, creation?: boolean): void {
+    this.errorSignUp = null;
     this.providerTriggered = provider;
 
     this._fh

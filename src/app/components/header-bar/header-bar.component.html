@@ -7,7 +7,8 @@
   </a>
 
   <div class="navbar-nav mr-auto" id="rank-board-zone" [class.hidden-xs-down]="!isUserAuthenticated">
-    <a routerLink="/rank-board" routerLinkActive="active" class="nav-item nav-link">Rank board</a>
+    <a routerLink="/rank-board" routerLinkActive="active" class="nav-item nav-link">Scores</a>
+    <a href="https://github.com/battleship2" target="_blank" class="nav-item nav-link">Github</a>
   </div>
 
   <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated" id="user-account-zone">

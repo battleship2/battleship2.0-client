@@ -55,6 +55,7 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
 
   private _handleRouteChange(event: NavigationEnd): void {
     switch (event.url) {
+      case '/404':
       case '/log-in':
       case '/sign-up':
       case '/reset-password':
