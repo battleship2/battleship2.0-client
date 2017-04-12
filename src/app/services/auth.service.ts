@@ -17,7 +17,7 @@ export class AuthService implements OnDestroy {
 
   constructor(private _logger: LoggerService, private _ngAuth: AngularFireAuth) {
     this._ngAuth$ = _ngAuth.subscribe((state: FirebaseAuthState) => {
-      this._logger.log('[AuthService] Receiving authentication:', state);
+      // this._logger.log('[AuthService] Receiving authentication:', state);
       this._authState = state;
       this.userStatusChanges.emit(this.user);
     });

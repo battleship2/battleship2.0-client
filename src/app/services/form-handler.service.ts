@@ -37,7 +37,7 @@ export class FormHandlerService {
     }
   }
 
-  public isEmpty(data: string): boolean {
+  public static isEmpty(data: string): boolean {
     return (isString(data) && data.trim().length <= 0);
   }
 

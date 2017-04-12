@@ -1,4 +1,5 @@
-<nav class="navbar navbar-toggleable-xl" [ngClass]="{ 'navbar-inverse bg-inverse': !isLightHeader, 'navbar-light bg-faded': isLightHeader }">
+<nav class="navbar navbar-toggleable-xl"
+     [ngClass]="{ 'navbar-inverse bg-inverse': !isTransluscentHeader && !isLightHeader, 'navbar-light bg-faded': isTransluscentHeader || isLightHeader }">
 
   <a class="navbar-brand" routerLink="/pick-your-battle">
     <img src="assets/img/logos/logo.png" width="40" height="40" alt="battleship 2 logo" class="d-inline-block align-middle mr-2">
@@ -22,11 +23,15 @@
 
     <ng-container *ngSwitchCase="false">
       <div class="connection-form">
-        <a routerLink="/log-in" routerLinkActive="hidden-xl-down" class="btn btn-link mr-auto btn-link-light">
+        <a routerLink="/log-in" routerLinkActive="hidden-xl-down"
+           class="btn btn-link mr-auto"
+           [ngClass]="{ 'btn-link-dark': isTransluscentHeader, 'btn-link-light': !isTransluscentHeader }">
           Log in
         </a>
 
-        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down" class="btn btn-outline-light">
+        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down"
+           class="btn"
+           [ngClass]="{ 'btn-outline-dark': isTransluscentHeader, 'btn-outline-light': !isTransluscentHeader }">
           Sign up
         </a>
       </div>

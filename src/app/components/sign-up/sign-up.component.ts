@@ -31,7 +31,7 @@ export class SignUpComponent implements OnInit, DoCheck {
   constructor(private _fh: FormHandlerService) {}
 
   public isEmpty(data: string): boolean {
-    return this._fh.isEmpty(data);
+    return FormHandlerService.isEmpty(data);
   }
 
   public ngDoCheck(): void {

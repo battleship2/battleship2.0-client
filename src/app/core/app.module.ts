@@ -24,6 +24,7 @@ import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { SubscriptionCleanerService } from "../services/subscription-cleaner.service";
 import { TooltipService } from '../services/tooltip.service';
 import { FormHandlerService } from "../services/form-handler.service";
+import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { FormHandlerService } from "../services/form-handler.service";
     RankBoardComponent,
     HeaderBarComponent,
     PageNotFoundComponent,
+    ResetPasswordComponent,
     PickYourBattleComponent,
     GettingStartedComponent
   ],

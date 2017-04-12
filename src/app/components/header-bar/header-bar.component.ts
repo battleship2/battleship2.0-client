@@ -19,6 +19,7 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
   public isLightHeader = false;
   public userMenuVisible = false;
   public isUserAuthenticated = null;
+  public isTransluscentHeader = false;
 
   constructor(private _auth: AuthService, private _router: Router) {
   }
@@ -55,19 +56,23 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
 
   private _handleRouteChange(event: NavigationEnd): void {
     switch (event.url) {
-      case '/404':
+      case '/reset-password':
+        this.isLightHeader = false;
+        this.isTransluscentHeader = true;
+        break;
       case '/log-in':
       case '/sign-up':
-      case '/reset-password':
         this.isLightHeader = true;
+        this.isTransluscentHeader = false;
         break;
       default:
         this.isLightHeader = false;
+        this.isTransluscentHeader = false;
     }
   }
 
   private _handleUserStatusChange(userData: UserInfo): void {
-    console.log('HeaderBar User changed to:', userData);
+    // console.log('HeaderBar User changed to:', userData);
     this.userData = userData;
     this.isUserAuthenticated = (isNull(userData) ? null : !userData[ 'anonymous' ]);
   }

@@ -5,6 +5,7 @@ import { PickYourBattleComponent } from "../../components/pick-your-battle/pick-
 import { RankBoardComponent } from "../../components/rank-board/rank-board.component";
 import { SignUpComponent } from "../../components/sign-up/sign-up.component";
 import { LogInComponent } from "../../components/log-in/log-in.component";
+import { ResetPasswordComponent } from '../../components/reset-password/reset-password.component';
 
 export const AppRoutes: Routes = [
   {
@@ -15,6 +16,11 @@ export const AppRoutes: Routes = [
   {
     path: 'log-in',
     component: LogInComponent
+  },
+
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   },
 
   {
@@ -33,11 +39,6 @@ export const AppRoutes: Routes = [
   },
 
   {
-    path: '404',
-    component: PageNotFoundComponent
-  },
-
-  {
     path: '',
     pathMatch: 'full',
     redirectTo: '/pick-your-battle'
@@ -45,6 +46,6 @@ export const AppRoutes: Routes = [
 
   {
     path: '**',
-    redirectTo: '/404'
+    component: PageNotFoundComponent
   }
 ];

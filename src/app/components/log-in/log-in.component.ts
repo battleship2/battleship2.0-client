@@ -23,7 +23,7 @@ export class LogInComponent implements OnInit {
   constructor(private _fh: FormHandlerService) {}
 
   public isEmpty(data: string): boolean {
-    return this._fh.isEmpty(data);
+    return FormHandlerService.isEmpty(data);
   }
 
   public ngOnInit(): void {
