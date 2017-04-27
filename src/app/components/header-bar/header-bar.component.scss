@@ -53,8 +53,9 @@
     border-top-right-radius: 0;
 
     .dropdown-header {
-      letter-spacing: .5px;
       color: rgba($bs-color-white-dark, .8);
+      font-size: .75rem;
+      letter-spacing: .5px;
     }
 
     .dropdown-divider {

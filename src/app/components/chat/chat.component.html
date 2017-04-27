@@ -1,0 +1,17 @@
+<div class="bsc-chat" [class.opened]="opened">
+  <div class="card messages">
+    <div class="card-header card-black" (click)="opened = !opened">
+      <div class="float-xs-left text-uppercase">
+        <div class="connection-status connecting" data-toggle="tooltip" data-placement="top" title="Connecting..."></div>
+        Chat
+      </div>
+      <!--<people-list></people-list>-->
+    </div>
+    <div class="message-writing-indicator hidden"></div>
+    <div class="card-block messages-container"></div>
+    <div class="card-footer input-container">
+      <i class="material-icons pull-xs-0 message-input-icon">keyboard_arrow_right</i>
+      <input type="text" class="message-input" placeholder="Send a message">
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@
 
 export const environment = {
   baseHref: '/',
+  serverUrl: 'http://localhost:9001',
   production: false,
   useConsole: true
 };

@@ -8,6 +8,8 @@ import { isNull } from "../../core/utils/utils";
 import { Subscription } from "rxjs/Subscription";
 import { UserInfo } from "firebase/app";
 import { SubscriptionCleanerService } from "../../services/subscription-cleaner.service";
+import { environment } from "../../../environments/environment";
+import { EngineService } from "../../services/engine.service";
 
 @Component({
   selector: 'bsc-app',
@@ -19,12 +21,15 @@ export class AppComponent implements OnInit, OnDestroy  {
 
   constructor(
     private _auth: AuthService,
+    private _engine: EngineService,
     private _domSanitizer: DomSanitizer,
     private _iconRegistry: IconRegistryService,
     private _appReadyEvent: AppReadyEventService,
     private _mdIconRegistry: MdIconRegistry) {}
 
   public ngOnInit(): void {
+    this._engine.start(environment.serverUrl);
+
     this._userStatusChanges$ =
       this._auth.userStatusChanges.subscribe((userData: UserInfo) => {
         if (isNull(userData)) {

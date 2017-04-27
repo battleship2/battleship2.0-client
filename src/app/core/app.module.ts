@@ -25,6 +25,9 @@ import { SubscriptionCleanerService } from "../services/subscription-cleaner.ser
 import { TooltipService } from '../services/tooltip.service';
 import { FormHandlerService } from "../services/form-handler.service";
 import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
+import { SocketService } from "../services/socket.service";
+import { ChatComponent } from "../components/chat/chat.component";
+import { EngineService } from "../services/engine.service";
 
 @NgModule({
   imports: [
@@ -37,6 +40,7 @@ import { ResetPasswordComponent } from '../components/reset-password/reset-passw
   ],
   declarations: [
     AppComponent,
+    ChatComponent,
     LogInComponent,
     SignUpComponent,
     RankBoardComponent,
@@ -49,7 +53,9 @@ import { ResetPasswordComponent } from '../components/reset-password/reset-passw
   bootstrap: [ AppComponent ],
   providers: [
     AuthService,
+    EngineService,
     LoggerService,
+    SocketService,
     TooltipService,
     FormHandlerService,
     IconRegistryService,
