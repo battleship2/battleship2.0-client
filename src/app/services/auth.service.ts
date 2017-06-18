@@ -70,6 +70,8 @@ export class AuthService implements OnDestroy {
     return this._ngFireAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
   }
 
+  //https://firebase.google.com/docs/auth/web/phone-auth
+
   public logInWithPhoneNumber(number: string): firebase.Promise<any> {
     const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
       'size': 'invisible',
