@@ -1,9 +1,8 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { emailPattern, passwordPattern } from '../../core/utils/utils';
-import { EmailPasswordCredentials } from 'angularfire2/auth';
 import { TooltipService } from '../../services/tooltip.service';
 import { EmailStats, FormHandlerService, PasswordStats, UserNameStats } from '../../services/form-handler.service';
-import { AuthProviders } from 'angularfire2';
+import { AuthProviders, EmailPasswordCredentials } from "../../definitions/types";
 
 @Component({
   selector: 'bsc-sign-up',

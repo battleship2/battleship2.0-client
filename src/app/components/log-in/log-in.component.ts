@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { emailPattern } from '../../core/utils/utils';
 import { TooltipService } from '../../services/tooltip.service';
-import { EmailPasswordCredentials } from 'angularfire2/auth';
-import { AuthProviders } from 'angularfire2';
 import { FormHandlerService } from '../../services/form-handler.service';
+import { AuthProviders, EmailPasswordCredentials } from "../../definitions/types";
 
 @Component({
   selector: 'bsc-log-in',

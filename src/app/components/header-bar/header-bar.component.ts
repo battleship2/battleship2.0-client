@@ -46,7 +46,7 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
     this.userMenuVisible = false;
   }
 
-  public signOut(): Promise<void> {
+  public signOut(): firebase.Promise<void> {
     return this._auth.signOut();
   }
 
@@ -74,6 +74,6 @@ export class HeaderBarComponent implements OnInit, OnDestroy {
   private _handleUserStatusChange(userData: UserInfo): void {
     // console.log('HeaderBar User changed to:', userData);
     this.userData = userData;
-    this.isUserAuthenticated = (isNull(userData) ? null : !userData[ 'anonymous' ]);
+    this.isUserAuthenticated = !isNull(userData);
   }
 }

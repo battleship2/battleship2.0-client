@@ -3,8 +3,7 @@ import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
 import { emailPattern, isNull, isString, passwordPattern } from "../core/utils/utils";
 import { UserInfo } from "firebase/app";
-import { EmailPasswordCredentials } from "angularfire2/auth";
-import { AuthProviders, FirebaseAuthState } from "angularfire2";
+import { AuthProviders, EmailPasswordCredentials } from "../definitions/types";
 
 export interface PasswordStats {
   valid: boolean;
@@ -31,7 +30,7 @@ export class FormHandlerService {
   public setup(): void {
     const user: UserInfo = this._auth.user;
 
-    if (!isNull(user) && !user['anonymous']) {
+    if (!isNull(user) && !user["anonymous"]) {
       this._handleUserLoggedIn();
       return;
     }
@@ -41,10 +40,11 @@ export class FormHandlerService {
     return (isString(data) && data.trim().length <= 0);
   }
 
-  public submit(provider: AuthProviders, credentials?: EmailPasswordCredentials, creation?: boolean): firebase.Promise<FirebaseAuthState> {
-    let promise: firebase.Promise<FirebaseAuthState> = null;
+  public submit(provider: AuthProviders | string, credentials?: EmailPasswordCredentials, creation?: boolean): firebase.Promise<any> {
+    let promise: firebase.Promise<any> = null;
 
     switch(provider) {
+      case "Password":
       case AuthProviders.Password:
         if (creation) {
           promise = this._auth.signUp(credentials);
@@ -52,21 +52,31 @@ export class FormHandlerService {
           promise = this._auth.logIn(credentials);
         }
         break;
+
+      case "Google":
       case AuthProviders.Google:
         promise = this._auth.logInWithGoogle();
         break;
+
+      case "Github":
       case AuthProviders.Github:
         promise = this._auth.logInWithGithub();
         break;
+
+      case "Twitter":
       case AuthProviders.Twitter:
         promise = this._auth.logInWithTwitter();
         break;
+
+      case "Facebook":
       case AuthProviders.Facebook:
         promise = this._auth.logInWithFacebook();
         break;
     }
 
-    return promise.then(() => this._handleUserLoggedIn());
+    return promise.then(() => {
+      this._handleUserLoggedIn();
+    });
   }
 
   public static getPasswordStats(password: string): PasswordStats {
