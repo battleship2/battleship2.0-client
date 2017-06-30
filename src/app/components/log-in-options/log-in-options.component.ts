@@ -42,14 +42,14 @@ export class LogInOptionsComponent implements OnInit, AfterViewInit {
     PHONE: {
       css: "btn-phone",
       name: "Phone",
-      title: "Connect with your phone number",
+      title: "Connect with your phone",
       image: "assets/img/logos/phone.png"
     },
 
     EMAIL: {
       css: "btn-email",
       name: "Email",
-      title: "Connect with your email address",
+      title: "Connect with your email",
       image: "assets/img/logos/at.png"
     },
 
