@@ -1,59 +1,65 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { emailPattern, passwordPattern } from '../../core/utils/utils';
-import { TooltipService } from '../../services/tooltip.service';
-import { EmailStats, FormHandlerService, PasswordStats, UserNameStats } from '../../services/form-handler.service';
+import { Component, DoCheck, OnInit, ViewChild } from "@angular/core";
+import { emailPattern, passwordPattern } from "../../core/utils/utils";
 import { AuthProviders, EmailPasswordCredentials } from "../../definitions/types";
+import { EmailStats, FormHandlerService, PasswordStats, UserNameStats } from "../../services/form-handler.service";
+import { LogInOptionsComponent } from "../log-in-options/log-in-options.component";
 
 @Component({
-  selector: 'bsc-sign-up',
-  styleUrls: [ 'sign-up.component.scss' ],
-  templateUrl: 'sign-up.component.html'
+  selector: "bsc-sign-up",
+  styleUrls: [ "sign-up.component.scss" ],
+  templateUrl: "sign-up.component.html"
 })
 export class SignUpComponent implements OnInit, DoCheck {
-  public user: EmailPasswordCredentials = {
-    email: '',
-    password: ''
-  };
-
+  public isEmpty = FormHandlerService.isEmpty;
+  public submitted = false;
   public errorSignUp: Error = null;
   public emailPattern = emailPattern;
-  public userDisplayName = '';
+  public ignoredOptions: Array<string> = [ "EMAIL" ];
+  public userDisplayName = "";
   public passwordPattern = passwordPattern;
-
-  public providerTriggered: AuthProviders = null;
-  public inputCurrentlyFocused = 'NONE';
+  public inputCurrentlyFocused = "NONE";
+  public credentials: EmailPasswordCredentials = {
+    email: "",
+    password: ""
+  };
 
   public emailStats: EmailStats;
-  public userNameStats: UserNameStats;
   public passwordStats: PasswordStats;
+  public userNameStats: UserNameStats;
+
+  @ViewChild(LogInOptionsComponent)
+  private _logInOptions: LogInOptionsComponent;
 
   constructor(private _fh: FormHandlerService) {}
 
-  public isEmpty(data: string): boolean {
-    return FormHandlerService.isEmpty(data);
+  public reset(): void {
+    this.submitted = false;
+    this.credentials = {
+      email: "",
+      password: ""
+    };
+    this._logInOptions.reset();
   }
 
   public ngDoCheck(): void {
-    this.emailStats = FormHandlerService.getEmailStats(this.user.email);
-    this.passwordStats = FormHandlerService.getPasswordStats(this.user.password);
+    this.emailStats = FormHandlerService.getEmailStats(this.credentials.email);
+    this.passwordStats = FormHandlerService.getPasswordStats(this.credentials.password);
     this.userNameStats = FormHandlerService.getUserNameStats(this.userDisplayName);
   }
 
   public ngOnInit(): void {
     this._fh.setup();
-    TooltipService.setup();
   }
 
-  public submit(provider: AuthProviders, credentials?: EmailPasswordCredentials, creation?: boolean): void {
+  public submit(provider: AuthProviders | string, credentials?: EmailPasswordCredentials): void {
+    this.submitted = true;
     this.errorSignUp = null;
-    this.providerTriggered = provider;
 
     this._fh
-      .submit(provider, credentials, creation)
-      .then(() => this.providerTriggered = null)
+      .submit(provider, credentials, true)
       .catch((error: Error) => {
+        this.reset();
         this.errorSignUp = error;
-        this.providerTriggered = null;
       });
   }
 }

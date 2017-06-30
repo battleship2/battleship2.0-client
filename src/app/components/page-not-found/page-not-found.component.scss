@@ -21,11 +21,11 @@ $img-animation-duration: 3s;
   width: 100%;
   cursor: default;
   position: fixed;
-  margin-top: 25px;
+  //margin-top: 25px;
 }
 
 .svg-background {
-  background: #01bcff url('../../../assets/img/backgrounds/background-404.svg');
+  background: #01bcff url("../../../assets/img/backgrounds/background-404.svg");
 }
 
 .four-o-four-container {
@@ -74,7 +74,7 @@ a, a:hover, a:visited, a:focus, a:active {
     border: 1px solid rgba($bs-color-white, .5);
     padding: 0;
     z-index: -1;
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     background: inherit;
@@ -130,9 +130,9 @@ a, a:hover, a:visited, a:focus, a:active {
     opacity: 0.6;
   }
   to {
-    padding: $animate-base;
-    opacity: 0;
     top: -$animate-base;
     left: -$animate-base;
+    opacity: 0;
+    padding: $animate-base;
   }
 }

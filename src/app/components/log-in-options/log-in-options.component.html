@@ -1,0 +1,20 @@
+<div class="p-relative">
+  <ng-container *ngFor="let option of displayedOptions">
+    <button [disabled]="optionTriggered"
+            class="btn btn-lg btn-log-in-option cursor-pointer {{ option.css }} m-1"
+            tabindex="6" (click)="!option.linkTo && select(option)" [title]="option.title"
+            [routerLink]="option.linkTo"
+            data-toggle="tooltip" data-placement="top">
+
+      <ng-container [ngSwitch]="option.loading">
+        <div class="loading-spinner" *ngSwitchCase="true">
+          <svg viewBox="0 0 64 64">
+            <circle transform="translate(32,32)" r="26"></circle>
+          </svg>
+        </div>
+
+        <img *ngSwitchDefault [src]="option.image" alt="{{ option.name }} logo" width="25" height="25">
+      </ng-container>
+    </button>
+  </ng-container>
+</div>

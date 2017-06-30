@@ -1,9 +1,9 @@
 <div class="row pane-fullscreen">
-  <div class="d-inline-block col-12 col-lg-7 col-md-6 pr-md-0">
+  <div class="col col-md-7 pr-sm-0">
     <div class="pane pane-left">
       <div class="container">
         <div class="row">
-          <div class="col-xl-5 col-lg-7 col-md-10 col-12 text-center ml-auto mr-auto">
+          <div class="col-xl-6 col-lg-8 col-md-10 col text-center ml-auto mr-auto">
             <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
             <h4 class="mb-2">
               Sign up for free, forever
@@ -16,8 +16,7 @@
             </p>
 
             <div class="alert alert-danger text-left" *ngIf="!providerTriggered && errorSignUp">
-              <strong>Oopsy...</strong>
-              {{ errorSignUp.message }}
+              <strong>Oopsy...</strong> {{ errorSignUp.message }}
             </div>
 
             <div class="alert alert-info text-left" *ngIf="providerTriggered && !errorSignUp">
@@ -39,7 +38,7 @@
               <div class="form-group p-relative">
                 <div class="input-group">
                   <input type="email" name="user-email" autocomplete="true" tabindex="2" #userEmail="ngModel"
-                         class="form-control" id="user-email" required [(ngModel)]="user.email" [pattern]="emailPattern"
+                         class="form-control" id="user-email" required [(ngModel)]="credentials.email" [pattern]="emailPattern"
                          [class.not-empty]="!isEmpty(userEmail.value)">
                   <label for="user-email">Email</label>
                 </div>
@@ -48,7 +47,7 @@
               <div class="form-group p-relative">
                 <div class="input-group">
                   <input type="password" name="user-password" autocomplete="true" tabindex="3" #userPassword="ngModel"
-                         class="form-control pr-5" id="user-password" required [(ngModel)]="user.password" minlength="8"
+                         class="form-control pr-5" id="user-password" required [(ngModel)]="credentials.password" minlength="8"
                          [class.not-empty]="!isEmpty(userPassword.value)" [pattern]="passwordPattern"
                          (focus)="inputCurrentlyFocused = 'PASSWORD'" (blur)="inputCurrentlyFocused = 'NONE'">
                   <label for="user-password">Password</label>
@@ -56,7 +55,7 @@
               </div>
 
               <div class="form-group p-relative">
-                <button [disabled]="providerTriggered === 4 || !signUpForm.form.valid" (click)="submit(4, user, true)"
+                <button [disabled]="providerTriggered === 4 || !signUpForm.form.valid" (click)="submit(4, credentials, true)"
                         class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer" tabindex="3">
                   <ng-container *ngIf="providerTriggered === 4">
                     <div class="loading-spinner">
@@ -99,44 +98,19 @@
               <div class="col-5 pl-0"><hr></div>
             </div>
 
-            <form class="user-data-form">
-              <div class="form-group p-relative">
-                <button class="btn btn-facebook btn-lg btn-submit btn-icon cursor-pointer"
-                        [disabled]="providerTriggered === 2"
-                        tabindex="6" (click)="submit(2)" title="Sign up with Facebook"
-                        data-toggle="tooltip" data-placement="top">
-                  <img src="assets/img/logos/fb.png" alt="facebook logo" width="25">
-                </button>
+            <bsc-log-in-options
+              emailLink="/sign-up"
+              phoneLink="/sign-up-with-phone-number"
+              [ignore]="ignoredOptions"
+              (selectedOption)="submit($event)"></bsc-log-in-options>
 
-                <button class="btn btn-github btn-lg btn-submit btn-icon cursor-pointer" title="Sign up with Github"
-                        [disabled]="providerTriggered === 0"
-                        data-toggle="tooltip" data-placement="top"
-                        tabindex="7" (click)="submit(0)">
-                  <img src="assets/img/logos/github.png" alt="github logo" width="25">
-                </button>
-
-                <button class="btn btn-google btn-lg btn-submit btn-icon cursor-pointer" title="Sign up with Google"
-                        [disabled]="providerTriggered === 3"
-                        data-toggle="tooltip" data-placement="top"
-                        tabindex="8" (click)="submit(3)">
-                  <img src="assets/img/logos/google.png" alt="google plus logo" width="25">
-                </button>
-
-                <button class="btn btn-twitter btn-lg btn-submit btn-icon cursor-pointer" title="Sign up with Twitter"
-                        [disabled]="providerTriggered === 1"
-                        data-toggle="tooltip" data-placement="top"
-                        tabindex="9" (click)="submit(1)">
-                  <img src="assets/img/logos/twitter.png" alt="twitter logo" width="25">
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="d-inline-block hidden-sm-down col-lg-5 col-md-6 pl-md-0">
+  <div class="hidden-xs-down col col-md-5 pl-sm-0">
     <div class="pane-background"></div>
     <div class="pane pane-right">
       <div class="container">
@@ -157,11 +131,7 @@
               <div class="col-12">
                 <ul class="pane-motto">
                   <li>
-                    <ng-container [ngSwitch]="userNameStats.length">
-                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
-                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
-                    </ng-container>
-                    <h6 [class.text-line-through]="userNameStats.length">Minimum 8 chars</h6>
+                    <bsc-icon-checkbox [active]="userNameStats.length" value="Minimum 8 chars"></bsc-icon-checkbox>
                   </li>
 
                   <li *ngIf="userName.valid" class="valid-input">
@@ -187,87 +157,36 @@
               <div class="col-12">
                 <ul class="pane-motto">
                   <li>
-                    <ng-container [ngSwitch]="passwordStats.length">
-                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
-                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
-                    </ng-container>
-                    <h6 [class.text-line-through]="passwordStats.length">Minimum 8 chars</h6>
+                    <bsc-icon-checkbox [active]="passwordStats.length" value="Minimum 8 chars"></bsc-icon-checkbox>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordStats.uppercase">
-                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
-                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
-                    </ng-container>
-                    <h6 [class.text-line-through]="passwordStats.uppercase">One uppercase letter</h6>
+                    <bsc-icon-checkbox [active]="passwordStats.uppercase" value="One uppercase letter"></bsc-icon-checkbox>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordStats.lowercase">
-                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
-                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
-                    </ng-container>
-                    <h6 [class.text-line-through]="passwordStats.lowercase">One lowercase letter</h6>
+                    <bsc-icon-checkbox [active]="passwordStats.lowercase" value="One lowercase letter"></bsc-icon-checkbox>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordStats.digit">
-                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
-                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
-                    </ng-container>
-                    <h6 [class.text-line-through]="passwordStats.digit">One digit</h6>
+                    <bsc-icon-checkbox [active]="passwordStats.digit" value="One digit"></bsc-icon-checkbox>
                   </li>
 
                   <li>
-                    <ng-container [ngSwitch]="passwordStats.symbol">
-                      <md-icon *ngSwitchCase="true" svgIcon="check_box_svg"></md-icon>
-                      <md-icon *ngSwitchDefault svgIcon="check_box_outline_blank_svg"></md-icon>
-                    </ng-container>
-                    <h6 [class.text-line-through]="passwordStats.symbol">One special character</h6>
+                    <bsc-icon-checkbox [active]="passwordStats.symbol" value="One special character"></bsc-icon-checkbox>
                   </li>
 
                   <li *ngIf="userPassword.valid" class="valid-input">
                     <hr class="jumbotron-hr">
                     <md-icon svgIcon="check_svg"></md-icon>
-                    <h6>That is what I call "secure"!</h6>
+                    <h6>Ahoy! That is what I call "secure"!</h6>
                   </li>
                 </ul>
               </div>
             </ng-container>
 
             <ng-container *ngSwitchDefault>
-              <div class="col-12">
-                <h4 class="mb-5">Join the war now!</h4>
-              </div>
-
-              <div class="col-12">
-                <ul class="pane-motto">
-                  <li>
-                    <md-icon svgIcon="history_svg"></md-icon>
-                    <h6>Unlimited access</h6>
-                  </li>
-                  <li>
-                    <md-icon svgIcon="explore_svg"></md-icon>
-                    <h6>Discover new tactics</h6>
-                  </li>
-                  <li>
-                    <md-icon svgIcon="build_svg"></md-icon>
-                    <h6>Engineer your destiny</h6>
-                  </li>
-                  <li>
-                    <md-icon svgIcon="compare_arrows_svg"></md-icon>
-                    <h6>Fight relentless enemies</h6>
-                  </li>
-                  <li>
-                    <md-icon svgIcon="extension_svg"></md-icon>
-                    <h6>Play the way you always wanted to</h6>
-                  </li>
-                  <li>
-                    <md-icon svgIcon="favorite_svg"></md-icon>
-                    <h6>Amaze yourself with incredible strategies</h6>
-                  </li>
-                </ul>
-              </div>
+              <bsc-game-motto></bsc-game-motto>
             </ng-container>
 
           </div>
@@ -275,5 +194,4 @@
       </div>
     </div>
   </div>
-
 </div>

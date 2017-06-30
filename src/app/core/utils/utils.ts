@@ -12,7 +12,17 @@
  * Email regular expression shared across the application.
  */
 export const emailPattern: RegExp =
-  /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i;
+  /^[a-z0-9!#$%&"*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i;
+
+/**
+ * @name internationalPhoneNumberPattern
+ * @kind RegExp
+ *
+ * @description
+ * International phone number regular expression shared across the application.
+ */
+export const internationalPhoneNumberPattern: RegExp =
+  /\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/;
 
 /**
  * @name passwordPattern
@@ -38,7 +48,7 @@ export const truncate = (value: string, size: number, suffix?: string): string |
       return value;
     }
 
-    suffix = isString(suffix) ? suffix : '...';
+    suffix = isString(suffix) ? suffix : "...";
 
     if (suffix.length < size) {
       return value.trim().substr(0, size - suffix.length) + suffix;
@@ -62,7 +72,7 @@ export const cssRuleExists = (className: string): boolean => {
   forEach(document.styleSheets, (styleSheet: any) => {
     if (!exists && isDefined(styleSheet.rules)) {
       forEach(styleSheet.rules, (rule: any) => {
-        if (isString(rule.selectorText) && rule.selectorText === ('.' + className.trim())) {
+        if (isString(rule.selectorText) && rule.selectorText === ("." + className.trim())) {
           exists = true;
         }
       });
@@ -86,10 +96,10 @@ export const UUID = (): string => {
 
     let time = new Date().getTime() + window.performance.now();
 
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char: string) => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (char: string) => {
       const r = (time + Math.random() * 16) % 16 | 0;
       time = Math.floor(time / 16);
-      return (char === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      return (char === "x" ? r : (r & 0x3 | 0x8)).toString(16);
     });
 
     // If we have a cryptographically secure PRNG, use that
@@ -98,15 +108,15 @@ export const UUID = (): string => {
 
     const buf: Uint16Array = new Uint16Array(8);
     window.crypto.getRandomValues(buf);
-    return (_pad4(buf[ 0 ]) + _pad4(buf[ 1 ]) + '-' + _pad4(buf[ 2 ]) + '-' + _pad4(buf[ 3 ]) +
-    '-' + _pad4(buf[ 4 ]) + '-' + _pad4(buf[ 5 ]) + _pad4(buf[ 6 ]) + _pad4(buf[ 7 ]));
+    return (_pad4(buf[ 0 ]) + _pad4(buf[ 1 ]) + "-" + _pad4(buf[ 2 ]) + "-" + _pad4(buf[ 3 ]) +
+    "-" + _pad4(buf[ 4 ]) + "-" + _pad4(buf[ 5 ]) + _pad4(buf[ 6 ]) + _pad4(buf[ 7 ]));
 
     // Otherwise, just use Math.random
     // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
     // https://stackoverflow.com/questions/11605068/why-does-jshint-argue-against-bitwise-operators-how-should-i-express-this-code
   } else {
-    return _random4() + _random4() + '-' + _random4() + '-' + _random4() + '-' +
-      _random4() + '-' + _random4() + _random4() + _random4();
+    return _random4() + _random4() + "-" + _random4() + "-" + _random4() + "-" +
+      _random4() + "-" + _random4() + _random4() + _random4();
   }
 };
 
@@ -120,7 +130,7 @@ export const UUID = (): string => {
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is `null`.
  */
-export const isNull = (value: any): boolean => value === null && typeof value === 'object';
+export const isNull = (value: any): boolean => value === null && typeof value === "object";
 
 /**
  * @name isString
@@ -132,7 +142,7 @@ export const isNull = (value: any): boolean => value === null && typeof value ==
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is a `String`.
  */
-export const isString = (value: any): boolean => typeof value === 'string';
+export const isString = (value: any): boolean => typeof value === "string";
 
 /**
  * @name isUndefined
@@ -144,7 +154,7 @@ export const isString = (value: any): boolean => typeof value === 'string';
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is undefined.
  */
-export const isUndefined = (value: any): boolean => typeof value === 'undefined';
+export const isUndefined = (value: any): boolean => typeof value === "undefined";
 
 /**
  * @name isDefined
@@ -156,7 +166,7 @@ export const isUndefined = (value: any): boolean => typeof value === 'undefined'
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is defined.
  */
-export const isDefined = (value: any): boolean => typeof value !== 'undefined';
+export const isDefined = (value: any): boolean => typeof value !== "undefined";
 
 /**
  * @name isObject
@@ -169,7 +179,7 @@ export const isDefined = (value: any): boolean => typeof value !== 'undefined';
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is an `Object` but not `null`.
  */
-export const isObject = (value: any): boolean => value !== null && typeof value === 'object';
+export const isObject = (value: any): boolean => value !== null && typeof value === "object";
 
 /**
  * @name isNumber
@@ -178,16 +188,16 @@ export const isObject = (value: any): boolean => value !== null && typeof value 
  * @description
  * Determines if a reference is a `Number`.
  *
- * This includes the 'special' numbers `NaN`, `+Infinity` and `-Infinity`.
+ * This includes the "special" numbers `NaN`, `+Infinity` and `-Infinity`.
  *
  * If you wish to exclude these then you can use the native
- * [`isFinite'](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite)
+ * [`isFinite"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite)
  * method.
  *
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is a `Number`.
  */
-export const isNumber = (value: any): boolean => typeof value === 'number';
+export const isNumber = (value: any): boolean => typeof value === "number";
 
 /**
  * @name isDate
@@ -199,7 +209,7 @@ export const isNumber = (value: any): boolean => typeof value === 'number';
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is a `Date`.
  */
-export const isDate = (value: any): boolean => Object.prototype.toString.call(value) === '[object Date]';
+export const isDate = (value: any): boolean => Object.prototype.toString.call(value) === "[object Date]";
 
 /**
  * @name isArray
@@ -223,7 +233,7 @@ export const isArray = (value: any): boolean => Array.isArray(value);
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is a `Function`.
  */
-export const isFunction = (value: any): boolean => typeof value === 'function';
+export const isFunction = (value: any): boolean => typeof value === "function";
 
 /**
  * @name isElement
@@ -247,7 +257,7 @@ export const isElement = (node: any): boolean => !!(node && (node.nodeName || (n
  * @param {*} value Reference to check.
  * @returns {Boolean} True if `value` is a `RegExp`.
  */
-export const isRegExp = (value: any): boolean => toString.call(value) === '[object RegExp]';
+export const isRegExp = (value: any): boolean => toString.call(value) === "[object RegExp]";
 
 /**
  * @name noop
@@ -273,8 +283,7 @@ export const noop = (): void => {};
  * @param {Number} maxHeight Fittable area maximum available height
  * @return {Object} { width, height }
  */
-export const getAspectRatioFit = (srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number):
-  { ratio: number, width: number, height: number } => {
+export const getAspectRatioFit = (srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number): { ratio: number, width: number, height: number } => {
   const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
   return { ratio: ratio, width: srcWidth * ratio, height: srcHeight * ratio };
 };
@@ -295,9 +304,7 @@ export const getAspectRatioFit = (srcWidth: number, srcHeight: number, maxWidth:
  * @param {...Object} sources Source object(s).
  * @returns {Object} Reference to `dst`.
  */
-export function extend(dst: Object, ...sources: Object[]): Object {
-  return _baseExtend(dst, [].slice.call(arguments, 1), false);
-}
+export const extend = (dst: Object, ...sources: Object[]): Object => _baseExtend(dst, sources, false);
 
 /**
  * @name merge
@@ -315,9 +322,7 @@ export function extend(dst: Object, ...sources: Object[]): Object {
  * @param {...Object} sources Source object(s).
  * @returns {Object} Reference to `dst`.
  */
-export function merge(dst: Object, ...sources: Object[]): Object {
-  return _baseExtend(dst, [].slice.call(arguments, 1), true);
-}
+export const merge = (dst: Object, ...sources: Object[]): Object => _baseExtend(dst, sources, true);
 
 /**
  * @name forEach
@@ -332,9 +337,9 @@ export function merge(dst: Object, ...sources: Object[]): Object {
  * It is worth noting that `forEach` does not iterate over inherited properties because it filters
  * using the `hasOwnProperty` method.
  *
- * Unlike ES262's
+ * Unlike ES262"s
  * [Array.prototype.forEach](http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.18),
- * providing 'undefined' or 'null' values for `obj` will not throw a TypeError, but rather just
+ * providing "undefined" or "null" values for `obj` will not throw a TypeError, but rather just
  * return the value provided.
  *
  * @param {Object|Array} obj Object to iterate over.
@@ -351,14 +356,14 @@ export const forEach = (obj: any, iterator: Function, context?: Object): Object 
     if (isFunction(obj)) {
 
       for (key in obj) {
-        if (key !== 'prototype' && key !== 'length' && key !== 'name' && obj.hasOwnProperty(key)) {
+        if (key !== "prototype" && key !== "length" && key !== "name" && obj.hasOwnProperty(key)) {
           iterator.call(context, obj[ key ], key, obj);
         }
       }
 
     } else if (isArray(obj) || _isArrayLike(obj)) {
 
-      const isPrimitive = typeof obj !== 'object';
+      const isPrimitive = typeof obj !== "object";
       for (key = 0, length = obj.length; key < length; key++) {
         if (isPrimitive || key in obj) {
           iterator.call(context, obj[ key ], key, obj);
@@ -377,7 +382,7 @@ export const forEach = (obj: any, iterator: Function, context?: Object): Object 
         iterator.call(context, obj[ key ], key, obj);
       }
 
-    } else if (typeof obj.hasOwnProperty === 'function') {
+    } else if (typeof obj.hasOwnProperty === "function") {
 
       // Slow path for objects inheriting Object.prototype, hasOwnProperty check needed
       for (key in obj) {
@@ -484,13 +489,13 @@ const _isArrayLike = (obj: any): boolean => {
   }
 
   // Support: iOS 8.2 (not reproducible in simulator)
-  // 'length' in obj used to prevent JIT error (gh-11508)
-  const length = 'length' in Object(obj) && obj.length;
+  // "length" in obj used to prevent JIT error (gh-11508)
+  const length = "length" in Object(obj) && obj.length;
 
   // NodeList objects (with `item` method) and
   // other objects with suitable length characteristics are array-like
   return isNumber(length) &&
-    (length >= 0 && ((length - 1) in obj || obj instanceof Array) || typeof obj.item === 'function');
+    (length >= 0 && ((length - 1) in obj || obj instanceof Array) || typeof obj.item === "function");
 
 };
 
@@ -510,7 +515,7 @@ const _isWindow = (obj: any): boolean => obj && obj.window === obj;
  * @description
  * Determine if a value is an object with a null prototype
  */
-const _isBlankObject = (value: any): boolean => value !== null && typeof value === 'object' && !Object.getPrototypeOf(value);
+const _isBlankObject = (value: any): boolean => value !== null && typeof value === "object" && !Object.getPrototypeOf(value);
 
 /**
  * @name _pad4
@@ -521,7 +526,7 @@ const _isBlankObject = (value: any): boolean => value !== null && typeof value =
 const _pad4 = (num: number): string => {
   let ret = num.toString(16);
   while (ret.length < 4) {
-    ret = '0' + ret;
+    ret = "0" + ret;
   }
   return ret;
 };

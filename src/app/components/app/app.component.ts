@@ -12,9 +12,9 @@ import { environment } from "../../../environments/environment";
 import { EngineService } from "../../services/engine.service";
 
 @Component({
-  selector: 'bsc-app',
-  styleUrls: [ 'app.component.scss' ],
-  templateUrl: 'app.component.html'
+  selector: "bsc-app",
+  styleUrls: [ "app.component.scss" ],
+  templateUrl: "app.component.html"
 })
 export class AppComponent implements OnInit, OnDestroy  {
   private _userStatusChanges$: Subscription;
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy  {
 
     this._iconRegistry.startRegistration();
 
-    // Now that the core data has loaded, let's trigger the event that the
+    // Now that the core data has loaded, let"s trigger the event that the
     // pre-bootstrap loading screen is listening for. This will initiate
     // the teardown of the loading screen.
     this._appReadyEvent.trigger();

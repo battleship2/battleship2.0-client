@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { isArray } from "../core/utils/utils";
 
@@ -12,7 +12,7 @@ export class SubscriptionCleanerService {
 
   public static handleSome(subscriptions: Array<Subscription>): void {
     if (isArray(subscriptions) && subscriptions.length > 0) {
-      subscriptions.forEach((subscription: Subscription) => SubscriptionCleanerService.handleOne(subscription));
+      subscriptions.forEach(SubscriptionCleanerService.handleOne);
     }
   }
 }

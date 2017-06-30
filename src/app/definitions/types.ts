@@ -1,6 +1,6 @@
 import { UserInfo } from "firebase/app";
 
-export declare type Dictionary = { [key: string]: string };
+export declare type Dictionary<T> = { [key: string]: T };
 
 export declare type EmailPasswordCredentials = {
   email: string;
@@ -12,7 +12,8 @@ export enum AuthProviders {
   Github,
   Twitter,
   Facebook,
-  Password
+  Password,
+  Phone
 }
 
 export declare interface BSUserInfo extends UserInfo {

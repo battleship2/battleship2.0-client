@@ -1,0 +1,115 @@
+<div class="row pane-fullscreen">
+  <div class="d-inline-block col-12 col-lg-7 col-md-6 pr-md-0">
+    <div class="pane pane-left">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-5 col-lg-7 col-md-10 col-12 text-center ml-auto mr-auto">
+            <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
+            <h4 class="mb-4" *ngIf="!signUp">Log into B&aring;ttleship 2</h4>
+            <h4 class="mb-4" *ngIf="signUp">Sign up to B&aring;ttleship 2</h4>
+
+            <div class="alert alert-danger text-left" *ngIf="!submitted && errorLogIn">
+              <strong>Oopsy...</strong>
+              {{ errorLogIn.message }}
+            </div>
+
+            <div class="alert alert-info text-left" *ngIf="!errorLogIn && submitted">
+              Get your phone ready, sending SMS verification code now!
+            </div>
+
+            <form class="user-data-form" #phoneForm="ngForm">
+              <div class="form-group p-relative">
+                <div class="input-group">
+                  <input type="tel" name="user-phone" autofocus autocomplete="true" #userPhone="ngModel"
+                         class="form-control" id="user-phone" required [(ngModel)]="phoneNumber" [pattern]="phonePattern"
+                         [class.not-empty]="!isEmpty(userPhone.value)">
+                  <label for="user-phone">Phone number</label>
+                </div>
+              </div>
+
+              <div class="form-group p-relative">
+                <button [disabled]="submitted || !phoneForm.form.valid"
+                        (click)="submit('Phone', phoneNumber)" id="send-code-phone-sign-in-button"
+                        class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer">
+
+                  <ng-container *ngIf="submitted">
+                    <div class="loading-spinner">
+                      <svg viewBox="0 0 64 64">
+                        <circle transform="translate(32,32)" r="26"></circle>
+                      </svg>
+                    </div>
+                  </ng-container>
+
+                  Send me a code
+                </button>
+              </div>
+            </form>
+
+            <p>
+              <small>
+                Don"t have an account? <a routerLink="/sign-up">Sign up</a>.
+              </small>
+            </p>
+
+            <div class="row mb-3">
+              <div class="col-5 pr-0"><hr></div>
+
+              <div class="col-2 px-0 pt-1">
+                <small class="text-muted">OR</small>
+              </div>
+
+              <div class="col-5 pl-0"><hr></div>
+            </div>
+
+            <bsc-log-in-options [ignore]="ignoredOptions" (selectedOption)="submit($event)"></bsc-log-in-options>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-inline-block hidden-sm-down col-lg-5 col-md-6 pl-md-0">
+    <div class="pane-background"></div>
+    <div class="pane pane-right">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="pane-body">
+            <div class="col-12 mb-5">
+              <h4>Join the war now!</h4>
+            </div>
+
+            <div class="col-12">
+              <ul class="pane-motto">
+                <li>
+                  <md-icon svgIcon="history_svg"></md-icon>
+                  <h6>Unlimited access</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="explore_svg"></md-icon>
+                  <h6>Discover new tactics</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="build_svg"></md-icon>
+                  <h6>Engineer your destiny</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="compare_arrows_svg"></md-icon>
+                  <h6>Fight relentless enemies</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="extension_svg"></md-icon>
+                  <h6>Play the way you always wanted to</h6>
+                </li>
+                <li>
+                  <md-icon svgIcon="favorite_svg"></md-icon>
+                  <h6>Amaze yourself with incredible strategies</h6>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

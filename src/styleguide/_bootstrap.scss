@@ -12,6 +12,10 @@
 // STYLES
 //
 // ------------------------
+.hidden {
+  display: none;
+}
+
 .text-muted a {
   color: $gray-light !important
 }
@@ -68,6 +72,10 @@
   &:disabled {
     color: lighten($bs-color-black, 50%);
   }
+}
+
+.btn-email, .btn-phone {
+  @include button-variant($bs-color-white, $green, darken($green, 5%));
 }
 
 .btn-facebook {

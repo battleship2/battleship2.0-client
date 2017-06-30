@@ -1,8 +1,8 @@
 /* tslint:disable:no-unused-variable */
 
-import * as utils from './utils';
+import * as utils from "./utils";
 
-describe('Core: utils', () => {
+describe("Core: utils", () => {
 
   let objA: any;
   let objB: any;
@@ -13,36 +13,36 @@ describe('Core: utils', () => {
   let itemsB: any;
 
   beforeEach(() => {
-    objA = { a: 'A' };
-    objB = { b: 'B' };
-    objC = { c: 'C', d: objA };
+    objA = { a: "A" };
+    objB = { b: "B" };
+    objC = { c: "C", d: objA };
     arrA = [ objA ];
     arrB = [ objB ];
-    itemsA = { a: 'A', b: 'B', c: 'C' };
-    itemsB = [ 0, 'a', new Date().toJSON(), null ];
+    itemsA = { a: "A", b: "B", c: "C" };
+    itemsB = [ 0, "a", new Date().toJSON(), null ];
   });
 
-  it('truncate', () => {
-    const toBeTruncated = 'Lorem ipsum dolore sit amet.';
+  it("truncate", () => {
+    const toBeTruncated = "Lorem ipsum dolore sit amet.";
 
     expect(utils.truncate(toBeTruncated, 100)).toBe(toBeTruncated);
-    expect(utils.truncate(toBeTruncated, 3, 'a')).toBe('Loa');
-    expect(utils.truncate(toBeTruncated, 1, 'aaa')).toBe(null);
+    expect(utils.truncate(toBeTruncated, 3, "a")).toBe("Loa");
+    expect(utils.truncate(toBeTruncated, 1, "aaa")).toBe(null);
     expect(utils.truncate(toBeTruncated, -5)).toBe(null);
     expect(utils.truncate(toBeTruncated, null)).toBe(null);
     expect(utils.truncate(null, 12)).toBe(null);
   });
 
-  it('cssRuleExists', () => {
-    const style = document.createElement('style');
-    style.innerHTML = '.myClass { color: #F00; }';
+  it("cssRuleExists", () => {
+    const style = document.createElement("style");
+    style.innerHTML = ".myClass { color: #F00; }";
     document.head.appendChild(style);
 
-    expect(utils.cssRuleExists('falseClass')).toBeFalsy();
-    expect(utils.cssRuleExists('myClass')).toBeTruthy();
+    expect(utils.cssRuleExists("falseClass")).toBeFalsy();
+    expect(utils.cssRuleExists("myClass")).toBeTruthy();
   });
 
-  it('UUID', () => {
+  it("UUID", () => {
     const uuid0 = utils.UUID();
     const uuid1 = utils.UUID();
 
@@ -50,75 +50,75 @@ describe('Core: utils', () => {
     expect(uuid0).not.toEqual(uuid1);
   });
 
-  it('isDate', () => {
+  it("isDate", () => {
     expect(utils.isDate(0)).toBeFalsy();
     expect(utils.isDate(new Date())).toBeTruthy();
   });
 
-  it('isNull', () => {
+  it("isNull", () => {
     expect(utils.isNull(0)).toBeFalsy();
     expect(utils.isNull(null)).toBeTruthy();
   });
 
-  it('isArray', () => {
+  it("isArray", () => {
     expect(utils.isArray({})).toBeFalsy();
     expect(utils.isArray([])).toBeTruthy();
   });
 
-  it('isString', () => {
+  it("isString", () => {
     expect(utils.isString(0)).toBeFalsy();
-    expect(utils.isString('0')).toBeTruthy();
+    expect(utils.isString("0")).toBeTruthy();
   });
 
-  it('isRegExp', () => {
+  it("isRegExp", () => {
     expect(utils.isRegExp(0)).toBeFalsy();
     expect(utils.isRegExp(new RegExp(/0/gi))).toBeTruthy();
   });
 
-  it('isObject', () => {
+  it("isObject", () => {
     expect(utils.isObject(null)).toBeFalsy();
     expect(utils.isObject({})).toBeTruthy();
   });
 
-  it('isNumber', () => {
-    expect(utils.isNumber('0')).toBeFalsy();
+  it("isNumber", () => {
+    expect(utils.isNumber("0")).toBeFalsy();
     expect(utils.isNumber(0)).toBeTruthy();
   });
 
-  it('isDefined', () => {
+  it("isDefined", () => {
     expect(utils.isDefined(undefined)).toBeFalsy();
     expect(utils.isDefined(0)).toBeTruthy();
   });
 
-  it('isElement', () => {
+  it("isElement", () => {
     expect(utils.isElement(0)).toBeFalsy();
-    expect(utils.isElement(document.createElement('p'))).toBeTruthy();
+    expect(utils.isElement(document.createElement("p"))).toBeTruthy();
   });
 
-  it('isFunction', () => {
+  it("isFunction", () => {
     expect(utils.isFunction(0)).toBeFalsy();
     expect(utils.isFunction(() => {
     })).toBeTruthy();
   });
 
-  it('isUndefined', () => {
+  it("isUndefined", () => {
     expect(utils.isUndefined(0)).toBeFalsy();
     expect(utils.isUndefined(undefined)).toBeTruthy();
   });
 
-  it('merge', () => {
-    expect(utils.merge({}, objA, objB)).toEqual({ a: 'A', b: 'B' });
-    expect(utils.merge({}, objC)).toEqual({ c: 'C', d: { a: 'A' } });
-    expect(utils.merge([], arrA, arrB)).toEqual([ { a: 'A', b: 'B' } ]);
+  it("merge", () => {
+    expect(utils.merge({}, objA, objB)).toEqual({ a: "A", b: "B" });
+    expect(utils.merge({}, objC)).toEqual({ c: "C", d: { a: "A" } });
+    expect(utils.merge([], arrA, arrB)).toEqual([ { a: "A", b: "B" } ]);
   });
 
-  it('extend', () => {
-    expect(utils.extend({}, objA, objB)).toEqual({ a: 'A', b: 'B' });
-    expect(utils.extend({}, objC)).toEqual({ c: 'C', d: { a: 'A' } });
-    expect(utils.extend([], arrA, arrB)).toEqual([ { b: 'B' } ]);
+  it("extend", () => {
+    expect(utils.extend({}, objA, objB)).toEqual({ a: "A", b: "B" });
+    expect(utils.extend({}, objC)).toEqual({ c: "C", d: { a: "A" } });
+    expect(utils.extend([], arrA, arrB)).toEqual([ { b: "B" } ]);
   });
 
-  it('forEach', () => {
+  it("forEach", () => {
     utils.forEach(itemsA, (item: any, index: any) => {
       expect(itemsA.hasOwnProperty(index)).toBeTruthy();
       expect(item).toEqual(itemsA[ index ]);

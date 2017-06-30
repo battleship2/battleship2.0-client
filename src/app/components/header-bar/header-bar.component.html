@@ -1,18 +1,23 @@
 <nav class="navbar navbar-toggleable-xl"
-     [ngClass]="{ 'navbar-inverse bg-inverse': !isTransluscentHeader && !isLightHeader, 'navbar-light bg-faded': isTransluscentHeader || isLightHeader }">
 
-  <a class="navbar-brand" routerLink="/pick-your-battle">
+     [class.bg-inverse]="!transparentHeader"
+     [class.navbar-inverse]="!transparentHeader"
+
+     [class.bg-transparent]="transparentHeader"
+     [class.navbar-light]="transparentHeader">
+
+  <a class="navbar-brand navbar-left-{{ leftPartMode }}" routerLink="/pick-your-battle">
     <img src="assets/img/logos/logo.png" width="40" height="40" alt="battleship 2 logo" class="d-inline-block align-middle mr-2">
     <span class="nav-title hidden-sm-down">B&aring;ttleship 2</span>
     <span class="nav-title hidden-md-up">BS 2</span>
   </a>
 
-  <div class="navbar-nav mr-auto" id="rank-board-zone" [class.hidden-xs-down]="!isUserAuthenticated">
+  <div class="navbar-nav navbar-left-{{ leftPartMode }} mr-auto" id="rank-board-zone" [ngClass]="{'hidden-xs-down': !userAuthenticated}">
     <a routerLink="/rank-board" routerLinkActive="active" class="nav-item nav-link">Scores</a>
     <a href="https://github.com/battleship2" target="_blank" class="nav-item nav-link">Github</a>
   </div>
 
-  <div class="navbar-nav ml-auto" [ngSwitch]="isUserAuthenticated" id="user-account-zone">
+  <div class="navbar-nav ml-auto navbar-right-{{ rightPartMode }}" [ngSwitch]="userAuthenticated" id="user-account-zone">
     <ng-container *ngSwitchCase="true">
       <a class="nav-link nav-item mr-0 user-menu cursor-pointer" [ngSwitch]="userData.photoURL" (mouseenter)="showUserMenu()">
         <span class="sr-only">User menu</span>
@@ -23,15 +28,11 @@
 
     <ng-container *ngSwitchCase="false">
       <div class="connection-form">
-        <a routerLink="/log-in" routerLinkActive="hidden-xl-down"
-           class="btn btn-link mr-auto"
-           [ngClass]="{ 'btn-link-dark': isTransluscentHeader, 'btn-link-light': !isTransluscentHeader }">
+        <a routerLink="/log-in" routerLinkActive="hidden-xl-down" class="btn btn-link mr-auto">
           Log in
         </a>
 
-        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down"
-           class="btn"
-           [ngClass]="{ 'btn-outline-dark': isTransluscentHeader, 'btn-outline-light': !isTransluscentHeader }">
+        <a routerLink="/sign-up" routerLinkActive="hidden-xl-down" class="btn">
           Sign up
         </a>
       </div>
@@ -46,10 +47,10 @@
     </ng-container>
   </div>
 
-  <div class="dropdown" [class.show]="isUserAuthenticated && userMenuVisible" (mouseleave)="hideUserMenu()" (click)="hideUserMenu()">
+  <div class="dropdown" [class.show]="userAuthenticated && userMenuVisible" (mouseleave)="hideUserMenu()" (click)="hideUserMenu()">
     <div class="dropdown-menu dropdown-menu-right">
       <h6 class="dropdown-header text-center">
-        Signed in as {{ getMenuTitle() }}
+        Signed in as {{ getUserName() }}
       </h6>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="/">

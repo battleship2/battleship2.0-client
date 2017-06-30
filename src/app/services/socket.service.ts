@@ -12,7 +12,7 @@ export class SocketService {
   constructor(private _logger: LoggerService) {
   }
 
-  public static get events(): Dictionary {
+  public static get events(): Dictionary<string> {
     return {
       READY: "ready",
       MESSAGE: "message",

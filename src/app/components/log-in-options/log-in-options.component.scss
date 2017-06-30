@@ -12,34 +12,17 @@
 // STYLES
 //
 // ------------------------
-.btn-submit {
-  &.btn-submitted {
-    padding: 0;
-  }
+.btn-log-in-option {
+  width: 59px;
+  height: 59px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 2px;
 
   .loading-spinner {
-    top: 3px;
-    width: 37px;
-    height: 37px;
-    margin: .2rem;
-  }
-}
-
-.reset-password {
-  top: 12px;
-  right: 14px;
-  z-index: 4;
-  outline: none;
-  position: absolute;
-
-  /deep/ svg {
-    fill: $bs-color-black-light;
-  }
-
-  &:hover {
-    /deep/ svg {
-      fill: $bs-color-blue-green;
-    }
+    width: 25px;
+    margin: 0;
+    height: 25px;
   }
 }
 

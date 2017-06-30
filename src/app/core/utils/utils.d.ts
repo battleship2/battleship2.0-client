@@ -1,5 +1,6 @@
 export const emailPattern: RegExp;
 export const passwordPattern: RegExp;
+export const internationalPhoneNumberPattern: RegExp;
 
 export function truncate(value: string, size: number, suffix: string): string | null;
 export function cssRuleExists(className: string): boolean;

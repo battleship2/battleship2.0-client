@@ -30,7 +30,7 @@ export class FormHandlerService {
   public setup(): void {
     const user: UserInfo = this._auth.user;
 
-    if (!isNull(user) && !user["anonymous"]) {
+    if (!isNull(user) && !user[ "anonymous" ]) {
       this._handleUserLoggedIn();
       return;
     }
@@ -40,17 +40,22 @@ export class FormHandlerService {
     return (isString(data) && data.trim().length <= 0);
   }
 
-  public submit(provider: AuthProviders | string, credentials?: EmailPasswordCredentials, creation?: boolean): firebase.Promise<any> {
+  public submit(provider: AuthProviders | string, credentials?: EmailPasswordCredentials | string, creation?: boolean, captchaPhoneNumber?: firebase.auth.RecaptchaVerifier): firebase.Promise<any> {
     let promise: firebase.Promise<any> = null;
 
-    switch(provider) {
+    switch (provider) {
       case "Password":
       case AuthProviders.Password:
         if (creation) {
-          promise = this._auth.signUp(credentials);
+          promise = this._auth.signUp(<EmailPasswordCredentials>credentials);
         } else {
-          promise = this._auth.logIn(credentials);
+          promise = this._auth.logIn(<EmailPasswordCredentials>credentials);
         }
+        break;
+
+      case "Phone":
+      case AuthProviders.Phone:
+        promise = this._auth.logInWithPhoneNumber(<string>credentials, captchaPhoneNumber);
         break;
 
       case "Google":
@@ -103,6 +108,6 @@ export class FormHandlerService {
   }
 
   private _handleUserLoggedIn(): Promise<boolean> {
-    return this._router.navigateByUrl('/pick-your-battle', { replaceUrl: true });
+    return this._router.navigateByUrl("/pick-your-battle", { replaceUrl: true });
   }
 }

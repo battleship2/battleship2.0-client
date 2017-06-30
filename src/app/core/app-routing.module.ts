@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
-import { AppRoutes } from './config/app-routes.config';
+import { AppRoutes } from "./config/app-routes.config";
 
 @NgModule({
   imports: [ RouterModule.forRoot(AppRoutes, { useHash: true }) ],

@@ -20,7 +20,7 @@ import { AppRoutingModule } from "../../core/app-routing.module";
 import { GettingStartedComponent } from "../getting-started/getting-started.component";
 import { PageNotFoundComponent } from "../page-not-found/page-not-found.component";
 
-describe('HeaderBarComponent', () => {
+describe("HeaderBarComponent", () => {
   let fixture: ComponentFixture<HeaderBarComponent>;
   let userData: UserInfo;
   let rankBoardZone: DebugElement;
@@ -55,12 +55,12 @@ describe('HeaderBarComponent', () => {
     fixture.detectChanges();
 
     userData = <UserInfo>{
-      email: 'work.rmarques@gmail.com',
+      email: "work.rmarques@gmail.com",
       photoURL: null,
-      displayName: 'Raphaël MARQUES'
+      displayName: "Raphaël MARQUES"
     };
-    rankBoardZone = fixture.debugElement.query(By.css('#rank-board-zone'));
-    userAccountZone = fixture.debugElement.query(By.css('#user-account-zone'));
+    rankBoardZone = fixture.debugElement.query(By.css("#rank-board-zone"));
+    userAccountZone = fixture.debugElement.query(By.css("#user-account-zone"));
   });
 
   beforeEach(inject([ IconRegistryService ], (irs) => {
@@ -71,61 +71,61 @@ describe('HeaderBarComponent', () => {
     fixture.destroy();
   });
 
-  it('should create the component', () => {
+  it("should create the component", () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should hide the "Rank Board" link on small screens when user is unauthenticated', () => {
-    expect(rankBoardZone.nativeElement.classList).toContain('hidden-xs-down', 'Expected element to be hidden on small screens if user is unauthenticated.');
+  it("should hide the "Rank Board" link on small screens when user is unauthenticated", () => {
+    expect(rankBoardZone.nativeElement.classList).toContain("hidden-xs-down", "Expected element to be hidden on small screens if user is unauthenticated.");
   });
 
-  it('should show a loader while retrieving user authentication status', () => {
-    expect(fixture.componentInstance.isUserAuthenticated).toBe(null, 'Expected user to be unauthenticated on startup.');
-    expect(userAccountZone.nativeElement.children.length).toBe(1, 'Expected only one element to be shown in the user zone.');
-    expect(userAccountZone.nativeElement.firstElementChild.classList).toContain('loading-spinner', 'Expected element to be the loader.');
+  it("should show a loader while retrieving user authentication status", () => {
+    expect(fixture.componentInstance.userAuthenticated).toBe(null, "Expected user to be unauthenticated on startup.");
+    expect(userAccountZone.nativeElement.children.length).toBe(1, "Expected only one element to be shown in the user zone.");
+    expect(userAccountZone.nativeElement.firstElementChild.classList).toContain("loading-spinner", "Expected element to be the loader.");
   });
 
-  it('should show the connection form when user is unauthenticated', () => {
-    fixture.componentInstance.isUserAuthenticated = false;
+  it("should show the connection form when user is unauthenticated", () => {
+    fixture.componentInstance.userAuthenticated = false;
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      expect(userAccountZone.nativeElement.children.length).toBe(1, 'Expected only one element to be shown in the user zone.');
-      expect(userAccountZone.nativeElement.firstElementChild.classList).toContain('connection-form', 'Expected element to be the user connection form.');
+      expect(userAccountZone.nativeElement.children.length).toBe(1, "Expected only one element to be shown in the user zone.");
+      expect(userAccountZone.nativeElement.firstElementChild.classList).toContain("connection-form", "Expected element to be the user connection form.");
     });
   });
 
-  it('should show the user menu link when user is authenticated', () => {
+  it("should show the user menu link when user is authenticated", () => {
     fixture.componentInstance.userData = <UserInfo>{};
-    fixture.componentInstance.isUserAuthenticated = true;
+    fixture.componentInstance.userAuthenticated = true;
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      expect(userAccountZone.nativeElement.children.length).toBe(1, 'Expected only one element to be shown in the user zone.');
-      expect(userAccountZone.nativeElement.firstElementChild.classList).toContain('user-menu', 'Expected element to be the user menu link.');
+      expect(userAccountZone.nativeElement.children.length).toBe(1, "Expected only one element to be shown in the user zone.");
+      expect(userAccountZone.nativeElement.firstElementChild.classList).toContain("user-menu", "Expected element to be the user menu link.");
     });
   });
 
-  it('should show the default avatar when user is authenticated and does not have an avatar', () => {
+  it("should show the default avatar when user is authenticated and does not have an avatar", () => {
     fixture.componentInstance.userData = userData;
-    fixture.componentInstance.isUserAuthenticated = true;
+    fixture.componentInstance.userAuthenticated = true;
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      expect(userAccountZone.nativeElement.children.length).toBe(1, 'Expected only one element to be shown in the user zone.');
-      expect(userAccountZone.nativeElement.querySelector('md-icon').getAttribute('aria-label')).toBe('person_pin_svg', 'Expected element to be the default user avatar.')
+      expect(userAccountZone.nativeElement.children.length).toBe(1, "Expected only one element to be shown in the user zone.");
+      expect(userAccountZone.nativeElement.querySelector("md-icon").getAttribute("aria-label")).toBe("person_pin_svg", "Expected element to be the default user avatar.")
     });
   });
 
-  it('should show the user avatar when user is authenticated and have one', () => {
-    userData.photoURL = 'https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/16299320_10211702963710550_1207413941079745708_n.jpg?oh=8341d560f5f3d7549bfd91cf1d98dca0&oe=595476A1';
+  it("should show the user avatar when user is authenticated and have one", () => {
+    userData.photoURL = "https://scontent.xx.fbcdn.net/v/t1.0-1/p100x100/16299320_10211702963710550_1207413941079745708_n.jpg?oh=8341d560f5f3d7549bfd91cf1d98dca0&oe=595476A1";
     fixture.componentInstance.userData = userData;
-    fixture.componentInstance.isUserAuthenticated = true;
+    fixture.componentInstance.userAuthenticated = true;
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      expect(userAccountZone.nativeElement.children.length).toBe(1, 'Expected only one element to be shown in the user zone.');
-      expect(userAccountZone.nativeElement.querySelector('img').getAttribute('src')).toBe(userData.photoURL, 'Expected element to be the user avatar.')
+      expect(userAccountZone.nativeElement.children.length).toBe(1, "Expected only one element to be shown in the user zone.");
+      expect(userAccountZone.nativeElement.querySelector("img").getAttribute("src")).toBe(userData.photoURL, "Expected element to be the user avatar.")
     });
   });
 });

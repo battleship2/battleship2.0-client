@@ -1,7 +1,7 @@
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from "@angular/platform-browser";
 
-import { Inject } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Inject } from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class AppReadyEventService {
@@ -30,7 +30,7 @@ export class AppReadyEventService {
     const bubbles = true;
     const cancelable = false;
 
-    this._doc.dispatchEvent(this._createEvent('appready', bubbles, cancelable));
+    this._doc.dispatchEvent(this._createEvent("appready", bubbles, cancelable));
     this._isAppReady = true;
   }
 
@@ -39,14 +39,14 @@ export class AppReadyEventService {
     let customEvent: any;
 
     // IE uses some other kind of event initialization. As such,
-    // we'll default to trying the "normal" event generation and then fallback to
+    // we"ll default to trying the "normal" event generation and then fallback to
     // using the IE version.
     try {
 
       customEvent = new CustomEvent(eventType, { bubbles: bubbles, cancelable: cancelable });
 
     } catch (error) {
-      customEvent = this._doc.createEvent('CustomEvent');
+      customEvent = this._doc.createEvent("CustomEvent");
       customEvent.initCustomEvent(eventType, bubbles, cancelable);
     }
 

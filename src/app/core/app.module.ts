@@ -29,6 +29,11 @@ import { SubscriptionCleanerService } from "../services/subscription-cleaner.ser
 import { TooltipService } from "../services/tooltip.service";
 import { AppRoutingModule } from "./app-routing.module";
 import { firebaseConfig } from "./config/firebase.config";
+import { LogInOptionsComponent } from "../components/log-in-options/log-in-options.component";
+import { LogInWithPhoneNumberComponent } from "../components/log-in-with-phone-number/log-in-with-phone-number.component";
+import { GameMottoComponent } from "../components/game-motto/game-motto.component";
+import { IconCheckboxComponent } from "../components/icon-checkbox/icon-checkbox.component";
+import { SignUpWithPhoneNumberComponent } from "../components/sign-up-with-phone-number/sign-up-with-phone-number.component";
 
 @NgModule({
   imports: [
@@ -45,12 +50,17 @@ import { firebaseConfig } from "./config/firebase.config";
     ChatComponent,
     LogInComponent,
     SignUpComponent,
+    GameMottoComponent,
     RankBoardComponent,
     HeaderBarComponent,
+    IconCheckboxComponent,
+    LogInOptionsComponent,
     PageNotFoundComponent,
     ResetPasswordComponent,
     PickYourBattleComponent,
-    GettingStartedComponent
+    GettingStartedComponent,
+    LogInWithPhoneNumberComponent,
+    SignUpWithPhoneNumberComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [

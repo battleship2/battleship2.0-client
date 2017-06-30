@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { emailPattern } from '../../core/utils/utils';
-import { FormHandlerService } from '../../services/form-handler.service';
+import { Component } from "@angular/core";
+import { emailPattern } from "../../core/utils/utils";
+import { FormHandlerService } from "../../services/form-handler.service";
 
 @Component({
-  selector: 'bsc-reset-password',
-  styleUrls: [ 'reset-password.component.scss' ],
-  templateUrl: 'reset-password.component.html'
+  selector: "bsc-reset-password",
+  styleUrls: [ "reset-password.component.scss" ],
+  templateUrl: "reset-password.component.html"
 })
 export class ResetPasswordComponent {
-  public email = '';
+  public email = "";
   public emailSent = false;
   public emailSending = false;
   public emailPattern = emailPattern;
@@ -18,7 +18,7 @@ export class ResetPasswordComponent {
   }
 
   public sendRecoveryEmail(email: string): void {
-    console.error('IMPLEMENT RECOVERY EMAIL LOGIC HERE');
+    console.error("IMPLEMENT RECOVERY EMAIL LOGIC HERE");
 
     this.emailSending = true;
 

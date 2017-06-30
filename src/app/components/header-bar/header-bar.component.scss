@@ -4,7 +4,9 @@
 //
 // ------------------------
 @import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins";
 @import "../../../styleguide/variables/variables";
+@import "../../../styleguide/bootstrap";
 
 // ------------------------
 //
@@ -23,7 +25,31 @@
   height: $bs-header-height;
   z-index: 10000;
 
-  &.bg-faded {
+  .navbar-left-dark,
+  .navbar-right-dark {
+    .btn {
+      &.btn-link {
+        color: $bs-color-black;
+      }
+
+      &:not(.btn-link) {
+        @extend .btn-outline-dark;
+      }
+    }
+  }
+
+  .navbar-left-light,
+  .navbar-right-light {
+    * {
+      color: $bs-color-white;
+    }
+
+    .btn:not(.btn-link) {
+      @extend .btn-outline-light;
+    }
+  }
+
+  &.bg-transparent {
     background-color: transparent;
   }
 
@@ -88,6 +114,26 @@
           background-color: $red;
         }
       }
+    }
+  }
+}
+
+// ------------------------
+//
+// RESPONSIVE BREAKPOINTS
+//
+// ------------------------
+@include media-breakpoint-down(xs) {
+  .navbar {
+    background: $bs-color-black linear-gradient(to right bottom, $bs-color-black 0%, $bs-color-black-light 100%);
+
+    * {
+      color: $bs-color-white !important;
+    }
+
+    .btn:not(.btn-link) {
+      color: $bs-color-white;
+      border-color: $bs-color-white !important;
     }
   }
 }

@@ -70,41 +70,40 @@ export class AuthService implements OnDestroy {
     return this._ngFireAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
   }
 
-  //https://firebase.google.com/docs/auth/web/phone-auth
-
-  public logInWithPhoneNumber(number: string): firebase.Promise<any> {
-    const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-      'size': 'invisible',
-      'callback': function(response) {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // submit sign in
-      }
-    });
-
-    return this._ngFireAuth.auth.signInWithPhoneNumber('', null)
-      .then(function (confirmationResult) {
+  /*
+  * More details about this phone-number-login implementation can be found here:
+  * https://firebase.google.com/docs/auth/web/phone-auth
+  */
+  public logInWithPhoneNumber(number: string, recaptchaVerifier: firebase.auth.RecaptchaVerifier): firebase.Promise<any> {
+    return this._ngFireAuth.auth.signInWithPhoneNumber(number, recaptchaVerifier)
+      .then((confirmationResult) => {
+        this._logger.log("SMS sent, prompt user to type the code from the message.");
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         // const confirmationResult = confirmationResult;
 
+        console.log(confirmationResult);
+
         // get code from user and submit
-        // confirmationResult.confirm(code).then(function (result) {
+        // confirmationResult.confirm(code).then((result) => {
         //   // User signed in successfully.
         //   var user = result.user;
         //   // ...
-        // }).catch(function (error) {
-        //   // User couldn't sign in (bad verification code?)
+        // }).catch((error) => {
+        //   // User couldn"t sign in (bad verification code?)
         //   // ...
         // });
-      }).catch(function (error) {
-        // Error; SMS not sent
-        // ...
+      }).catch((error: Error) => this._logger.error("Error while sending SMS:", error));
+  }
 
-        // reset the captcha
-        recaptchaVerifier.render().then(function(widgetId) {
-          // grecaptcha.reset(widgetId);
-        });
-      });
+  public static getCaptchaVerifierForPhoneNumberLogin(buttonId: string): firebase.auth.RecaptchaVerifier {
+    return new firebase.auth.RecaptchaVerifier(buttonId, {
+      "size": "invisible",
+      "callback": function(response) {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        // submit sign in
+      }
+    });
   }
 
   public logInAnonymously(): firebase.Promise<any> {
