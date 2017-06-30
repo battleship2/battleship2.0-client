@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { emailPattern, isNull, isString, passwordPattern } from "../core/utils/utils";
 import { UserInfo } from "firebase/app";
 import { AuthProviders, EmailPasswordCredentials } from "../definitions/types";
+import { LoggerService } from "./logger.service";
 
 export interface PasswordStats {
   valid: boolean;
@@ -24,7 +25,7 @@ export interface EmailStats {
 
 @Injectable()
 export class FormHandlerService {
-  constructor(private _auth: AuthService, private _router: Router) {
+  constructor(private _auth: AuthService, private _router: Router, private _logger: LoggerService) {
   }
 
   public setup(): void {
@@ -42,6 +43,7 @@ export class FormHandlerService {
 
   public submit(provider: AuthProviders | string, credentials?: EmailPasswordCredentials | string, creation?: boolean, captchaPhoneNumber?: firebase.auth.RecaptchaVerifier): firebase.Promise<any> {
     let promise: firebase.Promise<any> = null;
+    let redirect = true;
 
     switch (provider) {
       case "Password":
@@ -55,6 +57,7 @@ export class FormHandlerService {
 
       case "Phone":
       case AuthProviders.Phone:
+        redirect = false;
         promise = this._auth.logInWithPhoneNumber(<string>credentials, captchaPhoneNumber);
         break;
 
@@ -79,9 +82,22 @@ export class FormHandlerService {
         break;
     }
 
-    return promise.then(() => {
-      this._handleUserLoggedIn();
+    return promise.then((value: any) => {
+      if (redirect) {
+        return this._handleUserLoggedIn();
+      } else {
+        return this._validatePhoneVerificationCode(value);
+      }
     });
+  }
+
+  private _validatePhoneVerificationCode(confirmationResult: any) {
+    return (verificationCode: string) => {
+      confirmationResult
+        .confirm(verificationCode)
+        .then((result) => this._handleUserLoggedIn())
+        .catch(this._logger.error);
+    };
   }
 
   public static getPasswordStats(password: string): PasswordStats {

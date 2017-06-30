@@ -3,51 +3,100 @@
     <div class="pane pane-left">
       <div class="container">
         <div class="row">
-          <div class="col-xl-5 col-lg-7 col-md-10 col-12 text-center ml-auto mr-auto">
+          <div class="col-xl-5 col-lg-7 col-md-10 col-12 text-center ml-auto mr-auto"
+               [ngSwitch]="showConfirmationResultForm">
             <img src="assets/img/logos/logo.png" alt="battleship 2 logo" width="68" class="mb-3">
-            <h4 class="mb-4" *ngIf="!signUp">Log into B&aring;ttleship 2</h4>
-            <h4 class="mb-4" *ngIf="signUp">Sign up to B&aring;ttleship 2</h4>
 
-            <div class="alert alert-danger text-left" *ngIf="!submitted && errorLogIn">
-              <strong>Oopsy...</strong>
-              {{ errorLogIn.message }}
-            </div>
+            <ng-container *ngSwitchDefault>
+              <h4 class="mb-4" *ngIf="!signUp">Log into B&aring;ttleship 2</h4>
+              <h4 class="mb-4" *ngIf="signUp">Sign up to B&aring;ttleship 2</h4>
 
-            <div class="alert alert-info text-left" *ngIf="!errorLogIn && submitted">
-              Get your phone ready, sending SMS verification code now!
-            </div>
+              <div class="alert alert-danger text-left" *ngIf="!submitted && errorLogIn">
+                <strong>Oopsy...</strong>
+                {{ errorLogIn.message }}
+              </div>
 
-            <form class="user-data-form" #phoneForm="ngForm">
-              <div class="form-group p-relative">
-                <div class="input-group">
-                  <input type="tel" name="user-phone" autofocus autocomplete="true" #userPhone="ngModel"
-                         class="form-control" id="user-phone" required [(ngModel)]="phoneNumber" [pattern]="phonePattern"
-                         [class.not-empty]="!isEmpty(userPhone.value)">
-                  <label for="user-phone">Phone number</label>
+              <div class="alert alert-info text-left" *ngIf="!errorLogIn && submitted">
+                Get your phone ready, sending SMS verification code now!
+              </div>
+
+              <form class="user-data-form" #phoneForm="ngForm">
+                <div class="form-group p-relative">
+                  <div class="input-group">
+                    <input type="tel" name="user-phone" autofocus autocomplete="true" #userPhone="ngModel"
+                           class="form-control" id="user-phone" required [(ngModel)]="phoneNumber" [pattern]="phonePattern"
+                           [class.not-empty]="!isEmpty(userPhone.value)">
+                    <label for="user-phone">Phone number</label>
+                  </div>
                 </div>
+
+                <div class="form-group p-relative">
+                  <button [disabled]="submitted || !phoneForm.form.valid" (click)="submit('Phone', phoneNumber)"
+                          class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer"
+                          [class.btn-submitted]="submitted" id="send-code-phone-sign-in-button">
+
+                    <ng-container *ngIf="submitted">
+                      <div class="loading-spinner">
+                        <svg viewBox="0 0 64 64">
+                          <circle transform="translate(32,32)" r="26"></circle>
+                        </svg>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!submitted">
+                      Send me a code
+                    </ng-container>
+                  </button>
+                </div>
+              </form>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="true">
+              <h4 class="mb-4">Almost there!</h4>
+
+              <div class="alert alert-danger text-left" *ngIf="!submitted && errorLogIn">
+                <strong>Oopsy...</strong>
+                {{ errorLogIn.message }}
               </div>
 
-              <div class="form-group p-relative">
-                <button [disabled]="submitted || !phoneForm.form.valid"
-                        (click)="submit('Phone', phoneNumber)" id="send-code-phone-sign-in-button"
-                        class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer">
-
-                  <ng-container *ngIf="submitted">
-                    <div class="loading-spinner">
-                      <svg viewBox="0 0 64 64">
-                        <circle transform="translate(32,32)" r="26"></circle>
-                      </svg>
-                    </div>
-                  </ng-container>
-
-                  Send me a code
-                </button>
+              <div class="alert alert-info text-left" *ngIf="!errorLogIn && submitted">
+                Validating coordinates... Better not be lying!
               </div>
-            </form>
+
+              <form class="user-data-form" #codeForm="ngForm">
+                <div class="form-group p-relative">
+                  <div class="input-group">
+                    <input type="text" name="user-code" autofocus autocomplete="off" #userCode="ngModel"
+                           class="form-control" id="user-code" required [(ngModel)]="verificationCode"
+                           [class.not-empty]="!isEmpty(userCode.value)">
+                    <label for="user-phone">SMS Verification Code</label>
+                  </div>
+                </div>
+
+                <div class="form-group p-relative">
+                  <button [disabled]="submitted || !codeForm.form.valid" (click)="validateCode(verificationCode)"
+                          class="btn btn-dark btn-lg btn-block text-uppercase btn-submit cursor-pointer"
+                          [class.btn-submitted]="submitted">
+
+                    <ng-container *ngIf="submitted">
+                      <div class="loading-spinner">
+                        <svg viewBox="0 0 64 64">
+                          <circle transform="translate(32,32)" r="26"></circle>
+                        </svg>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!submitted">
+                      Validate my code
+                    </ng-container>
+                  </button>
+                </div>
+              </form>
+            </ng-container>
 
             <p>
               <small>
-                Don"t have an account? <a routerLink="/sign-up">Sign up</a>.
+                Don't have an account? <a routerLink="/sign-up">Sign up</a>.
               </small>
             </p>
 
@@ -61,7 +110,10 @@
               <div class="col-5 pl-0"><hr></div>
             </div>
 
-            <bsc-log-in-options [ignore]="ignoredOptions" (selectedOption)="submit($event)"></bsc-log-in-options>
+            <bsc-log-in-options
+              [emailLink]="signUp ? '/sign-up' : '/log-in'"
+              [ignore]="ignoredOptions"
+              (selectedOption)="submit($event)"></bsc-log-in-options>
           </div>
         </div>
       </div>
@@ -74,38 +126,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="pane-body">
-            <div class="col-12 mb-5">
-              <h4>Join the war now!</h4>
-            </div>
-
-            <div class="col-12">
-              <ul class="pane-motto">
-                <li>
-                  <md-icon svgIcon="history_svg"></md-icon>
-                  <h6>Unlimited access</h6>
-                </li>
-                <li>
-                  <md-icon svgIcon="explore_svg"></md-icon>
-                  <h6>Discover new tactics</h6>
-                </li>
-                <li>
-                  <md-icon svgIcon="build_svg"></md-icon>
-                  <h6>Engineer your destiny</h6>
-                </li>
-                <li>
-                  <md-icon svgIcon="compare_arrows_svg"></md-icon>
-                  <h6>Fight relentless enemies</h6>
-                </li>
-                <li>
-                  <md-icon svgIcon="extension_svg"></md-icon>
-                  <h6>Play the way you always wanted to</h6>
-                </li>
-                <li>
-                  <md-icon svgIcon="favorite_svg"></md-icon>
-                  <h6>Amaze yourself with incredible strategies</h6>
-                </li>
-              </ul>
-            </div>
+            <bsc-game-motto></bsc-game-motto>
           </div>
         </div>
       </div>

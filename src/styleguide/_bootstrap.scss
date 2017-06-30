@@ -53,6 +53,19 @@
   }
 }
 
+.btn-submit {
+  &.btn-submitted {
+    padding: 0;
+  }
+
+  .loading-spinner {
+    top: 3px;
+    width: 37px;
+    height: 37px;
+    margin: .2rem;
+  }
+}
+
 .btn-dark {
   @include button-variant($bs-color-white, $bs-color-black, lighten($bs-color-black, 5%));
 }

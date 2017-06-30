@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from "@angular/core";
 import { internationalPhoneNumberPattern } from "../../core/utils/utils";
 import { AuthService } from "../../services/auth.service";
 import { FormHandlerService } from "../../services/form-handler.service";
@@ -10,7 +10,7 @@ import { AuthProviders } from "../../definitions/types";
   styleUrls: [ "log-in-with-phone-number.component.scss" ],
   templateUrl: "log-in-with-phone-number.component.html"
 })
-export class LogInWithPhoneNumberComponent implements OnInit {
+export class LogInWithPhoneNumberComponent implements OnInit, AfterViewInit {
   @Input()
   public signUp = false;
 
@@ -20,10 +20,11 @@ export class LogInWithPhoneNumberComponent implements OnInit {
   public phoneNumber: string = "";
   public phonePattern = internationalPhoneNumberPattern;
   public ignoredOptions: Array<string> = [ "PHONE" ];
+  public verificationCode = "";
   public phoneNumberLoginCaptcha: firebase.auth.RecaptchaVerifier = null;
   public showConfirmationResultForm = false;
 
-  private _confirmationResultHandler = null;
+  private _verificationCallback = null;
 
   @ViewChild(LogInOptionsComponent)
   private _logInOptions: LogInOptionsComponent;
@@ -36,7 +37,14 @@ export class LogInWithPhoneNumberComponent implements OnInit {
 
   public ngOnInit(): void {
     this._fh.setup();
+  }
+
+  public ngAfterViewInit(): void {
     this._createCaptcha();
+  }
+
+  public validateCode(verificationCode: string) {
+    this._verificationCallback(verificationCode);
   }
 
   public reset(): void {
@@ -51,7 +59,8 @@ export class LogInWithPhoneNumberComponent implements OnInit {
     this._fh
       .submit(provider, credentials, this.signUp, this.phoneNumberLoginCaptcha)
       .then((confirmationResult) => {
-        this._confirmationResultHandler = confirmationResult;
+        this.submitted = false;
+        this._verificationCallback = confirmationResult;
         this.showConfirmationResultForm = true;
       })
       .catch((error: Error) => {

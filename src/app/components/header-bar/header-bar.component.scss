@@ -123,7 +123,7 @@
 // RESPONSIVE BREAKPOINTS
 //
 // ------------------------
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .navbar {
     background: $bs-color-black linear-gradient(to right bottom, $bs-color-black 0%, $bs-color-black-light 100%);
 

@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { isDefined, isFunction, isString } from "../core/utils/utils";
 
-const consoleOverride = (target: any, key: string, descriptor: TypedPropertyDescriptor<any>) => {
-  descriptor.value = (...args: any[]) => {
+function consoleOverride (target: any, key: string, descriptor: TypedPropertyDescriptor<any>) {
+  descriptor.value = function (...args: any[]) {
     if (this._loggingActivated && isDefined(console) && isFunction(console[ key ])) {
       const firstArg = Array.prototype.splice.call(args, 0, 1)[ 0 ];
 
@@ -19,11 +19,11 @@ const consoleOverride = (target: any, key: string, descriptor: TypedPropertyDesc
   };
 
   return descriptor;
-};
+}
 
-const toggleLog = (state: boolean) => {
-  return (target: any, key: string, descriptor: TypedPropertyDescriptor<any>) => {
-    descriptor.value = (...args: any[]) => {
+function toggleLog(state: boolean) {
+  return function (target: any, key: string, descriptor: TypedPropertyDescriptor<any>) {
+    descriptor.value = function (...args: any[]) {
       if (environment.useConsole) {
         this._loggingActivated = state;
         console.log(this._loggerPrefix, this._loggerPrefixStyle, "", (state ? "Activated." : "Deactivated"));
@@ -31,7 +31,7 @@ const toggleLog = (state: boolean) => {
     };
     return descriptor;
   }
-};
+}
 
 @Injectable()
 export class LoggerService implements ILogger {

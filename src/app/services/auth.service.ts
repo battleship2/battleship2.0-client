@@ -76,34 +76,11 @@ export class AuthService implements OnDestroy {
   */
   public logInWithPhoneNumber(number: string, recaptchaVerifier: firebase.auth.RecaptchaVerifier): firebase.Promise<any> {
     return this._ngFireAuth.auth.signInWithPhoneNumber(number, recaptchaVerifier)
-      .then((confirmationResult) => {
-        this._logger.log("SMS sent, prompt user to type the code from the message.");
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        // const confirmationResult = confirmationResult;
-
-        console.log(confirmationResult);
-
-        // get code from user and submit
-        // confirmationResult.confirm(code).then((result) => {
-        //   // User signed in successfully.
-        //   var user = result.user;
-        //   // ...
-        // }).catch((error) => {
-        //   // User couldn"t sign in (bad verification code?)
-        //   // ...
-        // });
-      }).catch((error: Error) => this._logger.error("Error while sending SMS:", error));
+      .catch((error: Error) => this._logger.error("Error while sending SMS:", error));
   }
 
   public static getCaptchaVerifierForPhoneNumberLogin(buttonId: string): firebase.auth.RecaptchaVerifier {
-    return new firebase.auth.RecaptchaVerifier(buttonId, {
-      "size": "invisible",
-      "callback": function(response) {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // submit sign in
-      }
-    });
+    return new firebase.auth.RecaptchaVerifier(buttonId, { size: "invisible" });
   }
 
   public logInAnonymously(): firebase.Promise<any> {
